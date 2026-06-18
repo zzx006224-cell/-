@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>校园食堂 | 指路猫</title>
+    <style>
+        :root {
+            --bg: #f5fbf6;
+            --surface: #ffffff;
+            --text: #10222f;
+            --muted: #5f7d8a;
+            --primary: #2cae76;
+            --primary-dark: #24915f;
+            --accent-blue: #3c8dff;
+            --accent-orange: #ff9f49;
+            --shadow: 0 22px 60px rgba(16, 34, 47, 0.08);
+            --shadow-soft: 0 14px 45px rgba(16, 34, 47, 0.08);
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(180deg, #f5fbf6 0%, #eef8f3 100%);
+            color: var(--text);
+            min-height: 100%;
+        }
+
+        body {
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(14px);
+            background: rgba(245, 251, 246, 0.86);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+            padding: 18px 0;
+        }
+
+        .topbar-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #2cae76 0%, #36c08b 100%);
+            color: white;
+            font-size: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 15px;
+            transition: color .2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .page-wrapper {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            margin: 0 0 12px;
+            font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+            line-height: 1.1;
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            padding: 12px 20px;
+            border-radius: 999px;
+            background: rgba(44, 174, 118, 0.12);
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px 24px;
+            border-radius: 24px;
+            border: 1px solid rgba(45, 111, 73, 0.14);
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--text);
+            outline: none;
+            transition: border-color .2s ease, box-shadow .2s ease;
+            font-size: 1rem;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(44, 174, 118, 0.14);
+        }
+
+        .canteen-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+            align-items: start;
+        }
+
+        .canteen-card {
+            background: var(--surface);
+            border-radius: 24px;
+            border: 1px solid rgba(45, 111, 73, 0.08);
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+            cursor: pointer;
+            align-self: start;
+        }
+
+        .canteen-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 26px 55px rgba(16, 34, 47, 0.12);
+            border-color: rgba(44, 174, 118, 0.2);
+        }
+
+        .canteen-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(44, 174, 118, 0.12), rgba(60, 141, 255, 0.12));
+            display: grid;
+            place-items: center;
+            font-size: 3.5rem;
+        }
+
+        .canteen-body {
+            padding: 24px;
+        }
+
+        .canteen-title {
+            margin: 0 0 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .canteen-subtitle {
+            margin: 0 0 16px;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .canteen-intro {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .canteen-detail {
+            display: none;
+            padding: 20px 24px;
+            border-top: 1px solid rgba(45, 111, 73, 0.08);
+            background: #fafbf9;
+        }
+
+        .canteen-card.expanded .canteen-detail {
+            display: block;
+        }
+
+        .detail-item {
+            margin-bottom: 16px;
+        }
+
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            color: var(--text);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .map-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 12px 18px;
+            border: 1px solid var(--accent-blue);
+            border-radius: 16px;
+            background: rgba(60, 141, 255, 0.08);
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background .2s ease, transform .2s ease;
+            text-decoration: none;
+        }
+
+        .map-button:hover {
+            background: rgba(60, 141, 255, 0.16);
+            transform: translateY(-1px);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted);
+        }
+
+        .no-results h3 {
+            font-size: 1.3rem;
+            margin: 0 0 12px;
+        }
+
+        .no-results p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(45, 111, 73, 0.08);
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .footer p {
+            margin: 8px 0;
+        }
+
+        .footer a {
+            color: var(--primary);
+            font-weight: 600;
+            transition: color .2s ease;
+        }
+
+        .footer a:hover {
+            color: var(--primary-dark);
+        }
+
+        @media (max-width: 1024px) {
+            .canteen-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .canteen-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-wrapper {
+                padding: 28px 16px 40px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .topbar-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stats {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="网页.html">
+                <span class="brand-mark">🐱</span>
+                <span>指路猫</span>
+            </a>
+            <nav class="nav-links">
+                <a href="网页.html">首页</a>
+                <a href="#features">学校地图</a>
+                <a href="反馈建议.html">反馈建议</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+        <header class="header">
+            <h1>🍜 校园食堂</h1>
+            <p>找到最适合你的校园食堂</p>
+            <div class="stats">
+                <span class="stat-item">已收录：20 个地点</span>
+            </div>
+        </header>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input id="searchInput" type="text" placeholder="搜索食堂名称..." aria-label="搜索食堂" />
+            </div>
+        </div>
+
+        <div id="canteenGrid" class="canteen-grid"></div>
+        <div id="noResults" class="no-results" style="display: none;">
+            <h3>未找到相关食堂</h3>
+            <p>请尝试其他关键词</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>📢 信息持续更新中 | 发现错误欢迎<a href="反馈建议.html">反馈</a></p>
+        <p>免责声明：信息仅供参考，请以实际情况为准</p>
+        <p>最后更新时间：<span id="updateTime"></span></p>
+    </div>
+
+    <script>
+        const canteens = [
+            {
+                name: "siddiq 食堂",
+                location: "男宿舍区",
+                intro: "桑迪给食堂中国餐厅，土豆包子和肉夹馍夯爆了。",
+                time: "10:00 - 21:00（全年无休）",
+                description: "中国餐厅，土豆包子和肉夹馍很受欢迎，还有阿拉伯餐。",
+                directions: "谷歌地图搜索 'siddiq cafe'，跟着导航走能找到。",
+                wechat: "juanjuan963800",
+                mapKeyword: "siddiq cafe"
+            },
+            {
+                name: "bilal 食堂",
+                location: "男宿舍区",
+                intro: "中国餐厅夯爆了，手工现拉面。还有炸鸡薯条。",
+                time: "08:00 - 17:00（星期天休息）",
+                description: "中国餐厅特别好吃，都是手工现拉的面。旁边还有外国餐卖薯条炸鸡。",
+                directions: "谷歌地图搜索 'bilal cafe'，跟着导航走能找到。",
+                wechat: "可加我进群",
+                mapKeyword: "bilal cafe"
+            },
+            {
+                name: "ali 食堂",
+                location: "男宿舍区",
+                intro: "大米饭配炒菜，炒菜挺好吃的。",
+                time: "10:00 - 18:00（全年无休）",
+                description: "主要卖大米饭配炒菜，炒菜很好吃，就像在家里一样。",
+                directions: "谷歌地图搜索 'ali cafe'，跟着导航走能找到。",
+                wechat: "可加我进群",
+                mapKeyword: "ali cafe"
+            },
+            {
+                name: "faruq 食堂",
+                location: "男宿舍区",
+                intro: "中国餐厅，还有土耳其烤肉很好吃。",
+                time: "暂不清楚",
+                description: "中国餐厅不错，还有一家土耳其烤肉非常好吃，新疆学生一定要去尝尝。",
+                directions: "谷歌地图搜索 'faruq cafe'，跟着导航走能找到。",
+                wechat: "可加我进群",
+                mapKeyword: "faruq cafe"
+            },
+            {
+                name: "uthman 食堂",
+                location: "男宿舍区",
+                intro: "老板是新疆人，麻辣烫很好吃。",
+                time: "11:00 - 20:00（周六休息）",
+                description: "中国餐厅老板是新疆人，主要卖麻辣烫很好吃。",
+                directions: "谷歌地图搜索 'uthman cafe'，跟着导航走能找到。",
+                wechat: "wxid_ws8zs8ziv93821",
+                mapKeyword: "uthman cafe"
+            },
+            {
+                name: "zubair 食堂",
+                location: "男宿舍区",
+                intro: "凉拌牛肉很好吃，凉菜挺多的。",
+                time: "11:00 - 18:00",
+                description: "中国餐厅凉拌牛肉非常好吃，菜盒子也特别好吃。",
+                directions: "谷歌地图搜索 'zubair cafe'，跟着导航走能找到。",
+                wechat: "可加我进群",
+                mapKeyword: "zubair cafe"
+            },
+            {
+                name: "safiyyah 食堂",
+                location: "女宿舍区",
+                intro: "专门卖拌面的档口，手拉面很正宗。",
+                time: "11:00 - 18:00",
+                description: "有一家专门卖拌面的档口，各种拌面都挺好吃的。现拉面等待时间较长。",
+                directions: "谷歌地图搜索 'safiyyah cafe'，跟着导航走能找到。",
+                wechat: "可加我进群预定",
+                mapKeyword: "safiyyah cafe"
+            },
+            {
+                name: "nusaibah 食堂",
+                location: "女宿舍区",
+                intro: "女生宿舍区食堂，后期更新。",
+                time: "暂不清楚",
+                description: "女生宿舍区的食堂，信息持续更新中。",
+                directions: "暂无",
+                wechat: "暂无",
+                mapKeyword: "nusaibah"
+            },
+            {
+                name: "sumayyah 食堂",
+                location: "女宿舍区",
+                intro: "女生宿舍区食堂，后期更新。",
+                time: "暂不清楚",
+                description: "女生宿舍区的食堂，信息持续更新中。",
+                directions: "暂无",
+                wechat: "暂无",
+                mapKeyword: "sumayyah"
+            },
+            {
+                name: "salahuddin 食堂",
+                location: "女宿舍区",
+                intro: "女生宿舍区食堂，后期更新。",
+                time: "暂不清楚",
+                description: "女生宿舍区的食堂，信息持续更新中。",
+                directions: "暂无",
+                wechat: "暂无",
+                mapKeyword: "salahuddin"
+            },
+            {
+                name: "maryam 食堂",
+                location: "女宿舍区",
+                intro: "女生宿舍区食堂，后期更新。",
+                time: "暂不清楚",
+                description: "女生宿舍区的食堂，信息持续更新中。",
+                directions: "暂无",
+                wechat: "暂无",
+                mapKeyword: "maryam"
+            },
+            {
+                name: "saadiah 食堂",
+                location: "女宿舍区",
+                intro: "女生宿舍区食堂，后期更新。",
+                time: "暂不清楚",
+                description: "女生宿舍区的食堂，信息持续更新中。",
+                directions: "暂无",
+                wechat: "暂无",
+                mapKeyword: "saadiah"
+            },
+            {
+                name: "asma 食堂",
+                location: "女宿舍区",
+                intro: "女生宿舍区食堂，后期更新。",
+                time: "暂不清楚",
+                description: "女生宿舍区的食堂，信息持续更新中。",
+                directions: "暂无",
+                wechat: "暂无",
+                mapKeyword: "asma"
+            },
+            {
+                name: "hafsah 食堂",
+                location: "女宿舍区",
+                intro: "女生宿舍区食堂，后期更新。",
+                time: "暂不清楚",
+                description: "女生宿舍区的食堂，信息持续更新中。",
+                directions: "暂无",
+                wechat: "暂无",
+                mapKeyword: "hafsah"
+            },
+            {
+                name: "ruqayyah 食堂",
+                location: "女宿舍区",
+                intro: "女生宿舍区食堂，后期更新。",
+                time: "暂不清楚",
+                description: "女生宿舍区的食堂，信息持续更新中。",
+                directions: "暂无",
+                wechat: "暂无",
+                mapKeyword: "ruqayyah"
+            },
+            {
+                name: "asiah 食堂",
+                location: "女宿舍区",
+                intro: "女生宿舍区食堂，后期更新。",
+                time: "暂不清楚",
+                description: "女生宿舍区的食堂，信息持续更新中。",
+                directions: "暂无",
+                wechat: "暂无",
+                mapKeyword: "asiah"
+            },
+            {
+                name: "aminah 食堂",
+                location: "女宿舍区",
+                intro: "女生宿舍区食堂，后期更新。",
+                time: "暂不清楚",
+                description: "女生宿舍区的食堂，信息持续更新中。",
+                directions: "暂无",
+                wechat: "暂无",
+                mapKeyword: "aminah"
+            },
+            {
+                name: "河南饭店",
+                location: "上课区",
+                intro: "牛肉面特别好吃，阿姨人特别好。",
+                time: "09:00 - 18:00（全年无休）",
+                description: "在上课区，牛肉面和别的不一样，像是用面汤做的。种类挺多的，阿姨人特别好，每次都会多给面和肉，还会免费给油条。",
+                directions: "谷歌地图搜索 'Zauq Cafe'，直接导航过去，墙上会有咖啡标志。",
+                wechat: "可加我进群",
+                mapKeyword: "Zauq Cafe"
+            },
+            {
+                name: "独角兽漂亮饭",
+                location: "上课区附近",
+                intro: "情侣或朋友聚餐好去处，漂亮饭很精致。",
+                time: "11:00 - 22:00",
+                description: "适合情侣或朋友放假去吃，饭量少价格高，但确实挺好吃的。墙上有独角兽图案很好记。",
+                directions: "谷歌地图搜索 'Mykori-UIA, Gombak'",
+                wechat: "暂无",
+                mapKeyword: "Mykori-UIA"
+            },
+            {
+                name: "卤味鸭货",
+                location: "校外送达",
+                intro: "外面的饭店，每两天来学校送一次。",
+                time: "群里接龙安排时间",
+                description: "这个不是学校里面的饭店，是外面的一个饭店。每两天会来学校送一次鸭货。挺好吃的，就是价格有点贵。",
+                directions: "在群里接龙，她会安排什么时候送。",
+                wechat: "M_CHENG007",
+                mapKeyword: "无"
+            }
+        ];
+
+        const grid = document.getElementById('canteenGrid');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+        const updateTimeEl = document.getElementById('updateTime');
+
+        // Set update time
+        const today = new Date();
+        const dateStr = today.getFullYear() + '-' + 
+                       String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                       String(today.getDate()).padStart(2, '0');
+        updateTimeEl.textContent = dateStr;
+
+        function renderCanteens(items) {
+            grid.innerHTML = '';
+            if (items.length === 0) {
+                noResults.style.display = 'block';
+                return;
+            }
+            noResults.style.display = 'none';
+            
+            items.forEach(canteen => {
+                const card = document.createElement('div');
+                card.className = 'canteen-card';
+                card.innerHTML = `
+                    <div class="canteen-image">🍜</div>
+                    <div class="canteen-body">
+                        <h3 class="canteen-title">${canteen.name}</h3>
+                        <p class="canteen-subtitle">${canteen.location}</p>
+                        <p class="canteen-intro">${canteen.intro}</p>
+                    </div>
+                    <div class="canteen-detail">
+                        <div class="detail-item">
+                            <div class="detail-label">💼 营业时间</div>
+                            <div class="detail-value">${canteen.time}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">📝 详情</div>
+                            <div class="detail-value">${canteen.description}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">🗺 位置说明</div>
+                            <div class="detail-value">${canteen.directions}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">💬 联系方式</div>
+                            <div class="detail-value">${canteen.wechat}</div>
+                        </div>
+                        ${canteen.mapKeyword !== '无' ? `
+                        <a href="https://www.google.com/maps/search/${encodeURIComponent(canteen.mapKeyword)}" target="_blank" class="map-button">
+                            🗺 打开地图
+                        </a>
+                        ` : ''}
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    card.classList.toggle('expanded');
+                });
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCanteens(query) {
+            if (!query.trim()) {
+                renderCanteens(canteens);
+                return;
+            }
+            
+            const filtered = canteens.filter(c => 
+                c.name.toLowerCase().includes(query.toLowerCase()) ||
+                c.location.toLowerCase().includes(query.toLowerCase()) ||
+                c.intro.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            renderCanteens(filtered);
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            filterCanteens(e.target.value);
+        });
+
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                filterCanteens(e.target.value);
+            }
+        });
+
+        // Initial render
+        renderCanteens(canteens);
+    </script>
+</body>
+</html>

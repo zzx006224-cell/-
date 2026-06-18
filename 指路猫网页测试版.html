@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园导航 - 指路猫</title>
+    <!-- Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 头部导航 */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        /* 搜索框 */
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f0f0f0;
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            background: white;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            background: none;
+            border: none;
+            color: #667eea;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .search-box button:hover {
+            transform: scale(1.1);
+        }
+
+        /* 主要内容 */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 3rem auto;
+            width: 100%;
+            padding: 0 2rem;
+        }
+
+        .welcome-section {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .welcome-section h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-section p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* 功能卡片 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        /* 位置信息 */
+        .location-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .location-section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .location-item:last-child {
+            border-bottom: none;
+        }
+
+        .location-icon {
+            font-size: 1.5rem;
+            color: #667eea;
+            width: 40px;
+            text-align: center;
+        }
+
+        .location-info h4 {
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .location-info p {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* 页脚 */
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.2s;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .search-container {
+                flex: 1 100%;
+                max-width: 100%;
+                margin: 1rem 0 0 0;
+                order: 3;
+            }
+
+            .welcome-section h1 {
+                font-size: 1.8rem;
+            }
+
+            main {
+                margin: 1rem auto;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-cat"></i>
+                <span>指路猫</span>
+            </div>
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索校园地点、活动...">
+                    <button onclick="handleSearch()" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+        <section class="welcome-section">
+            <h1><i class="fas fa-university" style="color: #764ba2;"></i> 欢迎来到校园</h1>
+            <p>指路猫为您提供完整的校园导航和信息服务。快速找到你想要的位置，了解校园活动。</p>
+        </section>
+
+        <!-- 功能卡片 -->
+        <section class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-map-location-dot"></i>
+                </div>
+                <h3>位置导航</h3>
+                <p>快速找到校园内的各个建筑和地点</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-calendar-days"></i>
+                </div>
+                <h3>活动日历</h3>
+                <p>了解最新的校园活动和安排</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>学习资源</h3>
+                <p>访问校园的学习资源和图书馆</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3>食堂信息</h3>
+                <p>查看食堂菜单和营业时间</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>娱乐设施</h3>
+                <p>发现校园的娱乐和运动设施</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-people-group"></i>
+                </div>
+                <h3>社团活动</h3>
+                <p>加入校园社团，参与丰富活动</p>
+            </div>
+        </section>
+
+        <!-- 位置信息 -->
+        <section class="location-section">
+            <h2>
+                <i class="fas fa-building"></i>
+                校园主要地点
+            </h2>
+            <div class="location-item">
+                <div class="location-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="location-info">
+                    <h4>图书馆</h4>
+                    <p>校园中心，A栋3楼 | 开放时间：08:00-22:00</p>
+                </div>
+            </div>
+
+            <div class="location-item">
+                <div class="location-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="location-info">
+                    <h4>学生食堂</h4>
+                    <p>校园东侧，B栋1楼 | 开放时间：11:00-13:00, 17:30-19:30</p>
+                </div>
+            </div>
+
+            <div class="location-item">
+                <div class="location-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <div class="location-info">
+                    <h4>体育馆</h4>
+                    <p>校园北侧操场 | 开放时间：06:00-22:00</p>
+                </div>
+            </div>
+
+            <div class="location-item">
+                <div class="location-icon">
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+                <div class="location-info">
+                    <h4>医务室</h4>
+                    <p>校园中心，C栋1楼 | 开放时间：08:00-17:00</p>
+                </div>
+            </div>
+
+            <div class="location-item">
+                <div class="location-icon">
+                    <i class="fas fa-laptop"></i>
+                </div>
+                <div class="location-info">
+                    <h4>计算机中心</h4>
+                    <p>校园西侧，D栋2楼 | 开放时间：08:00-20:00</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>&copy; 2024 指路猫校园导航系统 | 版权所有</p>
+        <p>帮助学生更好地了解校园、融入校园生活</p>
+        <div class="social-links">
+            <a href="#" title="微博"><i class="fab fa-weibo"></i></a>
+            <a href="#" title="微信"><i class="fab fa-weixin"></i></a>
+            <a href="#" title="QQ"><i class="fab fa-qq"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // 搜索功能
+        function handleSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const query = searchInput.value.trim();
+            
+            if (query) {
+                alert(`搜索: ${query}\n(功能待开发)`);
+                // 这里可以后续添加真正的搜索功能
+            }
+        }
+
+        // 回车键搜索
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleSearch();
+            }
+        });
+
+        // 功能卡片点击事件
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('h3').textContent;
+                alert(`您点击了: ${title}\n(功能待开发)`);
+            });
+        });
+    </script>
+</body>
+
+</html>

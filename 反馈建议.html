@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>指路猫反馈建议</title>
+    <style>
+        :root {
+            --bg: #f3faf6;
+            --surface: #ffffff;
+            --surface-strong: #eef8f2;
+            --text: #122432;
+            --muted: #5b6c7a;
+            --green: #2dae75;
+            --green-dark: #228a5c;
+            --blue: #3c8dff;
+            --orange: #ff9f49;
+            --border: rgba(35, 83, 59, 0.12);
+            --shadow: 0 20px 40px rgba(16, 34, 47, 0.08);
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            background: linear-gradient(180deg, #f7fdf8 0%, #ecf8f0 100%);
+            color: var(--text);
+        }
+
+        body {
+            line-height: 1.6;
+            padding: 0 16px 40px;
+        }
+
+        .page {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 26px 0 0;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-title span {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 18px;
+            background: var(--green);
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 12px 24px rgba(45, 174, 118, 0.24);
+        }
+
+        .header-title h1 {
+            margin: 0;
+            font-size: clamp(1.9rem, 3vw, 2.6rem);
+            line-height: 1.1;
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--muted);
+            max-width: 560px;
+        }
+
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            padding: 26px;
+        }
+
+        .panel + .panel {
+            margin-top: 22px;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-group small {
+            color: var(--muted);
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .input-row input {
+            width: 100%;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid rgba(35, 83, 59, 0.14);
+            padding: 16px 18px;
+            background: #fbfdf9;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            font-size: 1rem;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(45, 174, 117, 0.14);
+        }
+
+        textarea {
+            min-height: 160px;
+            resize: vertical;
+        }
+
+        .upload-area {
+            position: relative;
+            min-height: 180px;
+            display: grid;
+            place-items: center;
+            padding: 26px;
+            border: 2px dashed rgba(35, 83, 59, 0.22);
+            border-radius: 24px;
+            background: var(--surface-strong);
+            text-align: center;
+            color: var(--muted);
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .upload-area.dragover {
+            background: rgba(44, 174, 118, 0.08);
+            border-color: var(--green-dark);
+        }
+
+        .upload-area p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .upload-area small {
+            display: block;
+            margin-top: 12px;
+            color: var(--muted);
+        }
+
+        .upload-area input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--green), var(--blue));
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 16px 32px rgba(45, 174, 118, 0.18);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .status-card {
+            display: grid;
+            gap: 14px;
+            padding: 24px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(60, 141, 255, 0.12), #ffffff 45%);
+            border: 1px solid rgba(60, 141, 255, 0.14);
+        }
+
+        .status-card.hidden {
+            display: none;
+        }
+
+        .status-card strong {
+            font-size: 1.2rem;
+        }
+
+        .status-card .icon {
+            font-size: 2.4rem;
+            margin-bottom: 6px;
+        }
+
+        .updates {
+            display: grid;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .updates li {
+            list-style: none;
+            padding: 14px 18px;
+            border-radius: 18px;
+            background: #f4fbff;
+            color: var(--text);
+            border: 1px solid rgba(60, 141, 255, 0.16);
+        }
+
+        .updates li::before {
+            content: "✓";
+            margin-right: 10px;
+            color: var(--green);
+        }
+
+        .small-note {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 720px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .primary-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header-title">
+                <span>🐱</span>
+                <div>
+                    <h1>反馈建议</h1>
+                    <p>欢迎告知我们你的使用意见，帮助指路猫变得更好。</p>
+                </div>
+            </div>
+            <p class="small-note">数据会保存在你的浏览器中，未来可扩展到数据库接口。</p>
+        </header>
+
+        <section class="panel">
+            <div class="form-group">
+                <label>联系方式</label>
+                <small>如果你愿意联系我，可以使用下面方式。（邮箱可能看不到）</small>
+            </div>
+            <div class="form-group">
+                <p>微信：z18997728164</p>
+                <p>WA Business：＋60 11-6997 3050</p>
+                <p>QQ邮箱：2136541070@qq.com</p>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="form-group">
+                <label>联系方式（选填）</label>
+                <small>邮箱、微信、Telegram 都可以填写。不填写也可以提交。</small>
+            </div>
+            <div class="input-row">
+                <input id="email" type="email" placeholder="邮箱" autocomplete="email" />
+                <input id="wechat" type="text" placeholder="微信" />
+                <input id="telegram" type="text" placeholder="Telegram" />
+            </div>
+
+            <div class="form-group">
+                <label for="message">反馈内容</label>
+                <textarea id="message" placeholder="请描述你的建议、遇到的问题或希望改进的功能..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>截图上传</label>
+                <div id="uploadArea" class="upload-area">
+                    <p>拖拽上传</p>
+                    <small>支持 JPG、PNG</small>
+                    <input id="fileInput" type="file" accept="image/png, image/jpeg" />
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="submitBtn" class="primary-btn" type="button">提交反馈</button>
+                <div class="hint">提交成功后会显示感谢动画与预计更新说明。</div>
+            </div>
+        </section>
+
+        <section id="statusCard" class="status-card hidden">
+            <div class="icon">🐱</div>
+            <strong>感谢反馈！</strong>
+            <p>我们已收到你的建议，预计 3 天内更新。</p>
+        </section>
+
+        <section class="panel">
+            <div class="form-group">
+                <label>查看已修复问题</label>
+                <small>最近更新记录</small>
+            </div>
+            <ul class="updates" id="updatesList">
+                <li>修复 Finance 办公室位置</li>
+                <li>更新签证流程</li>
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        const emailInput = document.getElementById('email');
+        const wechatInput = document.getElementById('wechat');
+        const telegramInput = document.getElementById('telegram');
+        const messageInput = document.getElementById('message');
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusCard = document.getElementById('statusCard');
+        const updatesList = document.getElementById('updatesList');
+
+        const STORAGE_KEY = 'guidecatFeedbacks';
+
+        function saveFeedback(feedback) {
+            const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            existing.unshift(feedback);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(existing.slice(0, 20)));
+        }
+
+        function loadUpdates() {
+            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            if (stored.length > 0) {
+                stored.slice(0, 3).forEach((item) => {
+                    const li = document.createElement('li');
+                    li.textContent = item.summary || '收到新反馈建议';
+                    updatesList.appendChild(li);
+                });
+            }
+        }
+
+        function showSuccess() {
+            statusCard.classList.remove('hidden');
+            statusCard.animate([
+                { opacity: 0, transform: 'scale(0.95)' },
+                { opacity: 1, transform: 'scale(1)' }
+            ], {
+                duration: 320,
+                easing: 'ease-out'
+            });
+        }
+
+        function getFileData(file) {
+            return new Promise((resolve) => {
+                if (!file) {
+                    resolve(null);
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => resolve(null);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        uploadArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = event.dataTransfer.files[0];
+            if (file && /image\/(jpeg|png)/.test(file.type)) {
+                fileInput.files = event.dataTransfer.files;
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file && !/image\/(jpeg|png)/.test(file.type)) {
+                alert('仅支持 JPG 或 PNG 图片格式。');
+                fileInput.value = '';
+            }
+        });
+
+        submitBtn.addEventListener('click', async () => {
+            const feedback = {
+                email: emailInput.value.trim(),
+                wechat: wechatInput.value.trim(),
+                telegram: telegramInput.value.trim(),
+                message: messageInput.value.trim(),
+                screenshot: await getFileData(fileInput.files[0]),
+                summary: messageInput.value.trim().slice(0, 45) || '反馈建议',
+                createdAt: new Date().toISOString()
+            };
+
+            if (!feedback.message) {
+                alert('请填写你的反馈内容。');
+                messageInput.focus();
+                return;
+            }
+
+            saveFeedback(feedback);
+            showSuccess();
+            emailInput.value = '';
+            wechatInput.value = '';
+            telegramInput.value = '';
+            messageInput.value = '';
+            fileInput.value = '';
+        });
+
+        loadUpdates();
+    </script>
+</body>
+</html>

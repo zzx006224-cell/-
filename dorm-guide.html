@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>宿舍指南 | 指路猫</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f5fbf6;
+            --surface: #ffffff;
+            --surface-strong: rgba(255, 255, 255, 0.95);
+            --text: #11242f;
+            --muted: #59737e;
+            --primary: #2cae76;
+            --primary-dark: #248257;
+            --accent-blue: #3c8dff;
+            --accent-orange: #ff9f49;
+            --shadow: 0 24px 70px rgba(16, 34, 47, 0.08);
+            --shadow-soft: 0 14px 36px rgba(16, 34, 47, 0.08);
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            background: linear-gradient(180deg, #f6fbf7 0%, #eef8f3 100%);
+            color: var(--text);
+        }
+
+        body {
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.88);
+            border-bottom: 1px solid rgba(44, 174, 118, 0.14);
+            backdrop-filter: blur(14px);
+        }
+
+        .topbar-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #2cae76 0%, #36c08b 100%);
+            color: white;
+            font-size: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.95rem;
+            transition: color .2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .page-wrapper {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .hero {
+            background: rgba(255, 255, 255, 0.84);
+            border: 1px solid rgba(44, 174, 118, 0.14);
+            border-radius: 32px;
+            box-shadow: var(--shadow-soft);
+            padding: 40px 32px;
+            margin-bottom: 32px;
+        }
+
+        .hero-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: clamp(2.1rem, 3vw, 2.65rem);
+            margin: 0 0 14px;
+        }
+
+        .hero-subtitle {
+            margin: 0 0 28px;
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 640px;
+        }
+
+        .search-panel {
+            display: grid;
+            gap: 14px;
+            position: relative;
+        }
+
+        .search-panel label {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+
+        .search-input {
+            width: 100%;
+            border: 1px solid rgba(45, 111, 73, 0.22);
+            border-radius: 18px;
+            padding: 16px 20px;
+            background: var(--surface-strong);
+            color: var(--text);
+            outline: none;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(44, 174, 118, 0.12);
+        }
+
+        .search-hint {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .search-hint span {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #f3fbf7;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+
+        .search-hint span:hover {
+            background: rgba(44, 174, 118, 0.14);
+        }
+
+        .search-feedback {
+            margin-top: 10px;
+            color: var(--muted);
+            min-height: 24px;
+            font-size: 0.95rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .card-link {
+            display: block;
+            background: var(--surface);
+            border-radius: 28px;
+            border: 1px solid rgba(45, 111, 73, 0.12);
+            box-shadow: var(--shadow-soft);
+            padding: 32px;
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-link:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 64px rgba(16, 34, 47, 0.12);
+            border-color: rgba(44, 174, 118, 0.22);
+        }
+
+        .card-link:active {
+            transform: translateY(-1px);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            display: grid;
+            place-items: center;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(44, 174, 118, 0.18), rgba(60, 141, 255, 0.18));
+            font-size: 1.35rem;
+            margin-bottom: 22px;
+        }
+
+        .card-title {
+            margin: 0 0 12px;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .card-desc {
+            margin: 0 0 22px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .card-preset {
+            margin: 0 0 24px;
+            padding: 20px;
+            background: #f6fbf8;
+            border-radius: 20px;
+            border: 1px solid rgba(44, 174, 118, 0.12);
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .card-preset strong {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(44, 174, 118, 0.2);
+            background: linear-gradient(135deg, rgba(44, 174, 118, 0.14), rgba(60, 141, 255, 0.12));
+            color: var(--primary-dark);
+            font-weight: 700;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .card-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .card-highlight {
+            box-shadow: 0 28px 80px rgba(44, 174, 118, 0.14);
+            border-color: rgba(44, 174, 118, 0.28);
+        }
+
+        .footer {
+            margin-top: 38px;
+            padding: 28px 24px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(44, 174, 118, 0.12);
+            box-shadow: var(--shadow-soft);
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.75;
+        }
+
+        .footer p {
+            margin: 0 0 10px;
+        }
+
+        .footer strong {
+            color: var(--text);
+        }
+
+        .footer-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-top: 12px;
+            color: var(--muted);
+        }
+
+        .footer-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 900px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .topbar-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero {
+                padding: 28px 20px;
+            }
+
+            .card-link {
+                padding: 24px;
+            }
+
+            .search-hint {
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="网页.html">
+                <span class="brand-mark">🐱</span>
+                <span>指路猫</span>
+            </a>
+            <nav class="nav-links">
+                <a href="网页.html">首页</a>
+                <a href="#cards">学校地图</a>
+                <a href="反馈建议.html">反馈建议</a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="page-wrapper">
+        <section class="hero" id="top">
+            <div class="hero-title">🏠 宿舍指南</div>
+            <p class="hero-subtitle">快速了解宿舍生活与办理流程。</p>
+            <div class="search-panel">
+                <label for="page-search">搜索：</label>
+                <input id="page-search" class="search-input" type="text" placeholder="搜索：宿舍 罚款 换宿舍 保留宿舍" aria-label="宿舍页面搜索" />
+                <div class="search-hint">
+                    <span data-keyword="宿舍基本信息">宿舍基本信息</span>
+                    <span data-keyword="宿舍注意事项">宿舍注意事项</span>
+                    <span data-keyword="换宿舍">换宿舍</span>
+                    <span data-keyword="保留宿舍">保留宿舍</span>
+                    <span data-keyword="宿舍缴费">宿舍缴费</span>
+                </div>
+                <div id="search-feedback" class="search-feedback">输入关键词可快速定位对应模块。</div>
+            </div>
+        </section>
+
+        <section class="cards-grid" id="cards">
+            <a id="card-info" class="card-link" href="dorm-info.html">
+                <div class="card-icon">🏠</div>
+                <h2 class="card-title">宿舍基本信息</h2>
+                <p class="card-desc">查看宿舍介绍、入住说明、宿舍设施和常见信息。</p>
+                <div class="card-preset">
+                    <strong>预留内容：</strong>
+                    入住流程<br />
+                    男女宿舍<br />
+                    生活设施<br />
+                    地图位置
+                </div>
+                <div class="card-button">进入查看</div>
+            </a>
+
+            <a id="card-rule" class="card-link" href="dorm-rule.html">
+                <div class="card-icon">⚠</div>
+                <h2 class="card-title">宿舍注意事项</h2>
+                <p class="card-desc">了解宿舍规定和日常注意事项。</p>
+                <div class="card-preset">
+                    <strong>预留内容：</strong>
+                    宿舍要求
+                </div>
+                <div class="card-button">进入查看</div>
+            </a>
+
+            <a id="card-change" class="card-link" href="dorm-change.html">
+                <div class="card-icon">🔄</div>
+                <h2 class="card-title">换宿舍以及保留宿舍</h2>
+                <p class="card-desc">查看换宿舍流程和宿舍保留说明。</p>
+                <div class="card-preset">
+                    <strong>预留内容：</strong>
+                    申请方式<br />
+                    办理流程<br />
+                    时间要求<br />
+                    常见问题
+                </div>
+                <div class="card-button">进入查看</div>
+            </a>
+
+            <a id="card-fee" class="card-link" href="dorm-fee.html">
+                <div class="card-icon">💳</div>
+                <h2 class="card-title">宿舍缴费罚款</h2>
+                <p class="card-desc">查看宿舍费用、缴费方式和罚款说明。</p>
+                <div class="card-preset">
+                    <strong>预留内容：</strong>
+                    逾期罚款<br />
+                    收费标准<br />
+                    常见问题
+                </div>
+                <div class="card-button">进入查看</div>
+            </a>
+        </section>
+
+        <section class="footer">
+            <p>信息持续更新中，发现错误欢迎<a href="反馈建议.html">反馈</a>。</p>
+            <p>免责声明：信息仅供参考，请以学校实际通知为准。</p>
+            <div class="footer-meta">
+                <span>最后更新时间：2026-06-18</span>
+                <span>版本号：Dorm V1.0</span>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const pageSearchInput = document.getElementById('page-search');
+        const pageSearchFeedback = document.getElementById('search-feedback');
+        const pageSearchTags = document.querySelectorAll('.search-hint span');
+        const searchItems = [
+            {
+                id: 'info',
+                title: '宿舍基本信息',
+                keywords: ['宿舍基本信息','宿舍基本','入住流程','男女宿舍','生活设施','地图位置','宿舍','信息'],
+                selector: '#card-info'
+            },
+            {
+                id: 'rule',
+                title: '宿舍注意事项',
+                keywords: ['宿舍注意事项','注意事项','宿舍要求','规则','注意'],
+                selector: '#card-rule'
+            },
+            {
+                id: 'change',
+                title: '换宿舍以及保留宿舍',
+                keywords: ['换宿舍','换','保留宿舍','保留','申请方式','办理流程','时间要求','常见问题'],
+                selector: '#card-change'
+            },
+            {
+                id: 'fee',
+                title: '宿舍缴费罚款',
+                keywords: ['宿舍缴费','缴费','罚款','逾期罚款','收费标准','费用'],
+                selector: '#card-fee'
+            }
+        ];
+
+        function normalize(text) {
+            return text.trim().toLowerCase();
+        }
+
+        function findPageItem(query) {
+            const key = normalize(query);
+            if (!key) return null;
+
+            const exact = searchItems.find(item =>
+                item.keywords.some(word => normalize(word) === key)
+            );
+            if (exact) return exact;
+
+            return searchItems.find(item =>
+                item.keywords.some(word => normalize(word).includes(key) || key.includes(normalize(word)))
+            );
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.card-link').forEach(card => {
+                card.classList.remove('card-highlight');
+            });
+        }
+
+        function highlightCard(card) {
+            clearHighlights();
+            card.classList.add('card-highlight');
+            setTimeout(() => card.classList.remove('card-highlight'), 2200);
+        }
+
+        function scrollToMatch(item) {
+            if (!item) return;
+            const card = document.querySelector(item.selector);
+            if (!card) return;
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            highlightCard(card);
+            pageSearchFeedback.textContent = `已定位到：${item.title}`;
+        }
+
+        function updateFeedback(message) {
+            pageSearchFeedback.textContent = message;
+        }
+
+        function handleSearch() {
+            const value = pageSearchInput.value;
+            const target = findPageItem(value);
+            if (target) {
+                scrollToMatch(target);
+            } else {
+                updateFeedback('未找到匹配内容，请试试：宿舍基本信息 / 罚款 / 换宿舍 / 保留宿舍');
+            }
+        }
+
+        pageSearchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
+        });
+
+        pageSearchInput.addEventListener('input', (event) => {
+            const value = event.target.value.trim();
+            if (!value) {
+                updateFeedback('输入关键词可快速定位对应模块。');
+                clearHighlights();
+                return;
+            }
+            const item = findPageItem(value);
+            if (item) {
+                updateFeedback(`建议：直接回车定位到${item.title}`);
+            } else {
+                updateFeedback('未找到匹配内容，请试试：宿舍基本信息 / 罚款 / 换宿舍 / 保留宿舍');
+            }
+        });
+
+        pageSearchTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                const keyword = tag.getAttribute('data-keyword');
+                pageSearchInput.value = keyword;
+                handleSearch();
+            });
+        });
+    </script>
+</body>
+</html>

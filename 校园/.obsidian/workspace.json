@@ -1,0 +1,281 @@
+{
+  "main": {
+    "id": "b56be6db2ae1f89f",
+    "type": "split",
+    "children": [
+      {
+        "id": "44514d6c2f7552f9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7024f18d14b03e45",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "校园模型方案文件/方案的开始与想法.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "方案的开始与想法"
+            }
+          },
+          {
+            "id": "74832f827047f373",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "校园模型方案文件/引路猫项目常用复制粘贴关键词.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "引路猫项目常用复制粘贴关键词"
+            }
+          },
+          {
+            "id": "e02e053ab6d33bf0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "宿舍页面设计.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "宿舍页面设计"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5c1dc51cf2d5b7bd",
+    "type": "split",
+    "children": [
+      {
+        "id": "f6998d91e13f7354",
+        "type": "tabs",
+        "dimension": 22.988505747126435,
+        "children": [
+          {
+            "id": "9c1cf5a9f24d9a51",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "byModifiedTime",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "3d54927e05b20767",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "02fb50311b8d9782",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      },
+      {
+        "id": "fefd3cf783fbbf45",
+        "type": "tabs",
+        "dimension": 77.01149425287356,
+        "children": [
+          {
+            "id": "557ca85e08394bfd",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://chatgpt.com/share/6a326627-cd04-83ec-8154-d490209a41a8",
+                "title": "记得我是谁吗",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "记得我是谁吗"
+            }
+          },
+          {
+            "id": "4d78dcf9022b57ee",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://chatgpt.com/c/6a329562-98ec-83ec-88ff-c3693b74c21c",
+                "title": "记得我是谁吗",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "记得我是谁吗"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 453.5
+  },
+  "right": {
+    "id": "a16c5b7b33ad2dd2",
+    "type": "split",
+    "children": [
+      {
+        "id": "e46497b13cf0d62b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "db06534917b5900e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "反向链接"
+            }
+          },
+          {
+            "id": "95230499ebe9664b",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "出链"
+            }
+          },
+          {
+            "id": "c036a513a18a663c",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "a06decf4bffe2ebe",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "28c11db2c58360ee",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "大纲"
+            }
+          },
+          {
+            "id": "1b02a42947aabe96",
+            "type": "leaf",
+            "state": {
+              "type": "footnotes",
+              "state": {},
+              "icon": "lucide-file-signature",
+              "title": "脚注"
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "workspaces:管理工作区布局": false,
+      "audio-recorder:开始/结束录音": false,
+      "random-note:开始漫游笔记": false,
+      "zk-prefixer:创建时间戳笔记": false,
+      "markdown-importer:打开 Markdown 格式转换器": false
+    }
+  },
+  "active": "4d78dcf9022b57ee",
+  "lastOpenFiles": [
+    "宿舍页面设计.md",
+    "校园模型方案文件/引路猫项目常用复制粘贴关键词.md",
+    "校园模型方案文件/签证办理页面.md",
+    "校园模型方案文件/学费缴纳页面设计.md",
+    "校园模型方案文件/食堂页面设计.md",
+    "校园模型方案文件/方案的开始与想法.md",
+    "校园模型方案文件/引路猫信息收集.md",
+    "校园模型方案文件/反馈页面.md",
+    "校园模型方案文件/关于项目.md",
+    "校园模型方案文件/引路猫项目第一步.md",
+    "欢迎.md",
+    "校园模型方案文件",
+    "未命名"
+  ]
+}
