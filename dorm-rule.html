@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>⚠ 宿舍注意事项 | 指路猫</title>
+    <style>
+        :root{
+            --bg:#f5fbf6;
+            --surface:#ffffff;
+            --text:#11242f;
+            --muted:#59737e;
+            --primary:#2cae76;
+            --primary-dark:#248257;
+            --accent-blue:#3c8dff;
+            --shadow-soft:0 14px 36px rgba(16,34,47,0.08);
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        html{scroll-behavior:smooth}
+        *{box-sizing:border-box}
+        body{margin:0;background:linear-gradient(180deg,#f6fbf7 0%,#eef8f3 100%);color:var(--text);line-height:1.6}
+
+        .topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,0.92);border-bottom:1px solid rgba(44,174,118,0.12);backdrop-filter:blur(8px)}
+        .topbar-inner{max-width:1240px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+        .brand{display:inline-flex;align-items:center;gap:10px;font-weight:700}
+        .brand-mark{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,var(--primary),#36c08b);color:#fff}
+        .nav-links{display:flex;gap:18px;align-items:center}
+        .nav-links a{color:var(--muted);text-decoration:none;font-weight:600}
+        .nav-links a:hover{color:var(--text)}
+
+        .page-wrapper{max-width:1100px;margin:22px auto;padding:20px}
+        .hero{background:var(--surface);border-radius:22px;padding:26px;border:1px solid rgba(44,174,118,0.12);box-shadow:var(--shadow-soft)}
+        .hero-title{font-size:1.45rem;font-weight:800;display:flex;align-items:center;gap:10px}
+        .hero-sub{color:var(--muted);margin-top:8px}
+
+        .search-panel{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+        .search-input{flex:1;min-width:180px;padding:12px 14px;border-radius:14px;border:1px solid rgba(45,111,73,0.12);outline:none}
+        .search-input:focus{box-shadow:0 0 0 6px rgba(44,174,118,0.08);border-color:var(--primary)}
+
+        .cards{margin-top:20px;display:grid;gap:12px}
+        .rule-card{background:var(--surface);border-radius:18px;padding:16px;border:1px solid rgba(45,111,73,0.08);box-shadow:var(--shadow-soft);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+        .rule-card:hover{transform:translateY(-4px)}
+        .card-head{display:flex;align-items:flex-start;gap:12px;cursor:pointer}
+        .num-badge{min-width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#36c08b);color:#fff;display:grid;place-items:center;font-weight:800}
+        .card-title{font-weight:800}
+        .card-body{margin-top:12px;max-height:800px;overflow:hidden;transition:max-height .32s ease,opacity .32s ease;opacity:1}
+        .rule-card.collapsed .card-body{max-height:0;opacity:0}
+        .card-body p{margin:0;color:var(--text);white-space:pre-wrap}
+
+        .return-top{position:fixed;right:18px;bottom:18px;background:var(--primary);color:#fff;border:none;padding:12px 14px;border-radius:14px;box-shadow:0 10px 30px rgba(44,174,118,0.18);cursor:pointer;display:none}
+
+        .footer{margin-top:20px;padding:18px;border-radius:14px;background:rgba(255,255,255,0.9);border:1px solid rgba(44,174,118,0.08);color:var(--muted);font-size:0.95rem}
+
+        @media(max-width:880px){.cards{gap:10px}.topbar-inner{padding:12px}.hero{padding:18px}}
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="dorm-guide.html">
+                <span class="brand-mark">🐱</span>
+                <span>返回宿舍指南</span>
+            </a>
+            <nav class="nav-links">
+                <a href="网页.html">返回首页</a>
+                <a href="反馈建议.html">反馈建议</a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="page-wrapper">
+        <section class="hero">
+            <div class="hero-title">⚠ 宿舍注意事项</div>
+            <div class="hero-sub">提前了解规则，减少踩坑。</div>
+
+            <div class="search-panel">
+                <input id="rule-search" class="search-input" placeholder="页面内搜索：输入关键词后回车定位" aria-label="页面内搜索" />
+                <div id="search-hint" style="color:var(--muted);font-size:0.95rem">回车定位并展开匹配卡片</div>
+            </div>
+        </section>
+
+        <section class="cards" id="cards">
+            <article id="card-1" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">1</div>
+                    <div>
+                        <div class="card-title">1;不管你住哪里，单人间还是四人间都一定一定把门锁好</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>不管你住哪里，单人间还是四人间都一定一定把门锁好，因为这边宿舍一个摄像头都没有你的东西被偷了你只能自己认栽找肯定是找不回来的。</p>
+                </div>
+            </article>
+
+            <article id="card-2" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">2</div>
+                    <div><div class="card-title">2：每个宿舍一个学期可能会查一次寝室</div></div>
+                </div>
+                <div class="card-body">
+                    <p>每个宿舍一个学期可能会查一次寝室有时候两个学期查一次，当你被查出违禁品时别慌也别害怕，大大方方说自己是中国人，因为这个学校对中国人很宽限一般不会找你麻烦但是肯定是要交罚款的50马币，一定一定不能慌张说自己是马来人或者是别的国家的人因为你这样说他们就会查你的档案如果发现你撒谎会不让你再住宿了，他们对马来学生的要求非常高发现违禁品直接开除。</p>
+                </div>
+            </article>
+
+            <article id="card-3" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">3</div>
+                    <div><div class="card-title">3:每两个学期可能会清理一次宿舍</div></div>
+                </div>
+                <div class="card-body">
+                    <p>每两个学期可能会清理一次宿舍，当你在这边住了两个学期后一定一定要去你们宿舍区办公室问清楚你们需不需要清空宿舍，最好提前一两个星期就去问清楚，因为有很多宿舍楼是固定留给新生，这里的天气在你们刚来的时候也就是9-10月份可能会特别热来的时候可以带一点降温的东西，别中暑了，尤其是iphone手机烫到爆炸。</p>
+                </div>
+            </article>
+
+            <article id="card-4" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">4</div>
+                    <div><div class="card-title">4：这个学校的动物特别特别多</div></div>
+                </div>
+                <div class="card-body">
+                    <p>这个学校的动物特别特别多，什么巨蜥，各种鹤，壁虎，浣熊，猴子等等...当然这边昆虫蚊子也特别特别多，来的时候可以网购一个纱窗，直接买一个2m×2m的磁吸纱窗过来多了再裁就好了，总比你来了被蚊子吃了好，杀虫药可以在这边宿舍区的便利店买一般都会有一两马币。</p>
+                </div>
+            </article>
+
+            <article id="card-5" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">5</div>
+                    <div><div class="card-title">5：钥匙一定要看好</div></div>
+                </div>
+                <div class="card-body">
+                    <p>钥匙一定要看好，因为丢了你只能花50马币去补一个新的，如果你想在外面找一个配钥匙的店便宜配一把钥匙想都别想了，因为学校宿舍钥匙都是学校统一制作发放的，外面不能给你配也不敢给你配。</p>
+                </div>
+            </article>
+
+            <article id="card-6" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">6</div>
+                    <div><div class="card-title">6：刚住进宿舍区前一个星期特别忙</div></div>
+                </div>
+                <div class="card-body">
+                    <p>刚住进宿舍区前一个星期可能会特别忙，你要买东西收拾行李，还要去宿舍区签到证明你已经入住了，如果一个星期内不去签到你的宿舍可能就会让给别人了，去的时候最好带一个英语好的，因为如果一直和他们聊不明白，他们可能就会没有耐心。</p>
+                </div>
+            </article>
+
+            <article id="card-7" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">7</div>
+                    <div><div class="card-title">7：在国内买东西邮到学校的地址</div></div>
+                </div>
+                <div class="card-body">
+                    <p>如果你们想提前在国内买东西邮到这个学校这是我用的地址，其他的地址目前我也不知道，小区楼栋/乡村名称就填下面这个：INTERNATIONAL ISLAMIC UNIVERSITY MALAYSIA Jalan Gombak,53100 Kuala Lumpur,Malaysia . IIUM (UIA) Mahallah Siddiq，门牌号不用填，全名就打你的名字（是拼英!），手机号你们还没来没有马来手机号，可以先用中国手机号开两天漫游拿到包裹后停掉，邮政编码：53100，你可以先用这个过度一下，等熟悉了再改成自己的。</p>
+                </div>
+            </article>
+
+            <article id="card-8" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">8</div>
+                    <div><div class="card-title">8：刚来只有一两个月特别热</div></div>
+                </div>
+                <div class="card-body">
+                    <p>你们过来就只有一两个月是特别特别热，到后面其实这边暴雨天气更多，建议拿两个被子一个薄的一个厚的，有些身体弱的可能刚来水土不服会生个大病多带点药，但要查查豆包有什么限制。</p>
+                </div>
+            </article>
+
+            <article id="card-9" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">9</div>
+                    <div><div class="card-title">9：暴雨天气打雷声非常大</div></div>
+                </div>
+                <div class="card-body">
+                    <p>这边暴雨天气打雷声非常无敌大，说你们可能理解不了，等你们来了就知道了，暴雨天气记得把插线板尽量拔掉，可能会跳闸断电。</p>
+                </div>
+            </article>
+
+            <article id="card-10" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">10</div>
+                    <div><div class="card-title">10：宿舍插线板电器买好一点的</div></div>
+                </div>
+                <div class="card-body">
+                    <p>宿舍插线板电器尽量买好一点的，公牛之类的大牌子，因为越到后面你买的电器之类的会越来越多尽量安全一点。</p>
+                </div>
+            </article>
+
+            <article id="card-11" class="rule-card">
+                <div class="card-head" tabindex="0">
+                    <div class="num-badge">11</div>
+                    <div><div class="card-title">11：一般iium门禁是早上6：00-晚上12：00</div></div>
+                </div>
+                <div class="card-body">
+                    <p></p>
+                </div>
+            </article>
+        </section>
+
+        <button id="toTop" class="return-top" aria-label="返回顶部">↑ Top</button>
+
+        <section class="footer">
+            <p>信息持续更新中，发现错误欢迎<a href="反馈建议.html">反馈</a></p>
+            <p>免责声明：信息仅供参考，请以学校实际通知为准。</p>
+            <div style="margin-top:10px;color:var(--muted)">最后更新时间：<span id="update-date"></span> &nbsp; 版本：Dorm Rule V1.0</div>
+        </section>
+    </main>
+
+    <script>
+        const cards = Array.from(document.querySelectorAll('.rule-card'));
+        cards.forEach(card => {
+            const head = card.querySelector('.card-head');
+            head.addEventListener('click', () => card.classList.toggle('collapsed'));
+            head.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('collapsed'); }
+            });
+        });
+
+        // search
+        const searchInput = document.getElementById('rule-search');
+        const searchHint = document.getElementById('search-hint');
+
+        function normalize(s){return s.trim().toLowerCase()}
+
+        function findMatch(q){
+            const key = normalize(q);
+            if(!key) return null;
+            return cards.find(c=>{
+                const text = c.innerText || c.textContent;
+                return normalize(text).includes(key);
+            });
+        }
+
+        function highlightCard(card){
+            if(!card) return;
+            card.classList.remove('collapsed');
+            card.scrollIntoView({behavior:'smooth',block:'center'});
+            card.style.transition='box-shadow .25s ease';
+            card.style.boxShadow='0 24px 60px rgba(44,174,118,0.12)';
+            setTimeout(()=>card.style.boxShadow='',900);
+        }
+
+        searchInput.addEventListener('keydown', (e)=>{
+            if(e.key === 'Enter'){
+                const q = searchInput.value;
+                const match = findMatch(q);
+                if(match){
+                    highlightCard(match);
+                    searchHint.textContent = '已定位并展开匹配卡片';
+                } else {
+                    searchHint.textContent = '未找到匹配内容';
+                }
+            }
+        });
+
+        // return to top
+        const toTop = document.getElementById('toTop');
+        window.addEventListener('scroll', ()=>{
+            if(window.scrollY > 220) toTop.style.display='block'; else toTop.style.display='none';
+        });
+        toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+        // auto update date
+        window.addEventListener('DOMContentLoaded', ()=>{
+            const d = new Date();
+            const f = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+            document.getElementById('update-date').textContent = f;
+        });
+    </script>
+</body>
+</html>

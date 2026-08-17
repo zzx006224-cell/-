@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>宿舍基本信息 | 指路猫</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f5fbf6;
+            --surface: #ffffff;
+            --surface-soft: rgba(255, 255, 255, 0.92);
+            --text: #10222f;
+            --muted: #5f7d8a;
+            --primary: #2cae76;
+            --primary-dark: #248257;
+            --accent-blue: #3c8dff;
+            --accent-orange: #ff9f49;
+            --shadow: 0 24px 68px rgba(16, 34, 47, 0.08);
+            --shadow-soft: 0 14px 42px rgba(16, 34, 47, 0.08);
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            background: linear-gradient(180deg, #f6fbf7 0%, #eef8f3 100%);
+            color: var(--text);
+        }
+
+        body {
+            line-height: 1.65;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(44, 174, 118, 0.14);
+            backdrop-filter: blur(14px);
+        }
+
+        .topbar-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #2cae76 0%, #36c08b 100%);
+            color: white;
+            font-size: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.95rem;
+            transition: color .2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .page-wrapper {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .hero {
+            background: var(--surface-soft);
+            border: 1px solid rgba(44, 174, 118, 0.14);
+            border-radius: 32px;
+            box-shadow: var(--shadow-soft);
+            padding: 40px 32px;
+            margin-bottom: 32px;
+        }
+
+        .hero-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: clamp(2.1rem, 3vw, 2.75rem);
+            margin: 0 0 14px;
+        }
+
+        .hero-subtitle {
+            margin: 0 0 28px;
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 680px;
+        }
+
+        .search-panel {
+            display: grid;
+            gap: 14px;
+            max-width: 720px;
+        }
+
+        .search-panel label {
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 18px;
+            border: 1px solid rgba(45, 111, 73, 0.22);
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(44, 174, 118, 0.12);
+        }
+
+        .search-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .search-keywords span {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #eef9f0;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+
+        .search-keywords span:hover {
+            background: rgba(44, 174, 118, 0.18);
+        }
+
+        .search-feedback {
+            min-height: 22px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            font-size: 1.55rem;
+        }
+
+        .section-title p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.95rem;
+            max-width: 760px;
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .room-card {
+            background: var(--surface);
+            border-radius: 28px;
+            border: 1px solid rgba(45, 111, 73, 0.12);
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+        }
+
+        .room-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 64px rgba(16, 34, 47, 0.12);
+            border-color: rgba(44, 174, 118, 0.22);
+        }
+
+        .room-card-header {
+            padding: 28px 26px 0;
+        }
+
+        .room-card-icon {
+            width: 50px;
+            height: 50px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(44, 174, 118, 0.16), rgba(60, 141, 255, 0.16));
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+        }
+
+        .room-card-title {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .room-card-price {
+            margin: 0 0 18px;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .room-card-meta {
+            margin: 0 0 18px;
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .room-card-list {
+            margin: 0;
+            padding: 0 0 26px 20px;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.75;
+            list-style: disc;
+        }
+
+        .room-card-list strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .toggle-section {
+            padding: 20px 26px 28px;
+            border-top: 1px solid rgba(45, 111, 73, 0.08);
+            background: #f7fdf8;
+        }
+
+        .toggle-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border-radius: 16px;
+            background: rgba(44, 174, 118, 0.12);
+            color: var(--primary-dark);
+            border: 1px solid rgba(44, 174, 118, 0.18);
+            cursor: pointer;
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .toggle-button:hover {
+            transform: translateY(-1px);
+            background: rgba(44, 174, 118, 0.18);
+        }
+
+        .toggle-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .28s ease;
+        }
+
+        .toggle-content.open {
+            max-height: 1200px;
+        }
+
+        .toggle-text {
+            margin: 18px 0 0;
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .steps-card {
+            background: var(--surface);
+            border-radius: 28px;
+            border: 1px solid rgba(45, 111, 73, 0.12);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px;
+        }
+
+        .steps-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .steps-list li {
+            display: grid;
+            grid-template-columns: 28px 1fr;
+            gap: 16px;
+            align-items: start;
+            margin-bottom: 18px;
+        }
+
+        .steps-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-badge {
+            width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+        }
+
+        .step-text {
+            color: var(--text);
+            font-size: 0.98rem;
+            line-height: 1.75;
+        }
+
+        .callout {
+            margin-top: 24px;
+            padding: 20px 22px;
+            background: #eef9f1;
+            border-radius: 24px;
+            border: 1px solid rgba(44, 174, 118, 0.16);
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.75;
+        }
+
+        .area-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .area-module {
+            background: var(--surface);
+            border-radius: 24px;
+            border: 1px solid rgba(45, 111, 73, 0.12);
+            box-shadow: var(--shadow-soft);
+            padding: 20px 22px;
+            cursor: pointer;
+            transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+            overflow: hidden;
+        }
+
+        .area-module:hover {
+            transform: translateY(-2px);
+            border-color: rgba(45, 111, 73, 0.24);
+        }
+
+        .area-module-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .module-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .module-meta {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .module-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: rgba(44, 174, 118, 0.12);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .module-list {
+            margin-top: 18px;
+            display: grid;
+            gap: 10px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.28s ease, opacity 0.28s ease;
+            opacity: 0;
+        }
+
+        .area-module.expanded .module-list {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        .module-item {
+            padding: 14px 16px;
+            border-radius: 18px;
+            background: rgba(252, 255, 247, 0.95);
+            border: 1px solid rgba(45, 111, 73, 0.1);
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .module-note {
+            margin-top: 22px;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .footer {
+            margin-top: 36px;
+            padding: 26px 24px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(44, 174, 118, 0.12);
+            box-shadow: var(--shadow-soft);
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .footer p {
+            margin: 0 0 10px;
+        }
+
+        .footer p:last-child {
+            margin-bottom: 0;
+        }
+
+        .footer-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-top: 14px;
+            color: var(--muted);
+        }
+
+        .footer-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .highlight {
+            background: rgba(60, 141, 255, 0.12);
+            border: 1px solid rgba(60, 141, 255, 0.18);
+        }
+
+        @media (max-width: 980px) {
+            .room-grid,
+            .area-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .topbar-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero {
+                padding: 28px 20px;
+            }
+
+            .search-input {
+                padding: 14px 18px;
+            }
+
+            .room-card {
+                border-radius: 24px;
+                padding: 0;
+            }
+
+            .room-card-header,
+            .toggle-section,
+            .steps-card,
+            .area-card,
+            .footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="dorm-guide.html">
+                <span class="brand-mark">🐱</span>
+                <span>返回宿舍指南</span>
+            </a>
+            <nav class="nav-links">
+                <a href="网页.html">首页</a>
+                <a href="反馈建议.html">反馈建议</a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="page-wrapper">
+        <section class="hero">
+            <div class="hero-title">🏠 宿舍基本信息</div>
+            <p class="hero-subtitle">帮助新生快速了解宿舍房型与入住方式。</p>
+            <div class="search-panel">
+                <label for="info-search">页面搜索</label>
+                <input id="info-search" class="search-input" type="text" placeholder="搜索：四人间 双人间 单人间 特色房型 入住 宿舍区" aria-label="宿舍基本信息搜索" />
+                <div class="search-keywords">
+                    <span data-keyword="四人间">四人间</span>
+                    <span data-keyword="双人间">双人间</span>
+                    <span data-keyword="单人间">单人间</span>
+                    <span data-keyword="特色房型">特色房型</span>
+                    <span data-keyword="入住">入住</span>
+                    <span data-keyword="宿舍区">宿舍区</span>
+                </div>
+                <div id="search-feedback" class="search-feedback">输入关键词后按回车可快速定位页面模块。</div>
+            </div>
+        </section>
+
+        <section class="section" id="room-types">
+            <div class="section-title">
+                <div>
+                    <h2>🏠 宿舍房型介绍</h2>
+                    <p>使用卡片展示每种房型的价格、配置和补充说明。</p>
+                </div>
+            </div>
+            <div class="room-grid">
+                <article id="four-person" class="room-card">
+                    <div class="room-card-header">
+                        <div class="room-card-icon">🏠</div>
+                        <h3 class="room-card-title">四人间</h3>
+                        <p class="room-card-price">687.5 马币／学期</p>
+                        <p class="room-card-meta">以 Siddiq 为例：</p>
+                    </div>
+                    <div class="toggle-section">
+                        <div class="toggle-text">
+                            房间大小：约 2.5m × 2.5m（不同宿舍区可能有误差）。
+                        </div>
+                        <ul class="room-card-list">
+                            <li><strong>配置：</strong>柜子、桌子、床、电风扇、白板、床垫、窗帘</li>
+                            <li><strong>尺寸：</strong>桌子 125×61×76 cm，床 190×96 cm</li>
+                            <li><strong>补充：</strong>四人间格局：一个大房间，分成四个独立生活区域，中间公共区域。类似四个卧室＋一个客厅。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article id="double" class="room-card">
+                    <div class="room-card-header">
+                        <div class="room-card-icon">👥</div>
+                        <h3 class="room-card-title">双人间</h3>
+                        <p class="room-card-price">837.5 马币／学期</p>
+                        <p class="room-card-meta">根据学校公开资料整理。</p>
+                    </div>
+                    <div class="toggle-section">
+                        <div class="toggle-text">
+                            空间更大，适合希望多一点私密和活动空间的新生。
+                        </div>
+                        <ul class="room-card-list">
+                            <li><strong>配置：</strong>单人床、床垫、衣柜、书桌书柜、白板、窗帘、吊扇、公共鞋架、镜子、书桌带抽屉</li>
+                            <li><strong>补充：</strong>双人间格局：两张床靠中间，左右布置书桌和衣柜。（后续补充）</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article id="single" class="room-card">
+                    <div class="room-card-header">
+                        <div class="room-card-icon">🛏</div>
+                        <h3 class="room-card-title">单人间</h3>
+                        <p class="room-card-price">1037.5 马币／学期</p>
+                        <p class="room-card-meta">结合朋友入住体验与公开资料。</p>
+                    </div>
+                    <div class="toggle-section">
+                        <div class="toggle-text">
+                            私密性更强，适合希望安静学习和稳定生活的新生。
+                        </div>
+                        <ul class="room-card-list">
+                            <li><strong>配置：</strong>完整独立家具，私密性更强。</li>
+                            <li><strong>Bilal 单人间示例：</strong>房间 5m × 2.5m，桌子 125×61×76 cm，床 190×96 cm</li>
+                            <li><strong>补充：</strong>大小略有差异。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article id="premium" class="room-card">
+                    <div class="room-card-header">
+                        <div class="room-card-icon">✨</div>
+                        <h3 class="room-card-title">特色升级房型</h3>
+                        <p class="room-card-meta">仅女生／混合宿舍。</p>
+                    </div>
+                    <div class="toggle-section">
+                        <div class="toggle-text">
+                            适合希望更高品质住宿体验的同学，功能升级并适合长期居住。
+                        </div>
+                        <ul class="room-card-list">
+                            <li><strong>展示房型：</strong>Premium Room、全新装修、升级家具、双人间升级、Executive Single</li>
+                            <li><strong>宿舍区：</strong>Ruqayyah、Salahuddin</li>
+                            <li><strong>优势：</strong>超大单间、独立卫浴、适合长期居住。</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="move-in">
+            <div class="section-title">
+                <div>
+                    <h2>入住流程</h2>
+                    <p>从接机到拿钥匙再到找到宿舍楼，一步步完成入住。</p>
+                </div>
+            </div>
+            <div class="steps-card">
+                <ul class="steps-list">
+                    <li>
+                        <div class="step-badge">①</div>
+                        <div class="step-text">中介接机</div>
+                    </li>
+                    <li>
+                        <div class="step-badge">②</div>
+                        <div class="step-text">大巴到宿舍区，中介喊宿舍区名字</div>
+                    </li>
+                    <li>
+                        <div class="step-badge">③</div>
+                        <div class="step-text">在微信新生群查看宿舍分配（中介会发表格）</div>
+                    </li>
+                    <li>
+                        <div class="step-badge">④</div>
+                        <div class="step-text">下车后找中介领取钥匙</div>
+                    </li>
+                    <li>
+                        <div class="step-badge">⑤</div>
+                        <div class="step-text">找宿舍楼</div>
+                    </li>
+                    <li>
+                        <div class="step-badge">⑥</div>
+                        <div class="step-text">完成入住</div>
+                    </li>
+                </ul>
+                <div class="callout">
+                    如果找不到：询问中介，或者打开谷歌地图，把你的宿舍区名字输入导航过去。
+                    <br /><br />
+                    补充：宿舍区是一个统称，通常包含 4-6 栋楼（A B C D E F 栋）、宿舍楼、办公室、食堂、洗衣房、公共设施。
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="area-list">
+            <div class="section-title">
+                <div>
+                    <h2>📍 宿舍区列表</h2>
+                    <p>共 17 座宿舍区。Mahallah ＝ 宿舍，例如：Mahallah Bilal、Mahallah Siddiq。</p>
+                </div>
+            </div>
+            <div class="area-grid">
+                <article class="area-module" data-module="male" tabindex="0">
+                    <div class="area-module-header">
+                        <div>
+                            <div class="module-title">男生宿舍</div>
+                            <div class="module-meta">常见男生宿舍区，点击展开查看具体名称。</div>
+                        </div>
+                        <div class="module-badge">👨‍🎓</div>
+                    </div>
+                    <div class="module-list">
+                        <div class="module-item">SIDDIQ</div>
+                        <div class="module-item">BILAL</div>
+                        <div class="module-item">FARUQ</div>
+                        <div class="module-item">UTHMAN</div>
+                        <div class="module-item">ALI</div>
+                        <div class="module-item">ZUBAIR</div>
+                    </div>
+                </article>
+                <article class="area-module" data-module="female" tabindex="0">
+                    <div class="area-module-header">
+                        <div>
+                            <div class="module-title">女生宿舍</div>
+                            <div class="module-meta">其他女生和混合宿舍区，点击展开查看具体名称。</div>
+                        </div>
+                        <div class="module-badge">👩‍🎓</div>
+                    </div>
+                    <div class="module-list">
+                        <div class="module-item">NUSAIBAH</div>
+                        <div class="module-item">SUMAYYAH</div>
+                        <div class="module-item">SALAHUDDIN</div>
+                        <div class="module-item">MARYAM</div>
+                        <div class="module-item">SAADIAH</div>
+                        <div class="module-item">ASMA</div>
+                        <div class="module-item">HAFSAH</div>
+                        <div class="module-item">RUQAYYAH</div>
+                        <div class="module-item">ASIAH</div>
+                        <div class="module-item">AMINAH</div>
+                        <div class="module-item">SAFIYYAH</div>
+                    </div>
+                </article>
+            </div>
+            <p class="module-note">宿舍区是一个统称，通常包含 4-6 栋楼（A B C D E F 栋）、宿舍楼、办公室、食堂、洗衣房、公共设施。</p>
+        </section>
+
+        <section class="footer">
+            <p>信息持续更新中，发现错误欢迎<a href="反馈建议.html">反馈</a>。</p>
+            <p>免责声明：实际情况可能变化，请以学校安排为准。</p>
+            <p>免责声明：宿舍价格会有变化，准确价格请询问自己的中介，我给的价格只是官网给的最最早的消息。</p>
+            <div class="footer-meta">
+                <span>最后更新时间：<span id="update-date"></span></span>
+                <span>版本：Dorm Info V1.0</span>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const infoSearch = document.getElementById('info-search');
+        const feedback = document.getElementById('search-feedback');
+        const keywordButtons = document.querySelectorAll('.search-keywords span');
+        const sections = [
+            {
+                id: 'four-person',
+                keywords: ['四人间', '四人', '四人间格局', 'siddiq']
+            },
+            {
+                id: 'double',
+                keywords: ['双人间', '双人', '双人间格局']
+            },
+            {
+                id: 'single',
+                keywords: ['单人间', '单人', 'bilal']
+            },
+            {
+                id: 'premium',
+                keywords: ['特色房型', '升级房型', 'premium', 'executive']
+            },
+            {
+                id: 'move-in',
+                keywords: ['入住', '入住流程', '接机', '钥匙', '找宿舍楼']
+            },
+            {
+                id: 'area-list',
+                keywords: ['宿舍区', 'mahallah', '男宿舍', '女宿舍', '宿舍区列表']
+            }
+        ];
+
+        function normalize(value) {
+            return value.trim().toLowerCase();
+        }
+
+        function findSection(query) {
+            const text = normalize(query);
+            if (!text) return null;
+
+            const exactMatch = sections.find(section =>
+                section.keywords.some(word => normalize(word) === text)
+            );
+            if (exactMatch) return exactMatch;
+
+            return sections.find(section =>
+                section.keywords.some(word => normalize(word).includes(text) || text.includes(normalize(word)))
+            );
+        }
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (!element) return;
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            element.classList.add('highlight');
+            setTimeout(() => element.classList.remove('highlight'), 2400);
+        }
+
+        function updateFeedbackText(message) {
+            feedback.textContent = message;
+        }
+
+        function handleSearch() {
+            const query = infoSearch.value;
+            const match = findSection(query);
+            if (match) {
+                scrollToSection(match.id);
+                updateFeedbackText(`已定位到：${match.id === 'four-person' ? '四人间' : match.id === 'double' ? '双人间' : match.id === 'single' ? '单人间' : match.id === 'premium' ? '特色房型' : match.id === 'move-in' ? '入住流程' : '宿舍区列表'}`);
+            } else {
+                updateFeedbackText('未找到对应模块，请试试：四人间 / 双人间 / 单人间 / 特色房型 / 入住 / 宿舍区');
+            }
+        }
+
+        infoSearch.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
+        });
+
+        infoSearch.addEventListener('input', (event) => {
+            const text = event.target.value.trim();
+            if (!text) {
+                updateFeedbackText('输入关键词后按回车可快速定位页面模块。');
+                return;
+            }
+            const match = findSection(text);
+            if (match) {
+                updateFeedbackText(`建议：回车定位到 ${match.id === 'four-person' ? '四人间' : match.id === 'double' ? '双人间' : match.id === 'single' ? '单人间' : match.id === 'premium' ? '特色房型' : match.id === 'move-in' ? '入住流程' : '宿舍区列表'}`);
+            } else {
+                updateFeedbackText('未找到匹配模块，请试试：四人间 / 双人间 / 单人间 / 特色房型 / 入住 / 宿舍区');
+            }
+        });
+
+        keywordButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const keyword = button.dataset.keyword;
+                infoSearch.value = keyword;
+                handleSearch();
+            });
+        });
+
+        const areaModules = document.querySelectorAll('.area-module');
+
+        function toggleModule(moduleCard) {
+            moduleCard.classList.toggle('expanded');
+            const expanded = moduleCard.classList.contains('expanded');
+            moduleCard.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        }
+
+        areaModules.forEach(moduleCard => {
+            moduleCard.setAttribute('role', 'button');
+            moduleCard.setAttribute('aria-expanded', 'false');
+            moduleCard.addEventListener('click', () => toggleModule(moduleCard));
+            moduleCard.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleModule(moduleCard);
+                }
+            });
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const date = new Date();
+            const formatted = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+            document.getElementById('update-date').textContent = formatted;
+        });
+    </script>
+</body>
+</html>

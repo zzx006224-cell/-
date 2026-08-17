@@ -8,49 +8,63 @@
         "type": "tabs",
         "children": [
           {
-            "id": "7024f18d14b03e45",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "校园模型方案文件/方案的开始与想法.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "方案的开始与想法"
-            }
-          },
-          {
             "id": "74832f827047f373",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "校园模型方案文件/引路猫项目常用复制粘贴关键词.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "引路猫项目常用复制粘贴关键词"
-            }
-          },
-          {
-            "id": "e02e053ab6d33bf0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "宿舍页面设计.md",
+                "file": "校园模型方案文件/宿舍页面设计.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "宿舍页面设计"
             }
+          },
+          {
+            "id": "3977d04c687e3428",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "校园模型方案文件/学费缴纳页面.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "学费缴纳页面"
+            }
+          },
+          {
+            "id": "4e6b468639eab5f8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "校园模型方案文件/第一次进入马如何盖章.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "第一次进入马如何盖章"
+            }
+          },
+          {
+            "id": "97c506ddaa60430e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "校园模型方案文件/签证续签页面设计.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "签证续签页面设计"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -62,7 +76,7 @@
       {
         "id": "f6998d91e13f7354",
         "type": "tabs",
-        "dimension": 22.988505747126435,
+        "dimension": 22.98850574712644,
         "children": [
           {
             "id": "9c1cf5a9f24d9a51",
@@ -160,6 +174,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "校园模型方案文件/宿舍页面设计.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +184,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "反向链接"
+              "title": "宿舍页面设计 的反向链接列表"
             }
           },
           {
@@ -178,11 +193,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "校园模型方案文件/宿舍页面设计.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
+              "title": "宿舍页面设计 的出链列表"
             }
           },
           {
@@ -220,12 +236,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "校园模型方案文件/宿舍页面设计.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "宿舍页面设计 的大纲"
             }
           },
           {
@@ -233,7 +250,9 @@
             "type": "leaf",
             "state": {
               "type": "footnotes",
-              "state": {},
+              "state": {
+                "file": "校园模型方案文件/宿舍页面设计.md"
+              },
               "icon": "lucide-file-signature",
               "title": "脚注"
             }
@@ -262,20 +281,27 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "4d78dcf9022b57ee",
+  "active": "97c506ddaa60430e",
   "lastOpenFiles": [
-    "宿舍页面设计.md",
+    "校园模型方案文件/第一次进入马如何盖章.md",
+    "校园模型方案文件/学费缴纳页面.md",
+    "感.md",
+    "校园模型方案文件/宿舍页面设计.md",
     "校园模型方案文件/引路猫项目常用复制粘贴关键词.md",
-    "校园模型方案文件/签证办理页面.md",
+    "校园模型方案文件/签证续签页面设计.md",
+    "《新球》/《新球》概念与规划阶段.md",
+    "《新球》/《新球》诞生以及想法.md",
     "校园模型方案文件/学费缴纳页面设计.md",
+    "校园模型方案文件/签证办理页面.md",
+    "注意事项.md",
+    "《新球》",
     "校园模型方案文件/食堂页面设计.md",
-    "校园模型方案文件/方案的开始与想法.md",
     "校园模型方案文件/引路猫信息收集.md",
+    "校园模型方案文件/方案的开始与想法.md",
     "校园模型方案文件/反馈页面.md",
     "校园模型方案文件/关于项目.md",
     "校园模型方案文件/引路猫项目第一步.md",
     "欢迎.md",
-    "校园模型方案文件",
-    "未命名"
+    "校园模型方案文件"
   ]
 }
