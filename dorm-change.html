@@ -5,16 +5,209 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>换宿舍以及保留宿舍 | 指路猫</title>
     <style>
-        body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f5fbf6; color: #10222f; font-family: "Segoe UI", Arial, sans-serif; }
-        main { width: min(680px, calc(100% - 32px)); padding: 32px; border-radius: 24px; background: white; box-shadow: 0 18px 45px rgba(16, 34, 47, .08); }
-        a { color: #24915f; font-weight: 700; }
+        :root {
+            color-scheme: light;
+            --bg: #f5fbf6;
+            --surface: #ffffff;
+            --text: #11242f;
+            --muted: #59737e;
+            --primary: #2cae76;
+            --primary-dark: #248257;
+            --orange: #ff9f49;
+            --shadow: 0 14px 36px rgba(16, 34, 47, 0.08);
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            background: linear-gradient(180deg, #f6fbf7 0%, #eef8f3 100%);
+            color: var(--text);
+        }
+
+        body { line-height: 1.7; }
+        a { color: inherit; text-decoration: none; }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.92);
+            border-bottom: 1px solid rgba(44, 174, 118, 0.14);
+            backdrop-filter: blur(14px);
+        }
+
+        .topbar-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; }
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary), #36c08b);
+            color: white;
+            font-size: 20px;
+        }
+
+        .nav-links { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+        .nav-links a { color: var(--muted); font-size: 0.95rem; }
+        .nav-links a:hover { color: var(--text); }
+
+        .page-wrapper { max-width: 900px; margin: 0 auto; padding: 42px 20px 54px; }
+
+        .page-heading { text-align: center; margin-bottom: 28px; }
+        .page-heading h1 { margin: 0 0 10px; font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.25; }
+        .page-heading p { margin: 0; color: var(--muted); }
+
+        .notice, .content-card, .footer {
+            background: var(--surface);
+            border: 1px solid rgba(44, 174, 118, 0.13);
+            box-shadow: var(--shadow);
+        }
+
+        .notice {
+            margin-bottom: 24px;
+            padding: 18px 22px;
+            border-left: 5px solid var(--primary);
+            border-radius: 18px;
+            color: var(--primary-dark);
+            background: #f1fbf5;
+        }
+
+        .content-card { padding: 30px; border-radius: 24px; margin-bottom: 24px; }
+        .content-card h2 { margin: 0 0 22px; font-size: 1.45rem; }
+        .content-card h3 { margin: 0 0 10px; font-size: 1.05rem; }
+        .content-card p { margin: 0; }
+
+        .situation-grid { display: grid; gap: 18px; }
+        .situation {
+            padding: 22px;
+            border: 1px solid rgba(44, 174, 118, 0.12);
+            border-radius: 18px;
+            background: #f8fcf9;
+        }
+
+        .situation p + p { margin-top: 16px; }
+        .time-note {
+            margin-top: 20px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 159, 73, 0.28);
+            background: #fff8ed;
+        }
+        .time-note h3 { color: #a95d1c; }
+
+        .fee-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+        .fee-card { padding: 18px; border-radius: 16px; background: #f1fbf5; border: 1px solid rgba(44, 174, 118, 0.12); }
+        .fee-card strong { display: block; margin-bottom: 5px; }
+        .fee-card span { color: var(--primary-dark); font-weight: 700; }
+
+        .warning {
+            margin-top: 24px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 159, 73, 0.34);
+            background: #fff8ed;
+        }
+        .warning h3 { color: #a95d1c; }
+
+        .back-link { display: inline-flex; margin: 4px 0 28px; color: var(--primary-dark); font-weight: 700; }
+        .footer { padding: 22px 24px; border-radius: 20px; color: var(--muted); font-size: 0.95rem; }
+        .footer p { margin: 0 0 6px; }
+        .footer a { color: var(--primary-dark); font-weight: 700; }
+
+        @media (max-width: 640px) {
+            .topbar-inner { align-items: flex-start; flex-direction: column; padding: 14px 16px; }
+            .nav-links { gap: 12px 16px; }
+            .page-wrapper { padding: 30px 16px 42px; }
+            .content-card { padding: 22px 18px; }
+            .fee-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <main>
-        <h1>换宿舍以及保留宿舍</h1>
-        <p>这个页面正在整理中，之后可以放申请方式、办理流程、时间要求和常见问题。</p>
-        <p><a href="dorm-guide.html">返回宿舍指南</a></p>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">🐱</span>
+                <span>指路猫</span>
+            </a>
+            <nav class="nav-links" aria-label="主导航">
+                <a href="index.html">首页</a>
+                <a href="dorm-guide.html">宿舍指南</a>
+                <a href="map.html">学校地图</a>
+                <a href="反馈建议.html">反馈建议</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-wrapper">
+        <header class="page-heading">
+            <h1>🔄 换宿舍以及保留宿舍</h1>
+            <p>了解宿舍更换与宿舍保留相关信息。</p>
+        </header>
+
+        <div class="notice">在寒暑假期间根据宿舍办公室发布公告时间，选择换宿舍或者保留宿舍。</div>
+
+        <section class="content-card" aria-labelledby="change-title">
+            <h2 id="change-title">🔄 换宿舍</h2>
+            <div class="situation-grid">
+                <article class="situation">
+                    <h3>情况1</h3>
+                    <p>宿舍区有空宿舍。</p>
+                    <p>带上你的学生卡，去宿舍办公室领取宿舍更换确认表，相同宿舍区缴费5马手续费（无论成功与否，不予退还)，申请成功后根据宿舍办公室给出的时间限制搬空原来宿舍，如果不清空会面临罚款。</p>
+                    <p>不同宿舍缴费10马手续费（无论成功与否，不予退还)，先去想去的宿舍办公室领取宿舍更换确认表，回来原宿舍申请check out，后续等待办公室通知搬宿舍。</p>
+                </article>
+
+                <article class="situation">
+                    <h3>情况2</h3>
+                    <p>宿舍区没有空宿舍，朋友之间互换。</p>
+                    <p>带上双方学生卡一起去办公室申请，经过办公室同意之后互换宿舍信息，缴费5马手续费（跨宿舍区10马）然后互换宿舍</p>
+                </article>
+            </div>
+
+            <div class="time-note">
+                <h3>时间</h3>
+                <p>换宿舍时间一般在正式开学后一个月或者两个月以内，这个时间仅供参考！还是要自己去办公室问。</p>
+            </div>
+        </section>
+
+        <section class="content-card" aria-labelledby="retain-title">
+            <h2 id="retain-title">🏠 保留宿舍</h2>
+            <p>在宿舍办公室没有发出硬性搬离通知时，可以选择保留宿舍。到宿舍办公室申请LIDV保留宿舍即可。</p>
+
+            <h3 style="margin-top: 24px;">保留费用</h3>
+            <p>注意：保留宿舍需要提交保留费。（双人一天12马币）（四人间一天10马币）（单人间一天15）</p>
+            <div class="fee-grid">
+                <div class="fee-card"><strong>双人</strong><span>一天 12马币</span></div>
+                <div class="fee-card"><strong>四人间</strong><span>一天 10马币</span></div>
+                <div class="fee-card"><strong>单人间</strong><span>一天 15</span></div>
+            </div>
+
+            <div class="warning">
+                <h3>⚠️ 注意</h3>
+                <p>如果你的宿舍要强制清空你没有清空会罚款200马币还要每天交10马币保留费。</p>
+            </div>
+        </section>
+
+        <a class="back-link" href="dorm-guide.html">← 返回宿舍指南</a>
+
+        <footer class="footer">
+            <p>信息持续更新中 · 发现错误欢迎<a href="反馈建议.html">反馈</a></p>
+            <p>信息仅供参考，请以实际情况为准</p>
+        </footer>
     </main>
 </body>
 </html>
