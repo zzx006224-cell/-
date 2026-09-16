@@ -3,18 +3,337 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>宿舍缴费罚款 | 指路猫</title>
+    <title>宿舍罚款 | 指路猫</title>
     <style>
-        body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f5fbf6; color: #10222f; font-family: "Segoe UI", Arial, sans-serif; }
-        main { width: min(680px, calc(100% - 32px)); padding: 32px; border-radius: 24px; background: white; box-shadow: 0 18px 45px rgba(16, 34, 47, .08); }
-        a { color: #24915f; font-weight: 700; }
+        :root {
+            --background: #f5fbf6;
+            --surface: #ffffff;
+            --text: #11242f;
+            --muted: #59737e;
+            --primary: #2cae76;
+            --primary-dark: #248257;
+            --orange: #d97706;
+            --border: rgba(45, 111, 73, 0.14);
+            --shadow: 0 18px 45px rgba(16, 34, 47, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #f6fbf7 0%, #eef8f3 100%);
+            color: var(--text);
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(14px);
+        }
+
+        .topbar-inner {
+            width: min(900px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 16px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #2cae76, #36c08b);
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 18px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover,
+        .back-link:hover {
+            color: var(--primary-dark);
+        }
+
+        main {
+            width: min(900px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 54px 0 48px;
+        }
+
+        .page-heading {
+            margin: 0 0 30px;
+            text-align: center;
+        }
+
+        .page-heading h1 {
+            margin: 0 0 8px;
+            font-size: clamp(2rem, 5vw, 2.7rem);
+            line-height: 1.2;
+        }
+
+        .page-heading p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .section-card {
+            margin-bottom: 22px;
+            padding: 30px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-card h2 {
+            margin: 0 0 22px;
+            font-size: 1.3rem;
+            line-height: 1.35;
+        }
+
+        .fine-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .fine-item {
+            padding: 18px 20px;
+            background: #f7fcf8;
+            border: 1px solid rgba(44, 174, 118, 0.12);
+            border-radius: 16px;
+        }
+
+        .fine-item h3 {
+            margin: 0 0 5px;
+            color: var(--primary-dark);
+            font-size: 1rem;
+        }
+
+        .fine-item p,
+        .note,
+        .time-text,
+        .method-text {
+            margin: 0;
+        }
+
+        .warning {
+            color: var(--orange);
+            font-weight: 700;
+        }
+
+        .note {
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid #e8f0ea;
+            color: var(--muted);
+        }
+
+        .time-text {
+            font-size: 1.05rem;
+        }
+
+        .method-text {
+            color: var(--muted);
+        }
+
+        .steps {
+            display: grid;
+            gap: 8px;
+            margin: 24px 0;
+        }
+
+        .step {
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: #f7fcf8;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .step:not(:last-child)::after {
+            display: block;
+            margin-top: 8px;
+            color: var(--primary);
+            content: "↓";
+            text-align: center;
+        }
+
+        .step span {
+            display: inline-block;
+        }
+
+        .ezpay-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 100%;
+            padding: 12px 20px;
+            border-radius: 14px;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+            transition: background .2s ease, transform .2s ease;
+        }
+
+        .ezpay-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 4px;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        footer {
+            width: min(900px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 0 0 34px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 4px 0;
+        }
+
+        @media (max-width: 640px) {
+            .topbar-inner {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .nav-links {
+                justify-content: flex-start;
+                gap: 8px 16px;
+            }
+
+            main {
+                padding-top: 36px;
+            }
+
+            .section-card {
+                padding: 22px 18px;
+                border-radius: 20px;
+            }
+
+            .fine-item {
+                padding: 16px;
+            }
+
+            .method-text,
+            .time-text,
+            .fine-item p {
+                overflow-wrap: anywhere;
+            }
+        }
     </style>
 </head>
 <body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">🐱</span>
+                <span>指路猫</span>
+            </a>
+            <nav class="nav-links" aria-label="主导航">
+                <a href="index.html">首页</a>
+                <a href="dorm-guide.html">宿舍指南</a>
+                <a href="campus-map.html">学校地图</a>
+                <a href="zhao.html">反馈建议</a>
+            </nav>
+        </div>
+    </header>
+
     <main>
-        <h1>宿舍缴费罚款</h1>
-        <p>这个页面正在整理中，之后可以放逾期罚款、收费标准和缴费说明。</p>
-        <p><a href="dorm-guide.html">返回宿舍指南</a></p>
+        <header class="page-heading">
+            <h1>💳 宿舍罚款</h1>
+            <p>了解宿舍罚款相关信息。</p>
+        </header>
+
+        <section class="section-card">
+            <h2>⚠️ 宿舍罚款情况</h2>
+            <div class="fine-list">
+                <article class="fine-item">
+                    <h3>（1）</h3>
+                    <p>使用违规电器，比如：冰箱，烤箱，电饭煲等大功率电器，每次查宿抓住<span class="warning">最低罚款50上不封顶</span></p>
+                </article>
+                <article class="fine-item">
+                    <h3>（2）</h3>
+                    <p>在宿舍留宿不是本学校的人。</p>
+                </article>
+                <article class="fine-item">
+                    <h3>（3）</h3>
+                    <p>在食堂穿短裤也会被罚款。</p>
+                </article>
+            </div>
+            <p class="note">以上情况比较常见，其他罚款可以自己查看校规避免。</p>
+        </section>
+
+        <section class="section-card">
+            <h2>📅 提交罚款时间</h2>
+            <p class="time-text"><strong>没有强制时间</strong>，但是你不交<strong>你的艾马龙会被封</strong>，无法查询成绩等。</p>
+        </section>
+
+        <section class="section-card">
+            <h2>📄 查看以及提交罚款方式</h2>
+            <p class="method-text">点击这个链接，打开后点击Student Fee打开后输入你的艾马龙账号和密码就可以查看你的罚款，根据界面提示提交罚款。</p>
+            <div class="steps" aria-label="缴纳方式">
+                <div class="step"><span>① 打开 EZPay</span></div>
+                <div class="step"><span>② 点击 Student Fee</span></div>
+                <div class="step"><span>③ 输入艾马龙账号和密码</span></div>
+            </div>
+            <a class="ezpay-button" href="https://ezpay.iium.edu.my/" target="_blank" rel="noopener noreferrer">打开 EZPay</a>
+        </section>
+
+        <a class="back-link" href="dorm-guide.html">← 返回宿舍指南</a>
     </main>
+
+    <footer>
+        <p>信息持续更新中 · 发现错误欢迎反馈</p>
+        <p>信息仅供参考，请以实际情况为准</p>
+    </footer>
 </body>
 </html>
