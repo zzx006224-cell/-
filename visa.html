@@ -5,16 +5,474 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>签证办理 | 指路猫</title>
     <style>
-        body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f5fbf6; color: #10222f; font-family: "Segoe UI", Arial, sans-serif; }
-        main { width: min(680px, calc(100% - 32px)); padding: 32px; border-radius: 24px; background: white; box-shadow: 0 18px 45px rgba(16, 34, 47, .08); }
-        a { color: #24915f; font-weight: 700; }
+        :root {
+            --bg: #f5fbf6;
+            --surface: #ffffff;
+            --surface-soft: #f7fcf9;
+            --border: rgba(45, 111, 73, 0.14);
+            --text: #11242f;
+            --muted: #5f7b86;
+            --primary: #2cae76;
+            --primary-dark: #248257;
+            --shadow: 0 18px 42px rgba(17, 36, 47, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #f6fbf7 0%, #edf8f2 100%);
+            color: var(--text);
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255,255,255,0.9);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+        }
+
+        .topbar-inner {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 16px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #2cae76, #36c08b);
+            color: #fff;
+            font-size: 20px;
+            box-shadow: 0 12px 24px rgba(44, 174, 118, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 18px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover,
+        .back-link:hover {
+            color: var(--primary-dark);
+        }
+
+        .page-shell {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 44px 0 72px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+            gap: 28px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .hero-copy {
+            padding: 10px 0;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(44, 174, 118, 0.12);
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 0.84rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-copy h1 {
+            margin: 18px 0 12px;
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            line-height: 1.15;
+            letter-spacing: -0.04em;
+        }
+
+        .hero-copy p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.04rem;
+            max-width: 640px;
+        }
+
+        .campus-visual {
+            position: relative;
+            min-height: 280px;
+            border-radius: 32px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ebfaf2 0%, #d9f4e4 100%);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .campus-visual svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .section-card {
+            margin-bottom: 22px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 28px;
+        }
+
+        .section-card h2 {
+            margin: 0 0 20px;
+            font-size: clamp(1.5rem, 2vw, 2rem);
+            line-height: 1.25;
+        }
+
+        .faq-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background: var(--surface-soft);
+            border: 1px solid rgba(44, 174, 118, 0.14);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .faq-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            text-align: left;
+            padding: 22px 20px;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+        }
+
+        .faq-toggle span {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .faq-index {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: rgba(44, 174, 118, 0.12);
+            color: var(--primary-dark);
+            font-size: 0.85rem;
+        }
+
+        .faq-arrow {
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: rgba(44, 174, 118, 0.08);
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            transition: transform .2s ease;
+            flex-shrink: 0;
+        }
+
+        .faq-item.is-open .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            display: none;
+            padding: 0 20px 22px;
+        }
+
+        .faq-item.is-open .faq-content {
+            display: block;
+        }
+
+        .faq-content p {
+            margin: 0 0 12px;
+            color: var(--muted);
+        }
+
+        .placeholder-box {
+            margin-top: 8px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: rgba(44, 174, 118, 0.04);
+            border: 1px solid rgba(44, 174, 118, 0.08);
+            color: var(--muted);
+        }
+
+        .footer {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto 36px;
+            padding: 26px 18px 12px;
+            color: var(--muted);
+            border-top: 1px solid rgba(45, 111, 73, 0.14);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer p {
+            margin: 0 0 8px;
+        }
+
+        @media (max-width: 760px) {
+            .topbar-inner,
+            .page-shell,
+            .footer {
+                width: min(100% - 22px, 1180px);
+            }
+
+            .topbar-inner {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 14px 0 16px;
+            }
+
+            .nav-links {
+                gap: 10px 14px;
+                justify-content: flex-start;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .section-card {
+                padding: 20px 16px;
+            }
+
+            .faq-toggle {
+                padding: 18px 16px;
+            }
+
+            .faq-content {
+                padding: 0 16px 18px;
+            }
+        }
     </style>
 </head>
 <body>
-    <main>
-        <h1>签证办理</h1>
-        <p>这个页面正在整理中，之后可以放签证窗口位置、材料清单和办理流程。</p>
-        <p><a href="index.html">返回首页</a></p>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">🐱</span>
+                <span>指路猫</span>
+            </a>
+            <nav class="nav-links" aria-label="主导航">
+                <a href="index.html">首页</a>
+                <a href="campus-map.html">学校地图</a>
+                <a href="other-affairs.html">其他事务</a>
+                <a href="visa.html">签证办理</a>
+                <a href="zhao.html">反馈建议</a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="page-shell">
+        <section class="hero">
+            <div class="hero-copy">
+                <span class="eyebrow">入学与生活</span>
+                <h1>签证办理</h1>
+                <p>这里将整理签证办理相关的常见信息，方便新生按步骤了解和准备后续材料。</p>
+            </div>
+
+            <div class="campus-visual" aria-label="校园景观插画">
+                <svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="校园景观插画">
+                    <defs>
+                        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#effcf5"/>
+                            <stop offset="100%" stop-color="#dff5ea"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="600" height="420" fill="url(#sky)"/>
+                    <circle cx="470" cy="90" r="36" fill="#f4d57d" opacity="0.8"/>
+                    <path d="M0 260 C110 220, 180 220, 280 260 S470 300, 600 260 L600 420 L0 420 Z" fill="#cfeecf"/>
+                    <path d="M0 310 C110 280, 170 270, 230 290 S430 330, 600 295 L600 420 L0 420 Z" fill="#bfe0c6"/>
+                    <rect x="80" y="150" width="180" height="128" rx="12" fill="#f5f8f4" stroke="#b9dcc5" stroke-width="3"/>
+                    <rect x="110" y="115" width="120" height="35" rx="8" fill="#c6e9d2"/>
+                    <rect x="98" y="178" width="46" height="64" rx="6" fill="#dfeee3"/>
+                    <rect x="156" y="178" width="46" height="64" rx="6" fill="#dfeee3"/>
+                    <rect x="214" y="178" width="34" height="64" rx="6" fill="#dfeee3"/>
+                    <path d="M300 240 L420 140 L520 240 Z" fill="#d0ebd8"/>
+                    <rect x="325" y="188" width="160" height="90" rx="10" fill="#ffffff" stroke="#b6d9c2" stroke-width="3"/>
+                    <rect x="338" y="200" width="48" height="62" rx="6" fill="#e7f7ef"/>
+                    <rect x="396" y="200" width="48" height="62" rx="6" fill="#e7f7ef"/>
+                    <rect x="454" y="200" width="18" height="62" rx="4" fill="#d7f1de"/>
+                    <path d="M60 305 L160 270 L195 305" fill="none" stroke="#7bbd92" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M260 314 L345 276 L396 314" fill="none" stroke="#7bbd92" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M470 314 L530 282 L560 314" fill="none" stroke="#7bbd92" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="80" cy="300" r="12" fill="#8ed4a7"/>
+                    <circle cx="520" cy="240" r="14" fill="#8ed4a7"/>
+                    <circle cx="140" cy="260" r="12" fill="#8ed4a7"/>
+                    <circle cx="215" cy="255" r="11" fill="#8ed4a7"/>
+                    <circle cx="465" cy="210" r="12" fill="#8ed4a7"/>
+                </svg>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2>签证办理信息</h2>
+            <div class="faq-list">
+                <!-- 1. 引言 -->
+                <article class="faq-item is-open">
+                    <button class="faq-toggle" type="button" aria-expanded="true">
+                        <span><span class="faq-index">1</span>引言</span>
+                        <span class="faq-arrow">⌄</span>
+                    </button>
+                    <div class="faq-content">
+                        <p>这里是签证办理相关内容的入口说明，后续可以逐步补充背景介绍和使用说明。</p>
+                        <div class="placeholder-box">后续更新：真实介绍、背景信息、阅读指引。</div>
+                    </div>
+                </article>
+
+                <!-- 2. 如何查看自己签证什么时候到期 -->
+                <article class="faq-item">
+                    <button class="faq-toggle" type="button" aria-expanded="false">
+                        <span><span class="faq-index">2</span>如何查看自己签证什么时候到期</span>
+                        <span class="faq-arrow">⌄</span>
+                    </button>
+                    <div class="faq-content">
+                        <p>此处会后续补充查看签证到期时间的方法和入口说明。</p>
+                        <div class="placeholder-box">后续更新：查看方式、入口说明、常见问题。</div>
+                    </div>
+                </article>
+
+                <!-- 3. 准备材料 -->
+                <article class="faq-item">
+                    <button class="faq-toggle" type="button" aria-expanded="false">
+                        <span><span class="faq-index">3</span>准备材料</span>
+                        <span class="faq-arrow">⌄</span>
+                    </button>
+                    <div class="faq-content">
+                        <p>这里将用于整理所需材料的清单和准备要点。</p>
+                        <div class="placeholder-box">后续更新：材料列表、准备顺序、注意事项。</div>
+                    </div>
+                </article>
+
+                <!-- 4. 如何获取材料 -->
+                <article class="faq-item">
+                    <button class="faq-toggle" type="button" aria-expanded="false">
+                        <span><span class="faq-index">4</span>如何获取材料</span>
+                        <span class="faq-arrow">⌄</span>
+                    </button>
+                    <div class="faq-content">
+                        <p>这里未来会整理从哪里获取材料，以及常见材料的获取渠道说明。</p>
+                        <div class="placeholder-box">后续更新：获取入口、所需步骤、操作提示。</div>
+                    </div>
+                </article>
+
+                <!-- 5. 材料准备好后提交 -->
+                <article class="faq-item">
+                    <button class="faq-toggle" type="button" aria-expanded="false">
+                        <span><span class="faq-index">5</span>材料准备好后提交</span>
+                        <span class="faq-arrow">⌄</span>
+                    </button>
+                    <div class="faq-content">
+                        <p>此处将用于说明材料提交前后需要关注的事项和后续流程。</p>
+                        <div class="placeholder-box">后续更新：提交入口、提交方式、提交后跟进。</div>
+                    </div>
+                </article>
+
+                <!-- 6. 穆伊家中介发的公告 -->
+                <article class="faq-item">
+                    <button class="faq-toggle" type="button" aria-expanded="false">
+                        <span><span class="faq-index">6</span>穆伊家中介发的公告</span>
+                        <span class="faq-arrow">⌄</span>
+                    </button>
+                    <div class="faq-content">
+                        <p>这里后续用于存放中介公告或重要通知，便于集中查看和更新。</p>
+                        <div class="placeholder-box">后续更新：公告整理、重要提醒、发布时间说明。</div>
+                    </div>
+                </article>
+
+                <!-- 7. 注意事项 -->
+                <article class="faq-item">
+                    <button class="faq-toggle" type="button" aria-expanded="false">
+                        <span><span class="faq-index">7</span>注意事项</span>
+                        <span class="faq-arrow">⌄</span>
+                    </button>
+                    <div class="faq-content">
+                        <p>这里会后续汇总签证办理过程中的注意事项和常见提醒。</p>
+                        <div class="placeholder-box">后续更新：风险提示、常见误区、重要提醒。</div>
+                    </div>
+                </article>
+            </div>
+        </section>
     </main>
+
+    <footer class="footer">
+        <p>信息持续更新中，发现错误欢迎 <a href="zhao.html">反馈</a>。</p>
+        <p>免责声明：信息仅供参考，请以学校实际通知为准。</p>
+    </footer>
+
+    <script>
+        // 每个栏目都可以单独展开/收起，允许多个栏目同时展开。
+        document.querySelectorAll('.faq-toggle').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const item = button.closest('.faq-item');
+                const isOpen = item.classList.contains('is-open');
+
+                item.classList.toggle('is-open', !isOpen);
+                button.setAttribute('aria-expanded', String(!isOpen));
+            });
+        });
+    </script>
 </body>
 </html>
