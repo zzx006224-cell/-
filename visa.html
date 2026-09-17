@@ -323,6 +323,55 @@
             margin-bottom: 0;
         }
 
+        .step-card,
+        .notice-card,
+        .warning-card {
+            margin-bottom: 16px;
+            padding: 16px;
+            border: 1px solid rgba(44, 174, 118, 0.12);
+            border-radius: 14px;
+            background: rgba(44, 174, 118, 0.04);
+        }
+
+        .step-card:last-child,
+        .notice-card:last-child,
+        .warning-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-card h3,
+        .notice-card h3,
+        .warning-card h3 {
+            margin: 0 0 10px;
+            color: var(--text);
+            font-size: 1.05rem;
+        }
+
+        .step-card p,
+        .notice-card p,
+        .warning-card p {
+            margin: 0 0 12px;
+        }
+
+        .step-card p:last-child,
+        .notice-card p:last-child,
+        .warning-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-card a {
+            color: var(--primary-dark);
+            overflow-wrap: anywhere;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+        }
+
+        .warning-card {
+            border-color: rgba(190, 143, 48, 0.2);
+            background: rgba(246, 220, 151, 0.12);
+        }
+
         .qr-image-button {
             display: block;
             width: min(180px, 100%);
@@ -639,8 +688,23 @@
                         <span class="faq-arrow">⌄</span>
                     </button>
                     <div class="faq-content">
-                        <p>此处将用于说明材料提交前后需要关注的事项和后续流程。</p>
-                        <div class="placeholder-box">后续更新：提交入口、提交方式、提交后跟进。</div>
+                        <div class="step-card">
+                            <p>提交材料在中介群里中介会给你发提交材料的链接，也可以扫描办公室的二维码线上提交，提交材料只能提前三个月提交，其他时间可能打不开链接。</p>
+                            <p>链接：</p>
+                            <p><a href="https://vios.iium.edu.my/index.php/viosapp_list_apps_c" target="_blank" rel="noopener noreferrer">https://vios.iium.edu.my/index.php/viosapp_list_apps_c</a></p>
+                        </div>
+
+                        <div class="step-card">
+                            <h3>提交流程（第一步）：</h3>
+                            <p>点击上面的链接，打开后点击页面右上角三条杠</p>
+                            <p>点击三条杠后会出现一行蓝色英文“CREATE APPLICATION”点击它</p>
+                            <p>会出来一个新界面，点击一下输入框会让你选类型，选择倒数第二个“STUDENT PASS APPLICATION”</p>
+                            <p>这些步骤是在创建文件学生签证，然后确认个人信息，最近入境日期。</p>
+                        </div>
+
+                        <div class="step-card">
+                            <h3>（第二步）：提交续签资料</h3>
+                        </div>
                     </div>
                 </article>
 
@@ -651,8 +715,9 @@
                         <span class="faq-arrow">⌄</span>
                     </button>
                     <div class="faq-content">
-                        <p>这里后续用于存放中介公告或重要通知，便于集中查看和更新。</p>
-                        <div class="placeholder-box">后续更新：公告整理、重要提醒、发布时间说明。</div>
+                        <div class="notice-card">
+                            <p>批了一年签证的学生，看你们的签证日期，到期前三个月去学校移民局办公室续签，按照要求准备资料上传，然后等审核，查进度如需补资料及时补资料，审核通过后就是交护照，护照是到期前一个月左右交，交完护照进度到100%以后等学校通知取护照即可，我们群里大部分是三年签证，个别是两年，也是同样，到期前的三个月交资料续签，到期前一个月交护照！切勿迟交资料和护照，太晚的会有罚款和一些不必要的麻烦和折腾。需要注意的是资料其中就有要求这一年当中的成绩和出勤率，如果出勤率特别低有时候要求给解释信，有时候太差会被拒签，然后在交钱申请新的反签信，很麻烦，所以群里一直叮嘱大家好好上课，不要缺勤，大家广而告之！</p>
+                        </div>
                     </div>
                 </article>
 
@@ -663,8 +728,18 @@
                         <span class="faq-arrow">⌄</span>
                     </button>
                     <div class="faq-content">
-                        <p>这里会后续汇总签证办理过程中的注意事项和常见提醒。</p>
-                        <div class="placeholder-box">后续更新：风险提示、常见误区、重要提醒。</div>
+                        <div class="warning-card">
+                            <p>1；当你第一次入学交完护照申请完签证后一定要看护照后面贴的日期看你第一次的签证什么时候到期，然后提前3-4个月就开始申请新的，这种事情没人给你操心自己一定要看好，自己去弄自己去跑如果没有及时弄这些东西后期会特别麻烦。</p>
+                        </div>
+                        <div class="warning-card">
+                            <p>2：在重新申请签证的时候他们会看你平时的成绩以及你有没有缺课特别多，尽量不要缺课因为会影响你申请签证。</p>
+                        </div>
+                        <div class="warning-card">
+                            <p>3：提交材料一定要在三个月前提交，如果拖到最后一个月签证费用会增加</p>
+                        </div>
+                        <div class="warning-card">
+                            <p>4：逾期停留在马来西亚每天必须付30马币。</p>
+                        </div>
                     </div>
                 </article>
             </div>
