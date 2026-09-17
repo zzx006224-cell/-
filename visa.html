@@ -258,6 +258,23 @@
             color: var(--muted);
         }
 
+        .material-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin: 0 0 18px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .material-list li {
+            padding: 12px 14px;
+            border: 1px solid rgba(44, 174, 118, 0.12);
+            border-radius: 12px;
+            background: rgba(44, 174, 118, 0.04);
+            color: var(--muted);
+        }
+
         .footer {
             width: min(1180px, calc(100% - 32px));
             margin: 0 auto 36px;
@@ -304,6 +321,10 @@
 
             .faq-content {
                 padding: 0 16px 18px;
+            }
+
+            .material-list {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -377,32 +398,44 @@
                         <span class="faq-arrow">⌄</span>
                     </button>
                     <div class="faq-content">
-                        <p>这里是签证办理相关内容的入口说明，后续可以逐步补充背景介绍和使用说明。</p>
-                        <div class="placeholder-box">后续更新：真实介绍、背景信息、阅读指引。</div>
+                        <p>当你成功入学后，学校会给你批签证，最多好像是三年，但是好多人他只给你批一年，中介会帮你弄第一次签证你只需要开学第一个星期交护照就可以了，但是后面你的签证到期就只能你自己去跑，但很多人第一次弄这个签证可能很多地方不明白会跑很多趟，所以我会在这个页面把签证续期讲清楚。</p>
                     </div>
                 </article>
 
                 <!-- 2. 如何查看自己签证什么时候到期 -->
                 <article class="faq-item">
                     <button class="faq-toggle" type="button" aria-expanded="false">
-                        <span><span class="faq-index">2</span>如何查看自己签证什么时候到期</span>
+                        <span><span class="faq-index">2</span>如和查看自己签证什么时候到期</span>
                         <span class="faq-arrow">⌄</span>
                     </button>
                     <div class="faq-content">
-                        <p>此处会后续补充查看签证到期时间的方法和入口说明。</p>
-                        <div class="placeholder-box">后续更新：查看方式、入口说明、常见问题。</div>
+                        <p>当你们拿到自己的护照后，可以看到护照背面有签证办公室贴的日期 会有三行日期 （第一行日期）这个日期是护照到期日 （第二行日期）签证到期日 （第三行日期）是提交材料的日期</p>
                     </div>
                 </article>
 
-                <!-- 3. 准备材料 -->
+                <!-- 3. 装备材料 -->
                 <article class="faq-item">
                     <button class="faq-toggle" type="button" aria-expanded="false">
-                        <span><span class="faq-index">3</span>准备材料</span>
+                        <span><span class="faq-index">3</span>装备材料</span>
                         <span class="faq-arrow">⌄</span>
                     </button>
                     <div class="faq-content">
-                        <p>这里将用于整理所需材料的清单和准备要点。</p>
-                        <div class="placeholder-box">后续更新：材料列表、准备顺序、注意事项。</div>
+                        <ul class="material-list">
+                            <li>录取通知书</li>
+                            <li>缴费回执</li>
+                            <li>护照</li>
+                            <li>学生卡</li>
+                            <li>推荐信</li>
+                            <li>确认信</li>
+                            <li>保险单</li>
+                            <li>成绩单</li>
+                            <li>出勤单</li>
+                            <li>在读证明</li>
+                            <li>预计毕业信</li>
+                            <li>白底照片电子版</li>
+                            <li>护照以及学生卡的扫描件</li>
+                        </ul>
+                        <p>以上是签证续签所需要准备的所有材料。</p>
                     </div>
                 </article>
 
