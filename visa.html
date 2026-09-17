@@ -275,6 +275,113 @@
             color: var(--muted);
         }
 
+        .detail-card {
+            margin: 0 0 18px;
+            padding: 16px;
+            border: 1px solid rgba(44, 174, 118, 0.12);
+            border-radius: 14px;
+            background: rgba(44, 174, 118, 0.04);
+        }
+
+        .detail-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-card h3 {
+            margin: 0 0 8px;
+            color: var(--text);
+            font-size: 1.05rem;
+        }
+
+        .detail-card p {
+            margin: 0 0 12px;
+        }
+
+        .detail-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-card a {
+            color: var(--primary-dark);
+            overflow-wrap: anywhere;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+        }
+
+        .detail-list {
+            margin: 0 0 12px;
+            padding-left: 24px;
+            color: var(--muted);
+        }
+
+        .detail-list li {
+            margin-bottom: 8px;
+        }
+
+        .detail-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .qr-image-button {
+            display: block;
+            width: min(180px, 100%);
+            margin: 12px auto 0;
+            padding: 0;
+            border: 0;
+            border-radius: 12px;
+            background: transparent;
+            cursor: zoom-in;
+        }
+
+        .qr-image-button img {
+            width: 100%;
+            height: auto;
+            border: 1px solid rgba(44, 174, 118, 0.16);
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .image-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.68);
+        }
+
+        .image-modal.is-open {
+            display: flex;
+        }
+
+        .image-modal img {
+            max-width: min(92vw, 980px);
+            max-height: 88vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            width: 44px;
+            height: 44px;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.94);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
         .footer {
             width: min(1180px, calc(100% - 32px));
             margin: 0 auto 36px;
@@ -446,8 +553,82 @@
                         <span class="faq-arrow">⌄</span>
                     </button>
                     <div class="faq-content">
-                        <p>这里未来会整理从哪里获取材料，以及常见材料的获取渠道说明。</p>
-                        <div class="placeholder-box">后续更新：获取入口、所需步骤、操作提示。</div>
+                        <div class="detail-card">
+                            <h3>如何获取材料</h3>
+                            <p>这个是一个链接里面可以要你的（录取通知书，预计毕业信。）这些东西：</p>
+                            <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSftvF-_Mpv6Pufr5_YMFQAoYzawTzFhrIhj75zA2Yf8iD-mkQ/viewform?pli=1&amp;pli=1" target="_blank" rel="noopener noreferrer">https://docs.google.com/forms/d/e/1FAIpQLSftvF-_Mpv6Pufr5_YMFQAoYzawTzFhrIhj75zA2Yf8iD-mkQ/viewform?pli=1&amp;pli=1</a></p>
+                            <p>但是需要缴纳1马币，这是他们的银行卡号直接转过去：14070000004716</p>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>通知书：</h3>
+                            <p>通知书在你被这个学校录取之后中介就会发给你，你只需要保存好就可以了。</p>
+                            <p>如果你发现你的通知书找不到了，可以在上面链接要。</p>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>缴费回执：</h3>
+                            <p>当你交完签证费用后他会给你发邮件，里面就是你的缴费回执单。</p>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>推荐信：</h3>
+                            <p>点击你的爱马龙，输入你的账号和密码，进入后看到首页左上角有一个三个小横杠的图标点一下，然后再点MY Academic，再点击Others，进入这个页面后可以看到很多文件，往下翻找到Expected Graduation打开就是你的推荐信。</p>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>确认信：</h3>
+                            <p>点击你的爱马龙，输入你的账号和密码，进入后看到首页左上角有一个三个小横杠的图标点一下，然后再点MY Academic，再点击Others，进入这个页面后可以看到很多文件，看到第一个文件Certification LetterUG/Double Degree点开就是你的确认信。</p>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>保险单：</h3>
+                            <p>提前3-4个月给这个邮箱发信息说你需要你的保险单，过几天它就会以邮件的方式给你发你的保险单，</p>
+                            <p>邮箱：<a href="mailto:etiqaagency1.iium@gmail.com">etiqaagency1.iium@gmail.com</a></p>
+                            <p>申请保险单所需的材料：</p>
+                            <p>本科生（第1-3级）：（1）副本护照详情页，一定要清晰</p>
+                            <p>（2）复印件当前学生签证，一定要清晰</p>
+                            <p>（3）副本最新认证信（来自AMAD或iMaa‘Ium门户）</p>
+                            <p>本科生（第四级）：1)副本护照详情页，一定要清晰</p>
+                            <p>2）复印件当前学生签证，一定要清晰</p>
+                            <p>3）副本最新预期毕业信(来自iMaa'lum Portal的Kuliyyah）</p>
+                            <p>研究所St学生：（1）副本护照详情页，一定要清晰</p>
+                            <p>（2）复印件当前学生签证，一定要清晰</p>
+                            <p>（3）)副本最新认证信(来自CPS或iMaa'lum门户)</p>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>成绩单：</h3>
+                            <p>打开你的艾马龙，点击MY Academic然后打开Partial Transcript这个就是你的成绩单。</p>
+                        </div>
+
+                        <div class="detail-card">
+                            <p>Emgs：这个软件达到90%就可以去办公室提交护照了。一般有一个月时间提交。</p>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>在读证明：</h3>
+                            <p>打开艾马龙点击MY Academic再点击Others看到Certification LetterUG/Double Degree点开就是你的在读证明。</p>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>出勤单：</h3>
+                            <p>出勤表如果低于80%续签是会被拒签的，出勤单需要扫描办公室的二维码获取，扫描完二维码后根据上面显示的内容填自己的信息然后提交，大概3-4天之后它就会发邮件给你。</p>
+                            <button class="qr-image-button" type="button" aria-label="查看出勤证明二维码">
+                                <img src="/mnt/data/af779782824023bc969f13690997c3b5.jpg" alt="" loading="lazy" />
+                            </button>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>白底照片电子版：</h3>
+                            <p>白底照片1寸2寸的都准备一些，尽量在国内多准备一点以备不时之需，如果你想来这边拍也可以，</p>
+                            <p>电子版就是你在照相馆拍完照片你可以问他要电子版的他会给你发一张照片。</p>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>护照以及学生卡扫描件：</h3>
+                            <p>护照学生卡扫描件，去打印店直接说你要护照以及学生卡的扫描件他们就明白了。这就是所有内容</p>
+                        </div>
                     </div>
                 </article>
 
@@ -495,6 +676,11 @@
         <p>免责声明：信息仅供参考，请以学校实际通知为准。</p>
     </footer>
 
+    <div class="image-modal" role="dialog" aria-modal="true" aria-label="出勤证明二维码大图">
+        <button class="image-modal-close" type="button" aria-label="关闭大图">&times;</button>
+        <img src="/mnt/data/af779782824023bc969f13690997c3b5.jpg" alt="" />
+    </div>
+
     <script>
         // 每个栏目都可以单独展开/收起，允许多个栏目同时展开。
         document.querySelectorAll('.faq-toggle').forEach(function (button) {
@@ -506,6 +692,36 @@
                 button.setAttribute('aria-expanded', String(!isOpen));
             });
         });
+
+        const qrImageButton = document.querySelector('.qr-image-button');
+        const imageModal = document.querySelector('.image-modal');
+        const imageModalClose = document.querySelector('.image-modal-close');
+
+        function closeImageModal() {
+            imageModal.classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+
+        if (qrImageButton && imageModal && imageModalClose) {
+            qrImageButton.addEventListener('click', function () {
+                imageModal.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            });
+
+            imageModalClose.addEventListener('click', closeImageModal);
+
+            imageModal.addEventListener('click', function (event) {
+                if (event.target === imageModal) {
+                    closeImageModal();
+                }
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && imageModal.classList.contains('is-open')) {
+                    closeImageModal();
+                }
+            });
+        }
     </script>
 </body>
 </html>
