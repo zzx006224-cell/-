@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>被开除条件 | 其他事务</title>
+    <style>
+        :root {
+            --bg: #f5fbf6;
+            --surface: #ffffff;
+            --border: rgba(45, 111, 73, 0.14);
+            --text: #11242f;
+            --muted: #5f7b86;
+            --primary: #2cae76;
+            --primary-dark: #248257;
+            --shadow: 0 18px 42px rgba(17, 36, 47, 0.08);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #f6fbf7 0%, #edf8f2 100%);
+            color: var(--text);
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+        }
+        a { color: inherit; text-decoration: none; }
+        .topbar { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,0.9); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+        .topbar-inner { width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
+        .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 14px; background: linear-gradient(135deg, #2cae76, #36c08b); color: #fff; font-size: 20px; }
+        .nav-links { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 18px; color: var(--muted); font-size: 0.92rem; }
+        .nav-links a:hover, .back-link:hover { color: var(--primary-dark); }
+        .page-shell { width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 52px 0 72px; }
+        .page-header { margin-bottom: 24px; }
+        .back-link { display: inline-block; margin-bottom: 16px; color: var(--primary-dark); font-weight: 600; }
+        .page-header h1 { margin: 0 0 10px; font-size: clamp(2.1rem, 4vw, 3rem); }
+        .page-header p { margin: 0; color: var(--muted); }
+        .content-card {
+            padding: 28px 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 18px 42px rgba(17, 36, 47, 0.08);
+        }
+        .content-label { display: inline-flex; padding: 8px 12px; background: rgba(44,174,118,0.08); color: var(--primary-dark); border-radius: 999px; font-weight: 700; margin-bottom: 16px; }
+        .content-card p { margin: 0 0 12px; color: var(--text); }
+        .content-card .placeholder { color: var(--muted); }
+        .footer { width: min(980px, calc(100% - 32px)); margin: 0 auto 32px; padding-top: 18px; border-top: 1px solid rgba(45,111,73,0.14); color: var(--muted); text-align: center; font-size: 0.9rem; }
+        .footer p { margin: 0 0 8px; }
+        @media (max-width: 760px) {
+            .topbar-inner, .page-shell, .footer { width: min(100% - 22px, 980px); }
+            .topbar-inner { flex-direction: column; align-items: flex-start; }
+            .nav-links { justify-content: flex-start; }
+            .content-card { padding: 20px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">🐱</span>
+                <span>指路猫</span>
+            </a>
+            <nav class="nav-links" aria-label="主导航">
+                <a href="index.html">首页</a>
+                <a href="campus-map.html">学校地图</a>
+                <a href="other-affairs.html">其他事务</a>
+                <a href="zhao.html">反馈建议</a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="page-shell">
+        <div class="page-header">
+            <a class="back-link" href="other-affairs.html">← 返回其他事务</a>
+            <h1>被开除条件</h1>
+            <p>此页面暂未补充正式内容，后续可在这里整理学校开除相关规定和注意事项。</p>
+        </div>
+
+        <section class="content-card">
+            <div class="content-label">更新说明</div>
+            <p>本页面用于后续添加“被开除条件”的真实信息，当前仅用于页面结构和链接占位。</p>
+            <p class="placeholder">后续可在此处补充内容：校规重点、常见违规情况、处理规则和提醒事项等。</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>信息持续更新中，发现错误欢迎 <a href="zhao.html">反馈</a>。</p>
+        <p>免责声明：信息仅供参考，请以学校实际通知为准。</p>
+    </footer>
+</body>
+</html>
