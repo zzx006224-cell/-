@@ -6,8 +6,8 @@
     <title>语言班信息 | 其他事务</title>
     <style>
         :root {
-            --bg: #f5fbf6;
             --surface: #ffffff;
+            --surface-soft: #f6fbf8;
             --border: rgba(45, 111, 73, 0.14);
             --text: #11242f;
             --muted: #5f7b86;
@@ -26,33 +26,47 @@
         }
         a { color: inherit; text-decoration: none; }
         .topbar { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,0.9); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
-        .topbar-inner { width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .topbar-inner { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
         .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
         .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 14px; background: linear-gradient(135deg, #2cae76, #36c08b); color: #fff; font-size: 20px; }
         .nav-links { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 18px; color: var(--muted); font-size: 0.92rem; }
         .nav-links a:hover, .back-link:hover { color: var(--primary-dark); }
-        .page-shell { width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 52px 0 72px; }
-        .page-header { margin-bottom: 24px; }
+        .page-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 72px; }
+        .page-header { margin-bottom: 30px; }
         .back-link { display: inline-block; margin-bottom: 16px; color: var(--primary-dark); font-weight: 600; }
-        .page-header h1 { margin: 0 0 10px; font-size: clamp(2.1rem, 4vw, 3rem); }
-        .page-header p { margin: 0; color: var(--muted); }
-        .content-card {
-            padding: 28px 24px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            box-shadow: 0 18px 42px rgba(17, 36, 47, 0.08);
-        }
-        .content-label { display: inline-flex; padding: 8px 12px; background: rgba(44,174,118,0.08); color: var(--primary-dark); border-radius: 999px; font-weight: 700; margin-bottom: 16px; }
-        .content-card p { margin: 0 0 12px; color: var(--text); }
-        .content-card .placeholder { color: var(--muted); }
-        .footer { width: min(980px, calc(100% - 32px)); margin: 0 auto 32px; padding-top: 18px; border-top: 1px solid rgba(45,111,73,0.14); color: var(--muted); text-align: center; font-size: 0.9rem; }
+        .page-header h1 { margin: 0; font-size: clamp(2.1rem, 4vw, 3rem); line-height: 1.15; }
+        .module-list { display: grid; gap: 22px; }
+        .module { padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); }
+        .module-heading { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; }
+        .module-icon { display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 42px; border-radius: 13px; background: rgba(44, 174, 118, 0.12); font-size: 1.35rem; }
+        .module h2 { margin: 0; font-size: 1.35rem; line-height: 1.3; }
+        .module p { margin: 0 0 14px; overflow-wrap: anywhere; }
+        .module p:last-child { margin-bottom: 0; }
+        .level-grid, .exam-grid, .score-grid, .tips-grid { display: grid; gap: 14px; }
+        .level-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .exam-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 20px 0 24px; }
+        .score-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 20px; }
+        .tips-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 20px; }
+        .info-card { padding: 18px; background: linear-gradient(180deg, #ffffff 0%, var(--surface-soft) 100%); border: 1px solid rgba(44, 174, 118, 0.14); border-radius: 16px; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+        .info-card:hover { transform: translateY(-2px); border-color: rgba(44, 174, 118, 0.3); box-shadow: 0 14px 28px rgba(44, 174, 118, 0.1); }
+        .info-card h3 { margin: 0 0 10px; color: var(--primary-dark); font-size: 1.08rem; line-height: 1.4; overflow-wrap: anywhere; }
+        .info-card p { margin: 0; color: var(--text); }
+        .exam-card h3 { color: var(--text); }
+        .subheading { margin: 20px 0 10px; color: var(--primary-dark); font-size: 1.05rem; }
+        .score-card { display: flex; flex-direction: column; justify-content: space-between; gap: 14px; min-height: 130px; }
+        .score-card p { margin: 0; }
+        .score { color: var(--primary-dark); font-size: 1.8rem; font-weight: 700; line-height: 1; }
+        .tip-card { min-height: 104px; }
+        .tip-card.emphasis { border-color: rgba(44, 174, 118, 0.36); background: linear-gradient(180deg, #f1fbf5 0%, #e6f6ed 100%); }
+        .footer { width: min(1180px, calc(100% - 32px)); margin: 0 auto 32px; padding-top: 18px; border-top: 1px solid rgba(45,111,73,0.14); color: var(--muted); text-align: center; font-size: 0.9rem; }
         .footer p { margin: 0 0 8px; }
         @media (max-width: 760px) {
-            .topbar-inner, .page-shell, .footer { width: min(100% - 22px, 980px); }
+            .topbar-inner, .page-shell, .footer { width: min(100% - 22px, 1180px); }
             .topbar-inner { flex-direction: column; align-items: flex-start; }
-            .nav-links { justify-content: flex-start; }
-            .content-card { padding: 20px 16px; }
+            .nav-links { justify-content: flex-start; gap: 10px 14px; }
+            .module { padding: 20px 16px; }
+            .level-grid, .exam-grid, .score-grid, .tips-grid { grid-template-columns: 1fr; gap: 10px; }
+            .info-card { padding: 16px; }
         }
     </style>
 </head>
@@ -76,14 +90,62 @@
         <div class="page-header">
             <a class="back-link" href="other-affairs.html">← 返回其他事务</a>
             <h1>语言班信息</h1>
-            <p>此页面暂未补充正式内容，后续可在这里整理语言班安排与报名要求。</p>
         </div>
 
-        <section class="content-card">
-            <div class="content-label">更新说明</div>
-            <p>本页面用于后续添加“语言班信息”的真实信息，当前仅用于页面结构和链接占位。</p>
-            <p class="placeholder">后续可在此处补充内容：班级安排、报名入口、课程说明和注意事项等。</p>
-        </section>
+        <div class="module-list">
+            <section class="module">
+                <div class="module-heading"><span class="module-icon" aria-hidden="true">📚</span><h2>1：语言班分四个等级</h2></div>
+                <div class="level-grid">
+                    <article class="info-card"><h3>LEED 1011</h3><p>1011上8小时课程，早上8点上课，下午5-6点下课（有些老师会提前下课）</p><p>上课时间大概是8：00到1：00，2：00到6：00</p></article>
+                    <article class="info-card"><h3>LEED 1012</h3><p>1012上6小时课程，早上8点上课，下午4-5点下课</p><p>上课时间大概是8：00到12：00，2：00到5：00</p></article>
+                    <article class="info-card"><h3>LEED 1013</h3><p>1013和1014的课程和1011以及1012都不一样，3级4级上3个小时的英语课（看你的老师上午还是下午上），3级一周有四节英语课</p></article>
+                    <article class="info-card"><h3>LEED 1014</h3><p>4级也是上3个小时的课，但是一周只上两节英语课，（上课时间也是看你们老师怎么定）</p></article>
+                </div>
+            </section>
+
+            <section class="module">
+                <div class="module-heading"><span class="module-icon" aria-hidden="true">👩‍🏫</span><h2>2：老师</h2></div>
+                <p>1级和2级一个班都是四个老师（听说读写各一个老师）</p>
+            </section>
+
+            <section class="module">
+                <div class="module-heading"><span class="module-icon" aria-hidden="true">📝</span><h2>3：考试</h2></div>
+                <p>这四个等级的班级一个学期都是四场考试，每次考试考四个东西：</p>
+                <div class="exam-grid">
+                    <article class="info-card exam-card"><h3>（听力考试，在火花平台上打开听力考试听录音写题）</h3></article>
+                    <article class="info-card exam-card"><h3>（交流考试，这个就是考说，老师会给你一个题目你围绕这个题目给老师说最多2分钟）</h3></article>
+                    <article class="info-card exam-card"><h3>（阅读考试：还是打开火花平台里面有阅读考试，阅读文章答题）</h3></article>
+                    <article class="info-card exam-card"><h3>（写作考试：纸质考试，老师会给你发试卷，上面有作文题目写满就可以了）</h3></article>
+                </div>
+                <h3 class="subheading">四次考试的时间：</h3>
+                <p>第一次考试在开学两个月后，第二次是期中考试在第一次考完后的2-3个星期左右，第三次考试在期中后的1-2个星期，第四次就是期末考试大概就是开学四个月之后（一个学期就4个月左右）。</p>
+            </section>
+
+            <section class="module">
+                <div class="module-heading"><span class="module-icon" aria-hidden="true">🎭</span><h2>4：语言班活动</h2></div>
+                <p>每个级别的班级每个学期都有两次活动，一次是话剧一次是摆摊，时间一般是期中第一次，快期末的时候最后一个活动。</p>
+            </section>
+
+            <section class="module">
+                <div class="module-heading"><span class="module-icon" aria-hidden="true">📊</span><h2>5：成绩（入系条件）</h2></div>
+                <p>你的总分是100分，一个学期总共四次考试，前三次考试成绩会加在一起（相当于累计计分）一般快期末考试的时候老师会给你们看你们上学期间拿了多少分你们加在一起就可以知道自己期末再考多少可以进系，一般老师都会打50-59分</p>
+                <div class="score-grid">
+                    <article class="info-card score-card"><p>英语专业的学生要考到：</p><strong class="score">75分</strong></article>
+                    <article class="info-card score-card"><p>其他专业的学生要考到：</p><strong class="score">70分</strong></article>
+                    <article class="info-card score-card"><p>阿语专业的学生要考到：</p><strong class="score">65分</strong></article>
+                </div>
+            </section>
+
+            <section class="module">
+                <div class="module-heading"><span class="module-icon" aria-hidden="true">💡</span><h2>6：注意以及技巧</h2></div>
+                <div class="tips-grid">
+                    <article class="info-card tip-card"><p>（1）语言班的大部分老师都挺好的，平时你可以多和老师聊天这样他给你的平时分就会高一点。</p></article>
+                    <article class="info-card tip-card emphasis"><p>（2）语言班缺课超过4节自动取消期末考试资格</p></article>
+                    <article class="info-card tip-card"><p>（3）不要经常迟到，老师可能会给你打低分</p></article>
+                    <article class="info-card tip-card"><p>（4）活动的时候一定要多说话加的分会特别多</p></article>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer class="footer">
