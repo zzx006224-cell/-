@@ -6,8 +6,8 @@
     <title>吉隆坡好用app | 其他事务</title>
     <style>
         :root {
-            --bg: #f5fbf6;
             --surface: #ffffff;
+            --surface-soft: #f6fbf8;
             --border: rgba(45, 111, 73, 0.14);
             --text: #11242f;
             --muted: #5f7b86;
@@ -26,33 +26,36 @@
         }
         a { color: inherit; text-decoration: none; }
         .topbar { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,0.9); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
-        .topbar-inner { width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .topbar-inner { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
         .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
         .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 14px; background: linear-gradient(135deg, #2cae76, #36c08b); color: #fff; font-size: 20px; }
         .nav-links { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 18px; color: var(--muted); font-size: 0.92rem; }
         .nav-links a:hover, .back-link:hover { color: var(--primary-dark); }
-        .page-shell { width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 52px 0 72px; }
-        .page-header { margin-bottom: 24px; }
+        .page-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 72px; }
+        .page-header { margin-bottom: 30px; }
         .back-link { display: inline-block; margin-bottom: 16px; color: var(--primary-dark); font-weight: 600; }
-        .page-header h1 { margin: 0 0 10px; font-size: clamp(2.1rem, 4vw, 3rem); }
-        .page-header p { margin: 0; color: var(--muted); }
-        .content-card {
-            padding: 28px 24px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            box-shadow: 0 18px 42px rgba(17, 36, 47, 0.08);
-        }
-        .content-label { display: inline-flex; padding: 8px 12px; background: rgba(44,174,118,0.08); color: var(--primary-dark); border-radius: 999px; font-weight: 700; margin-bottom: 16px; }
-        .content-card p { margin: 0 0 12px; color: var(--text); }
-        .content-card .placeholder { color: var(--muted); }
-        .footer { width: min(980px, calc(100% - 32px)); margin: 0 auto 32px; padding-top: 18px; border-top: 1px solid rgba(45,111,73,0.14); color: var(--muted); text-align: center; font-size: 0.9rem; }
+        .page-header h1 { margin: 0; font-size: clamp(2.1rem, 4vw, 3rem); line-height: 1.15; }
+        .category-list { display: grid; gap: 22px; }
+        .category { padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); }
+        .category-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .category-icon { display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 42px; border-radius: 13px; background: rgba(44, 174, 118, 0.12); font-size: 1.35rem; }
+        .category h2 { margin: 0; font-size: 1.35rem; line-height: 1.3; }
+        .category-note { margin: -6px 0 16px; color: var(--muted); }
+        .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+        .app-card { min-height: 126px; padding: 16px 17px; background: linear-gradient(180deg, #ffffff 0%, var(--surface-soft) 100%); border: 1px solid rgba(44, 174, 118, 0.14); border-radius: 16px; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+        .app-card:hover { transform: translateY(-2px); border-color: rgba(44, 174, 118, 0.3); box-shadow: 0 14px 28px rgba(44, 174, 118, 0.1); }
+        .app-number { display: block; margin-bottom: 4px; color: var(--primary-dark); font-size: 0.82rem; font-weight: 700; }
+        .app-name { display: block; color: var(--text); font-size: 1.08rem; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+        .app-description { margin: 8px 0 0; color: var(--muted); font-size: 0.94rem; line-height: 1.55; overflow-wrap: anywhere; }
+        .footer { width: min(1180px, calc(100% - 32px)); margin: 0 auto 32px; padding-top: 18px; border-top: 1px solid rgba(45,111,73,0.14); color: var(--muted); text-align: center; font-size: 0.9rem; }
         .footer p { margin: 0 0 8px; }
         @media (max-width: 760px) {
-            .topbar-inner, .page-shell, .footer { width: min(100% - 22px, 980px); }
+            .topbar-inner, .page-shell, .footer { width: min(100% - 22px, 1180px); }
             .topbar-inner { flex-direction: column; align-items: flex-start; }
-            .nav-links { justify-content: flex-start; }
-            .content-card { padding: 20px 16px; }
+            .nav-links { justify-content: flex-start; gap: 10px 14px; }
+            .category { padding: 20px 16px; }
+            .app-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+            .app-card { min-height: 118px; padding: 14px; }
         }
     </style>
 </head>
@@ -76,14 +79,88 @@
         <div class="page-header">
             <a class="back-link" href="other-affairs.html">← 返回其他事务</a>
             <h1>吉隆坡好用app</h1>
-            <p>此页面暂未补充正式内容，后续可在这里整理实用 App 推荐与使用说明。</p>
         </div>
 
-        <section class="content-card">
-            <div class="content-label">更新说明</div>
-            <p>本页面用于后续添加“吉隆坡好用app”的真实信息，当前仅用于页面结构和链接占位。</p>
-            <p class="placeholder">后续可在此处补充内容：出行app、支付app、导航app、生活实用类app等。</p>
-        </section>
+        <div class="category-list">
+            <section class="category">
+                <div class="category-header"><span class="category-icon" aria-hidden="true">📚</span><h2>学习软件：</h2></div>
+                <div class="app-grid">
+                    <article class="app-card"><span class="app-number">1：</span><span class="app-name">小鹦看看</span><p class="app-description">（介绍：看美剧边看边学）</p></article>
+                    <article class="app-card"><span class="app-number">2：</span><span class="app-name">百词斩</span><p class="app-description">（介绍：背单词）</p></article>
+                    <article class="app-card"><span class="app-number">3：</span><span class="app-name">不背单词</span><p class="app-description">(介绍：背单词)</p></article>
+                    <article class="app-card"><span class="app-number">4：</span><span class="app-name">NaturalReader</span><p class="app-description">（介绍：可以把英语文章导入教读）</p></article>
+                </div>
+            </section>
+
+            <section class="category">
+                <div class="category-header"><span class="category-icon" aria-hidden="true">🧳</span><h2>旅游软件：</h2></div>
+                <div class="app-grid">
+                    <article class="app-card"><span class="app-number">1：</span><span class="app-name">爱彼迎</span><p class="app-description">（介绍：订酒店非常方便）</p></article>
+                    <article class="app-card"><span class="app-number">2：</span><span class="app-name">Trip.com</span><p class="app-description">（介绍：旅行软件）</p></article>
+                    <article class="app-card"><span class="app-number">3：</span><span class="app-name">指北旅行</span><p class="app-description">（介绍：旅游规划软件）</p></article>
+                    <article class="app-card"><span class="app-number">4：</span><span class="app-name">Couchsurfing</span><p class="app-description">（介绍：背包客旅游软件）</p></article>
+                    <article class="app-card"><span class="app-number">5：</span><span class="app-name">GetYourGuide</span><p class="app-description">（介绍：旅游软件）</p></article>
+                </div>
+            </section>
+
+            <section class="category">
+                <div class="category-header"><span class="category-icon" aria-hidden="true">🚗</span><h2>导航（打车）软件：</h2></div>
+                <div class="app-grid">
+                    <article class="app-card"><span class="app-number">1：</span><span class="app-name">Bolt</span><p class="app-description">（打车软件，平时比Grab打车便宜）</p></article>
+                    <article class="app-card"><span class="app-number">2：</span><span class="app-name">Grab</span><p class="app-description">（非常实用的app，打车点外卖都可以）</p></article>
+                    <article class="app-card"><span class="app-number">3：</span><span class="app-name">Moovit</span><p class="app-description">（一款可以查看公交车路线的软件）</p></article>
+                    <article class="app-card"><span class="app-number">4：</span><span class="app-name">Waze</span><p class="app-description">（非常好用的一款导航软件会标清楚哪里有警察等）</p></article>
+                    <article class="app-card"><span class="app-number">5：</span><span class="app-name">Easybook</span><p class="app-description">（大巴，渡轮，火车买票）</p></article>
+                    <article class="app-card"><span class="app-number">6：</span><span class="app-name">redBus</span><p class="app-description">（大巴软件）</p></article>
+                    <article class="app-card"><span class="app-number">7：</span><span class="app-name">奥维地图</span><p class="app-description">（比较好用的一款导航软件）</p></article>
+                </div>
+            </section>
+
+            <section class="category">
+                <div class="category-header"><span class="category-icon" aria-hidden="true">💻</span><h2>网课软件：</h2></div>
+                <p class="category-note">（以下不多介绍，都是上网课要用的软件全部下上）</p>
+                <div class="app-grid">
+                    <article class="app-card"><span class="app-number">1：</span><span class="app-name">Chat</span></article>
+                    <article class="app-card"><span class="app-number">2：</span><span class="app-name">Copilot</span></article>
+                    <article class="app-card"><span class="app-number">3：</span><span class="app-name">Teams</span></article>
+                    <article class="app-card"><span class="app-number">4：</span><span class="app-name">Authenticator</span></article>
+                    <article class="app-card"><span class="app-number">5：</span><span class="app-name">Meet</span></article>
+                </div>
+            </section>
+
+            <section class="category">
+                <div class="category-header"><span class="category-icon" aria-hidden="true">💼</span><h2>找兼职软件：</h2></div>
+                <div class="app-grid">
+                    <article class="app-card"><span class="app-number">1：</span><span class="app-name">YY circle</span><p class="app-description">（介绍：上面会有招聘信息）</p></article>
+                    <article class="app-card"><span class="app-number">2：</span><span class="app-name">Linkedln</span><p class="app-description">（介绍：上面会有招聘信息）</p></article>
+                </div>
+            </section>
+
+            <section class="category">
+                <div class="category-header"><span class="category-icon" aria-hidden="true">🛍️</span><h2>购物软件：</h2></div>
+                <div class="app-grid">
+                    <article class="app-card"><span class="app-number">1：</span><span class="app-name">亚马逊</span><p class="app-description">（介绍：购物软件）</p></article>
+                    <article class="app-card"><span class="app-number">2：</span><span class="app-name">shopee</span><p class="app-description">（介绍：特别好用的一款购物软件）</p></article>
+                    <article class="app-card"><span class="app-number">3：</span><span class="app-name">Lazada</span><p class="app-description">（介绍：购物软件）</p></article>
+                    <article class="app-card"><span class="app-number">4：</span><span class="app-name">mudah.my</span><p class="app-description">（介绍：马来西亚二手购物平台）</p></article>
+                    <article class="app-card"><span class="app-number">5：</span><span class="app-name">TikTok</span><p class="app-description">（介绍：和国内抖音一样也可以买东西）</p></article>
+                </div>
+            </section>
+
+            <section class="category">
+                <div class="category-header"><span class="category-icon" aria-hidden="true">🧰</span><h2>其他软件：</h2></div>
+                <div class="app-grid">
+                    <article class="app-card"><span class="app-number">1：</span><span class="app-name">PAY@KL</span><p class="app-description">（介绍：车辆有罚款可以在这个上面交不用去交通局）</p></article>
+                    <article class="app-card"><span class="app-number">2：</span><span class="app-name">Canva可画</span><p class="app-description">（介绍：非常好用的一款设计软件）</p></article>
+                    <article class="app-card"><span class="app-number">3：</span><span class="app-name">你今天真好看</span><p class="app-description">（介绍：可以帮你改善皮肤状态，皮肤管理软件）</p></article>
+                    <article class="app-card"><span class="app-number">4：</span><span class="app-name">BoxPLUS Digital</span><p class="app-description">（介绍：这是我们学校快递柜的软件，你的快递出问题了可以试试在这上面解决。）</p></article>
+                    <article class="app-card"><span class="app-number">5：</span><span class="app-name">Beam</span><p class="app-description">（介绍：共享踏板的软件）</p></article>
+                    <article class="app-card"><span class="app-number">6：</span><span class="app-name">Suki</span><p class="app-description">（介绍：非常好的一款异地联系感情的一款软件）</p></article>
+                    <article class="app-card"><span class="app-number">7：</span><span class="app-name">模色研</span><p class="app-description">（介绍：如果有和我一样喜欢玩模型的可以用用，调色软件）</p></article>
+                    <article class="app-card"><span class="app-number">8：</span><span class="app-name">foodpanda</span><p class="app-description">（介绍：点外卖软件）</p></article>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer class="footer">
