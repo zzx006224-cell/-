@@ -330,15 +330,15 @@
 
         .hero-visual {
             position: relative;
-            min-height: 420px;
+            min-height: 460px;
             background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%),
                 radial-gradient(circle at top right, rgba(60, 141, 255, 0.16), transparent 36%),
                 radial-gradient(circle at 20% 10%, rgba(255, 159, 73, 0.16), transparent 28%),
                 #eef8f3;
-            border-radius: 32px;
-            box-shadow: var(--shadow);
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.8);
+            border-radius: 32px;
+            box-shadow: var(--shadow);
         }
 
         .hero-visual::before {
@@ -405,6 +405,114 @@
             background: linear-gradient(180deg, #ecf5f1 0%, #f9fff9 100%);
             border: 1px solid rgba(44, 174, 118, 0.12);
             overflow: hidden;
+        }
+
+        .campus-preview {
+            perspective: 800px;
+            touch-action: pan-y;
+            cursor: grab;
+        }
+
+        .campus-preview.is-dragging { cursor: grabbing; }
+        .campus-preview.is-3d { cursor: auto; }
+        .campus-launch, .campus-full-link { position: absolute; z-index: 3; border-radius: 999px; font-size: 12px; font-weight: 700; }
+        .campus-launch { left: 50%; bottom: 53px; transform: translateX(-50%); border: 0; padding: 10px 16px; color: #fff; background: #176d57; box-shadow: 0 4px 12px #0004; white-space: nowrap; }
+        .campus-full-link { left: 12px; top: 12px; padding: 7px 10px; color: #174d3b; background: #fff; text-decoration: none; }
+        .campus-preview.is-3d .campus-full-link { top: auto; bottom: 8px; color: #fff; background: #082432d9; }
+        .campus-preview-frame { display: none; position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+        .campus-preview.is-3d .campus-scene, .campus-preview.is-3d .campus-preview-note, .campus-preview.is-3d .campus-launch { display: none; }
+        .campus-preview.is-3d .campus-preview-frame { display: block; }
+
+        .campus-scene {
+            position: absolute;
+            width: 360px;
+            height: 280px;
+            left: 50%;
+            top: 47%;
+            transform: translate(-50%, -50%) rotateX(var(--tilt, 58deg)) rotateZ(var(--turn, -20deg));
+            transform-style: preserve-3d;
+        }
+
+        .campus-ground {
+            position: absolute;
+            inset: 0;
+            border: 2px solid #a8d6bb;
+            border-radius: 22px;
+            background: #d9efdf;
+            background-image: linear-gradient(#bcdcc6 1px, transparent 1px), linear-gradient(90deg, #bcdcc6 1px, transparent 1px);
+            background-size: 30px 30px;
+            box-shadow: 0 24px 38px rgba(16, 68, 44, .2);
+        }
+
+        .campus-building {
+            position: absolute;
+            left: var(--x);
+            top: var(--y);
+            width: var(--w);
+            height: var(--d);
+            padding: 0;
+            border: 0;
+            background: none;
+            color: #173a2b;
+            transform: translate(-50%, -50%);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .campus-building span { position: absolute; display: block; }
+
+        .campus-building .roof {
+            inset: 0;
+            border: 2px solid rgba(255, 255, 255, .9);
+            border-radius: 5px;
+            background: var(--roof);
+            transform: translateZ(var(--h));
+            display: grid;
+            place-items: center;
+            font-size: 11px;
+            font-weight: 800;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, .12);
+        }
+
+        .campus-building .front {
+            width: 100%;
+            height: var(--h);
+            bottom: 0;
+            background: var(--wall);
+            transform-origin: bottom;
+            transform: rotateX(-90deg);
+        }
+
+        .campus-building .side {
+            height: 100%;
+            width: var(--h);
+            right: 0;
+            background: var(--wall-dark);
+            transform-origin: right;
+            transform: rotateY(90deg);
+        }
+
+        .campus-building:focus-visible .roof { outline: 3px solid #174cbb; outline-offset: 3px; }
+
+        .campus-preview-note {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            padding: 7px 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .92);
+            color: #34584a;
+            font-size: 12px;
+            text-align: center;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @media (max-width: 480px) {
+            .campus-scene {
+                transform: translate(-50%, -50%) scale(.52) rotateX(var(--tilt, 58deg)) rotateZ(var(--turn, -20deg));
+            }
         }
 
         .map-grid {
@@ -610,10 +718,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .hero-visual {
-                min-height: 360px;
-            }
-
             .footer-grid {
                 grid-template-columns: 1fr;
             }
@@ -665,12 +769,11 @@
             }
 
             .hero-map {
-                inset: 18px;
+                inset: 12px;
+                padding: 10px;
             }
+            .hero-map .map-card { padding: 12px; gap: 10px; }
 
-            .hero-visual {
-                min-height: 320px;
-            }
         }
     </style>
 </head>
@@ -717,7 +820,7 @@
                     </div>
                 </div>
 
-                <div class="hero-visual" aria-hidden="true">
+                <div class="hero-visual">
                     <div class="shadow-layer"></div>
                     <div class="hero-map">
                         <div class="map-card">
@@ -726,13 +829,20 @@
                                     <span class="map-dot"></span>
                                     校区地图预览
                                 </div>
-                                <span>指路猫</span>
+                                <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" style="font-size:12px;color:#426d5c">位置参考 © OpenStreetMap</a>
                             </div>
-                            <div class="map-visual">
-                                <div class="map-grid"></div>
-                                <div class="map-pin"></div>
-                                <div class="map-pin"></div>
-                                <div class="map-pin"></div>
+                            <div class="map-visual campus-preview" id="campus-preview" tabindex="0" aria-label="鹅唛校区四处地标的可旋转三维示意图，拖动或使用方向键可旋转">
+                                <div class="campus-scene" id="campus-scene">
+                                    <div class="campus-ground"></div>
+                                    <button class="campus-building" type="button" aria-label="KICT 信息与通信技术学院" data-name="KICT 信息与通信技术学院" style="--x:14%;--y:12%;--w:55px;--d:38px;--h:23px;--roof:#71b6ed;--wall:#86c3eb;--wall-dark:#5398c6"><span class="front"></span><span class="side"></span><span class="roof">KICT</span></button>
+                                    <button class="campus-building" type="button" aria-label="Sultan Haji Ahmad Shah 清真寺" data-name="Sultan Haji Ahmad Shah 清真寺" style="--x:66%;--y:64%;--w:56px;--d:47px;--h:28px;--roof:#e5c17b;--wall:#ead29e;--wall-dark:#cba76d"><span class="front"></span><span class="side"></span><span class="roof">清真寺</span></button>
+                                    <button class="campus-building" type="button" aria-label="Dar Al-Hikmah 图书馆" data-name="Dar Al-Hikmah 图书馆" style="--x:87%;--y:63%;--w:48px;--d:42px;--h:20px;--roof:#a99ce0;--wall:#c3b9ea;--wall-dark:#8b7fc2"><span class="front"></span><span class="side"></span><span class="roof">图书馆</span></button>
+                                    <button class="campus-building" type="button" aria-label="Muhammad Abdul-Rauf 行政楼" data-name="Muhammad Abdul-Rauf 行政楼" style="--x:63%;--y:84%;--w:51px;--d:32px;--h:19px;--roof:#f6ad83;--wall:#f5c4a7;--wall-dark:#da936c"><span class="front"></span><span class="side"></span><span class="roof">行政楼</span></button>
+                                </div>
+                                <div class="campus-preview-note" id="campus-preview-note" aria-live="polite">拖动旋转 · 点击建筑查看名称 · 地标位置示意</div>
+                                <a class="campus-full-link" href="campus-3d-preview.html">完整 3D 校园 ↗</a>
+                                <button class="campus-launch" id="campus-launch" type="button">启动 3D 校园</button>
+                                <iframe class="campus-preview-frame" id="campus-preview-frame" title="IIUM Gombak 3D 校园预览" loading="lazy"></iframe>
                             </div>
                         </div>
                     </div>
@@ -847,6 +957,54 @@
     </main>
 
     <script>
+        const campusPreview = document.getElementById('campus-preview');
+        const campusScene = document.getElementById('campus-scene');
+        const campusPreviewNote = document.getElementById('campus-preview-note');
+        let turn = -20;
+        let tilt = 58;
+        let dragStart = null;
+
+        campusPreview.addEventListener('pointerdown', (event) => {
+            if (campusPreview.classList.contains('is-3d') || event.target.closest('.campus-building, .campus-launch, .campus-full-link')) return;
+            dragStart = { x: event.clientX, y: event.clientY };
+            campusPreview.setPointerCapture(event.pointerId);
+            campusPreview.classList.add('is-dragging');
+        });
+        campusPreview.addEventListener('pointermove', (event) => {
+            if (!dragStart || campusPreview.classList.contains('is-3d')) return;
+            turn += (event.clientX - dragStart.x) * .35;
+            tilt = Math.max(25, Math.min(75, tilt - (event.clientY - dragStart.y) * .2));
+            campusScene.style.setProperty('--turn', `${turn}deg`);
+            campusScene.style.setProperty('--tilt', `${tilt}deg`);
+            dragStart = { x: event.clientX, y: event.clientY };
+        });
+        const stopCampusDrag = () => {
+            dragStart = null;
+            campusPreview.classList.remove('is-dragging');
+        };
+        campusPreview.addEventListener('pointerup', stopCampusDrag);
+        campusPreview.addEventListener('pointercancel', stopCampusDrag);
+        campusPreview.addEventListener('lostpointercapture', stopCampusDrag);
+        campusPreview.addEventListener('keydown', (event) => {
+            if (campusPreview.classList.contains('is-3d')) return;
+            if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+            event.preventDefault();
+            if (event.key === 'ArrowLeft') turn -= 10;
+            if (event.key === 'ArrowRight') turn += 10;
+            if (event.key === 'ArrowUp') tilt = Math.min(75, tilt + 5);
+            if (event.key === 'ArrowDown') tilt = Math.max(25, tilt - 5);
+            campusScene.style.setProperty('--turn', `${turn}deg`);
+            campusScene.style.setProperty('--tilt', `${tilt}deg`);
+        });
+        campusPreview.querySelectorAll('.campus-building').forEach((building) => {
+            building.addEventListener('click', () => { campusPreviewNote.textContent = building.dataset.name + ' · 建筑外形为示意'; });
+        });
+        document.getElementById('campus-launch').addEventListener('click', () => {
+            campusPreview.classList.add('is-3d');
+            campusPreview.setAttribute('aria-label', 'IIUM Gombak 可交互 3D 校园预览');
+            document.getElementById('campus-preview-frame').src = 'campus-3d-preview.html?embed=1';
+        });
+
         // ========== 全站搜索系统 ==========
         
         // 搜索数据库 - 易于扩展

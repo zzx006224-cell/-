@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IIUM Gombak 3D 校园预览 · 指路猫</title>
+  <script>if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.classList.add('embed');</script>
+  <style>
+    :root { color-scheme: dark; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: #ecf7f3; background: #091d2b; }
+    .page { max-width: 1460px; margin: auto; padding: clamp(14px, 2.4vw, 34px); }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; }
+    .eyebrow { color: #73d5c1; font-size: 12px; letter-spacing: .18em; font-weight: 800; }
+    h1 { margin: 5px 0 4px; font-size: clamp(24px, 3vw, 38px); letter-spacing: -.03em; }
+    header p, .subtle { margin: 0; color: #9fb4c0; font-size: 14px; }
+    .badge { padding: 8px 12px; border: 1px solid #6dbdae69; border-radius: 999px; color: #b8eadd; font-size: 12px; white-space: nowrap; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; align-items: start; }
+    .stage { position: relative; overflow: hidden; height: min(70vh, 740px); border: 1px solid #ffffff1e; border-radius: 22px; background: #102f43; box-shadow: 0 22px 55px #0005; }
+    canvas { display: block; width: 100%; height: 100%; outline: none; touch-action: none; }
+    .stage::after { content: ""; pointer-events: none; position: absolute; inset: 0; background: linear-gradient(0deg, #05152180 0%, transparent 24%); }
+    .stage-top, .stage-bottom { position: absolute; z-index: 2; left: 20px; right: 20px; display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+    .stage-top { top: 18px; }
+    .stage-bottom { bottom: 16px; }
+    .pill { background: #082432c9; border: 1px solid #ffffff2e; border-radius: 999px; padding: 8px 12px; font-size: 12px; backdrop-filter: blur(8px); }
+    .controls { display: flex; gap: 7px; padding: 5px; background: #082432d9; border: 1px solid #ffffff24; border-radius: 14px; backdrop-filter: blur(8px); }
+    button { font: inherit; cursor: pointer; }
+    .mode { border: 0; border-radius: 10px; color: #b8cbd4; background: transparent; padding: 9px 12px; white-space: nowrap; }
+    .mode[aria-pressed="true"] { background: #e4fff1; color: #0b3a35; font-weight: 800; box-shadow: 0 2px 12px #b4ffe570; }
+    .help { font-size: 12px; color: #f2fffc; text-align: right; text-shadow: 0 1px 5px #001; }
+    .tooltip { display: none; position: absolute; z-index: 3; pointer-events: none; padding: 8px 12px; border-radius: 10px; background: #05242def; border: 1px solid #83d7bb80; box-shadow: 0 8px 20px #0007; font-weight: 700; font-size: 13px; white-space: nowrap; }
+    aside { display: flex; flex-direction: column; gap: 14px; }
+    .panel { border: 1px solid #ffffff1a; background: #102c3a; border-radius: 18px; padding: 19px; }
+    .panel h2 { font-size: 16px; margin: 0 0 10px; }
+    .panel p { font-size: 13px; color: #aec2cc; line-height: 1.65; margin: 0; }
+    .facts { margin: 12px 0 0; display: grid; gap: 8px; font-size: 12px; }
+    .facts div { border-top: 1px solid #ffffff1c; padding-top: 7px; }
+    .facts dt { color: #82cdbb; font-weight: 700; }
+    .facts dd { margin: 3px 0 0; color: #d3e2e3; line-height: 1.5; }
+    .facts a { color: #a0e9de; overflow-wrap: anywhere; }
+    .place-name { color: #fff; font-size: 21px; font-weight: 800; margin: 8px 0; }
+    .tag { display: inline-block; padding: 4px 8px; border-radius: 6px; color: #8ee9d0; background: #1e514e; font-size: 11px; font-weight: 800; }
+    .quick { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; max-height: 290px; overflow-y: auto; }
+    .quick button { text-align: left; border: 1px solid #ffffff1b; background: #163b4c; color: #d8ebe9; border-radius: 9px; padding: 9px; font-size: 12px; }
+    .quick button:hover, .quick button:focus-visible { border-color: #80eac5; background: #1f5260; }
+    .legend { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; color: #b6cbd1; font-size: 11px; }
+    .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; }
+    .error { position: absolute; z-index: 5; inset: 0; display: none; place-items: center; padding: 30px; text-align: center; background: #102f43; }
+    .close-card { display: none; }
+    @media (max-width: 850px) { .layout { grid-template-columns: 1fr; } .stage { height: 62vh; } aside { display: grid; grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { header { align-items: flex-start; } .badge { display: none; } aside { grid-template-columns: 1fr; } .stage { height: 58vh; } .stage-top, .stage-bottom { left: 10px; right: 10px; } .stage-top { align-items: flex-start; flex-direction: column; } .help { display: none; } .mode { padding: 8px 9px; font-size: 12px; } }
+    .embed body { height: 100vh; min-height: 0; overflow: hidden; }
+    .embed .page { max-width: none; height: 100%; padding: 0; }
+    .embed header { display: none; }
+    .embed .layout { display: block; position: relative; height: 100%; }
+    .embed .stage { width: 100%; height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+    .embed .stage-top { top: 8px; left: 8px; right: 8px; flex-direction: row; justify-content: flex-end; }
+    .embed .stage-top > .pill, .embed .stage-bottom { display: none; }
+    .embed aside { display: none; position: absolute; z-index: 4; right: 8px; bottom: 8px; width: min(300px, calc(100% - 16px)); max-height: 56%; overflow-y: auto; }
+    .embed.has-selection aside { display: block; }
+    .embed aside .panel { padding: 12px; background: #102c3af2; }
+    .embed aside .panel:not(:first-child) { display: none; }
+    .embed .close-card { display: block; float: right; border: 0; background: transparent; color: #fff; font-size: 20px; line-height: 1; }
+  </style>
+  <script type="importmap">
+  { "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+  } }
+  </script>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div><div class="eyebrow">IIUM GOMBAK · PHASE 1C</div><h1>校园，一眼看见</h1><p>指路猫低模 3D 校园预览 · 拖动探索你熟悉的地点</p></div>
+      <span class="badge">展示模型 · 非精确导航地图</span>
+    </header>
+    <div class="layout">
+      <main class="stage" id="stage" aria-label="可交互的 IIUM Gombak 低模三维校园">
+        <div class="stage-top"><span class="pill">IIUM Gombak Campus · 概念布局</span><div class="controls" role="group" aria-label="切换环境"><button class="mode" data-time="sunrise" aria-pressed="false">🌅 日出</button><button class="mode" data-time="day" aria-pressed="true">☀️ 日间</button><button class="mode" data-time="night" aria-pressed="false">🌙 夜晚</button></div></div>
+        <div class="tooltip" id="tooltip"></div>
+        <div class="stage-bottom"><span class="pill">北 ↑ · 建筑和 Mahallah 为简化示意</span><span class="help">拖动旋转 · 滚轮缩放 · 右键平移 · 点击建筑</span></div>
+        <div class="error" id="error">3D 预览未能加载。请检查网络连接与浏览器的 WebGL 支持。</div>
+      </main>
+      <aside>
+        <section class="panel" aria-live="polite"><button class="close-card" id="close-card" type="button" aria-label="关闭地点信息">×</button><span class="tag" id="place-tag">地点探索</span><div class="place-name" id="place-name">点击一处建筑或动物</div><p id="place-detail">分区图只用于相对布局；建筑体块、道路与生态布置均为展示示意。</p><dl class="facts" id="place-facts"></dl></section>
+        <section class="panel"><h2>快速查看</h2><div class="quick" id="quick"></div></section>
+        <section class="panel"><h2>这是一张展示地图</h2><p>道路、湖泊、地形、宿舍区与部分建筑轮廓经过艺术化简化。它帮助了解校园整体，不提供办公室定位、精确步行路线或测绘坐标。</p><div class="legend"><span><i class="dot" style="background:#64d9bd"></i>学院</span><span><i class="dot" style="background:#e9c97c"></i>公共设施</span><span><i class="dot" style="background:#a996dc"></i>Mahallah</span></div></section>
+      </aside>
+    </div>
+  </div>
+  <script>setTimeout(() => { if (!window.__campusPreviewReady) document.getElementById('error').style.display = 'grid'; }, 12000);</script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+
+    const stage = document.getElementById('stage');
+    const tooltip = document.getElementById('tooltip');
+    const nameBox = document.getElementById('place-name');
+    const detailBox = document.getElementById('place-detail');
+    const colors = { teal: 0x68c9b8, blue: 0x5aa8c3, cream: 0xe9dcc0, brick: 0xc89987, purple: 0xab9ac5, roof: 0x4d9c9f, path: 0xb7ad9d };
+    const places = [];
+    const pickables = [];
+    const glows = [];
+    const birds = [];
+    let mode = 'day';
+    let renderer;
+
+    try { renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' }); }
+    catch (error) { document.getElementById('error').style.display = 'grid'; throw error; }
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.4;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    stage.insertBefore(renderer.domElement, stage.firstChild);
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0xb8d7d4, 145, 245);
+    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 350);
+    camera.position.set(55, 58, 75);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 0, 0);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.07;
+    controls.minDistance = 22;
+    controls.maxDistance = 210;
+    controls.maxPolarAngle = Math.PI * 0.47;
+    controls.minPolarAngle = 0.35;
+    controls.update();
+
+    const ambient = new THREE.HemisphereLight(0xe1f8ff, 0x54765b, 2.4);
+    scene.add(ambient);
+    const sun = new THREE.DirectionalLight(0xfff3d8, 3.0);
+    sun.position.set(-18, 32, 22);
+    sun.castShadow = true;
+    sun.shadow.mapSize.set(1024, 1024);
+    sun.shadow.camera.left = -70; sun.shadow.camera.right = 70;
+    sun.shadow.camera.top = 65; sun.shadow.camera.bottom = -65;
+    sun.shadow.normalBias = 0.025;
+    scene.add(sun);
+
+    const mat = (color, roughness = 1) => new THREE.MeshStandardMaterial({ color, roughness, flatShading: true });
+    const groundMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, flatShading: true });
+    const wallMat = mat(colors.cream);
+    const roofMat = mat(colors.roof);
+    const darkRoofMat = mat(0x316d79);
+    const glassMat = new THREE.MeshStandardMaterial({ color: 0xa8d8d6, emissive: 0x75b9be, emissiveIntensity: 0.12, roughness: 0.35 });
+    const windowMat = new THREE.MeshStandardMaterial({ color: 0x8cc9c8, emissive: 0xffd890, emissiveIntensity: 0.05, roughness: 0.45 });
+    const lampMat = new THREE.MeshStandardMaterial({ color: 0xffe5ad, emissive: 0xffc977, emissiveIntensity: 0.15 });
+    glows.push(glassMat, windowMat, lampMat);
+
+    function height(x, z) {
+      const edge = Math.max(0, (Math.abs(x) - 43) / 31, (Math.abs(z) - 40) / 29);
+      return .1 + edge * edge * 12 + Math.sin(x * .17) * Math.cos(z * .14) * (.12 + edge * 1.1);
+    }
+    const terrain = new THREE.PlaneGeometry(180, 150, 96, 80);
+    terrain.rotateX(-Math.PI / 2);
+    const pos = terrain.attributes.position;
+    const vertexColors = [];
+    const grassA = new THREE.Color(0x78aa82), grassB = new THREE.Color(0x557f6a);
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i), z = pos.getZ(i), y = height(x, z);
+      pos.setY(i, y);
+      const t = THREE.MathUtils.clamp(y / 17 + .12 + Math.sin(x * 1.3 + z * .8) * .06, 0, 1);
+      const c = grassA.clone().lerp(grassB, t);
+      vertexColors.push(c.r, c.g, c.b);
+    }
+    terrain.setAttribute('color', new THREE.Float32BufferAttribute(vertexColors, 3));
+    terrain.computeVertexNormals();
+    const earth = new THREE.Mesh(terrain, groundMat);
+    earth.receiveShadow = true;
+    scene.add(earth);
+
+    function ribbon(points, width, material, closed = true) {
+      const curve = new THREE.CatmullRomCurve3(points.map(([x, z]) => new THREE.Vector3(x, 0, z)), closed, 'centripetal');
+      const verts = [], indices = [], count = Math.max(50, points.length * 13);
+      for (let i = 0; i <= count; i++) {
+        const p = curve.getPoint(i / count), tangent = curve.getTangent(i / count);
+        const nx = -tangent.z, nz = tangent.x;
+        for (const side of [-1, 1]) {
+          const x = p.x + nx * width * side / 2, z = p.z + nz * width * side / 2;
+          verts.push(x, height(x, z) + .055, z);
+        }
+        if (i < count) { const n = i * 2; indices.push(n, n+1, n+2, n+1, n+3, n+2); }
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+      geo.setIndex(indices); geo.computeVertexNormals();
+      scene.add(new THREE.Mesh(geo, material));
+    }
+    const river = [[-39,24],[-30,18],[-23,15],[-15,18],[-9,14],[-3,16],[5,14],[12,17],[18,15],[25,18],[31,15],[38,4],[42,-10]];
+    ribbon(river, 2.2, mat(0x8caf8a), false);
+    ribbon(river, 1.45, mat(0x348fc0,.3), false);
+    ribbon([[-43,12],[-34,8],[-29,-3],[-25,-18],[-14,-29],[4,-34],[27,-29],[39,-17],[43,4],[35,23],[20,29],[-3,28],[-19,25],[-36,18]], 1.45, mat(0x68777b));
+    ribbon([[-37,11],[-28,10],[-16,10],[-5,7],[9,7],[22,8],[35,9]], .85, mat(0x9fa6a0), false);
+    ribbon([[-28,-20],[-21,-10],[-18,0],[-10,9],[-10,21],[-18,30]], .75, mat(0x9fa6a0), false);
+    ribbon([[9,-27],[13,-14],[12,-3],[15,9],[16,23],[17,34]], .75, mat(0x9fa6a0), false);
+    ribbon([[-48,12],[-43,12],[-36,11]], 1.4, mat(0x68777b), false);
+    ribbon([[-18,45],[-18,30]], 1.4, mat(0x68777b), false);
+    ribbon([[48,9],[43,9],[35,9]], 1.4, mat(0x68777b), false);
+
+    function lake(x, z, sx, sz) {
+      const bank = new THREE.Mesh(new THREE.CircleGeometry(1, 30), mat(0xb2c3a2));
+      bank.rotation.x = -Math.PI / 2; bank.scale.set(sx + .45, sz + .45, 1); bank.position.set(x, height(x,z) + .07, z); scene.add(bank);
+      const water = new THREE.Mesh(new THREE.CircleGeometry(1, 30), new THREE.MeshStandardMaterial({ color: 0x52aaca, metalness: .13, roughness: .24, transparent: true, opacity: .9, side: THREE.DoubleSide }));
+      water.rotation.x = -Math.PI / 2; water.scale.set(sx, sz, 1); water.position.set(x, height(x,z) + .083, z); scene.add(water);
+    }
+    lake(42, -14, 3.5, 2.2); lake(-41, 26, 2.5, 1.4);
+
+    function box(group, w, h, d, x, y, z, material, shadow = true) {
+      const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
+      mesh.position.set(x, y, z); mesh.castShadow = shadow; mesh.receiveShadow = true; group.add(mesh);
+      return mesh;
+    }
+    function cone(group, r, h, x, y, z, material, sides = 6) {
+      const mesh = new THREE.Mesh(new THREE.ConeGeometry(r, h, sides), material);
+      mesh.position.set(x,y,z); mesh.castShadow = true; group.add(mesh); return mesh;
+    }
+    function place(name, detail, x, z, type, build, info = {}) {
+      const group = new THREE.Group();
+      group.position.set(x, height(x,z) + .05, z);
+      group.userData.buildingId = info.buildingId || null;
+      group.userData.place = { name, detail, type, group, ...info };
+      build(group);
+      group.traverse(obj => { if (obj.isMesh) pickables.push(obj); });
+      scene.add(group);
+      places.push(group.userData.place);
+      return group;
+    }
+    function genericBuilding(group, w, d, h, tint = wallMat) {
+      box(group, w, h, d, 0, h/2, 0, tint);
+      box(group, w+.25, .28, d+.25, 0, h+.14, 0, roofMat);
+      box(group, w*.65, .32, .06, 0, h*.63, d/2+.035, windowMat, false);
+      box(group, .64, h*.48, .08, 0, h*.24, d/2+.07, darkRoofMat, false);
+    }
+    const faculty = (id, name, x, z, w, d, h, link) => place(name, 'IIUM Gombak 学院；位置和楼体为低模示意。', x, z, '学院 · 示意体块', g => {
+      genericBuilding(g,w,d,h);
+      box(g,w*.46,h*.72,d*.64, w*.61,h*.36,-d*.2,wallMat);
+      box(g,w*.49,.25,d*.68,w*.61,h*.72+.12,-d*.2,roofMat);
+    }, { buildingId:id,
+      official:id.startsWith('AHAS')?'AbdulHamid AbuSulayman Kulliyyah of Islamic Revealed Knowledge and Human Sciences':name.split(' · ').at(-1),
+      function:'教学与学院事务', department:id.startsWith('AHAS')?'AHAS KIRKHS':name.split(' · ')[0],
+      link, source:'IIUM 官方学院目录' });
+    faculty('KICT','KICT · Kulliyyah of Information and Communication Technology',-35,0,4,3,2.6,'https://www.iium.edu.my/kict/');
+    faculty('KOE','KOE · Kulliyyah of Engineering',-26,3,5.1,3.4,2.5,'https://www.iium.edu.my/koe/');
+    faculty('KAED','KAED · Kulliyyah of Architecture and Environmental Design',-28,13,4.5,3.2,2.4,'https://www.iium.edu.my/kaed/');
+    faculty('KOED','KOED · Kulliyyah of Education',-14,1,4.2,3.1,2.6,'https://www.iium.edu.my/koed/');
+    faculty('AHAS_HS','AHAS KIRKHS · HS',-8,5,4.6,3,2.3,'https://www.iium.edu.my/ahaskirkhs/');
+    faculty('AHAS_IRK','AHAS KIRKHS · IRK',8,19,4.3,3,2.6,'https://www.iium.edu.my/ahaskirkhs/');
+    faculty('AIKOL','AIKOL · Ahmad Ibrahim Kulliyyah of Laws',23,9,4.2,3.2,2.5,'https://www.iium.edu.my/aikol/');
+    faculty('KENMS','KENMS · Kulliyyah of Economics and Management Sciences',25,20,4.5,3.2,2.7,'https://www.iium.edu.my/kenms/');
+
+    place('Muhammad Abdul-Rauf Building · Admin','MAR 行政楼；楼体为示意。',-7,17,'行政 · 示意体块',g => {
+      genericBuilding(g,6,3.7,3.1,mat(0xf0d9b4));
+      box(g,1.6,4.1,1.8,0,2.05,-1.25,wallMat);
+      box(g,1.85,.35,2.05,0,4.27,-1.25,darkRoofMat);
+      for (const x of [-2.2,-1.1,1.1,2.2]) box(g,.43,.5,.05,x,2.15,1.9,windowMat,false);
+    }, {buildingId:'ADMIN_MAR', official:'Muhammad Abdul-Rauf Building', function:'大学行政办公', department:'IIUM 行政部门', offices:'Student and Financial Services Department（1 楼）；Accounts Department（2 楼）', link:'https://ezpay.iium.edu.my/contact-us', source:'IIUM EzPay 官方联络页'});
+    place('Central Complex','RSD 办公室所在综合楼；楼体为示意。',-3,24,'公共设施 · 示意体块',g => {
+      genericBuilding(g,4.3,3.1,2.2,mat(0xdbd9c5));
+      box(g,2.5,.25,1.1,0,1.55,2,roofMat);
+    }, {buildingId:'CENTRAL_COMPLEX', official:'Central Complex', function:'公共服务', offices:'Residential and Services Department（楼层请以校方当期目录为准）', link:'https://mahallah.iium.edu.my/', source:'IIUM Residential and Services Department'});
+    place('M. Kamal Hassan Library','旧称 Dar al-Hikmah Library；旧图仍可能使用旧名。',13,10,'图书馆 · 示意体块',g => {
+      genericBuilding(g,6.3,4.4,2.8,mat(0xe8d9bb));
+      box(g,3.2,.55,2.9,0,3.18,-.4,darkRoofMat);
+      for (const x of [-2.2,-1.1,0,1.1,2.2]) box(g,.43,1.25,.06,x,1.53,2.24,glassMat,false);
+    }, {buildingId:'LIBRARY', official:'M. Kamal Hassan Library', function:'图书馆与学习资源', department:'IIUM Library', link:'https://division.iium.edu.my/lib/campus-libraries/', source:'IIUM Library'});
+    place('Sultan Haji Ahmad Shah Mosque','Gombak 校区清真寺；穹顶与尖塔为低模抽象。',1,15,'清真寺 · 示意体块',g => {
+      box(g,5.7,1.8,4.5,0,.9,0,mat(0xebe6d1));
+      const dome = new THREE.Mesh(new THREE.SphereGeometry(1.35, 12, 6, 0, Math.PI*2, 0, Math.PI/2), mat(0x59aab1,.52));
+      dome.position.y = 1.8; dome.castShadow = true; g.add(dome);
+      for (const x of [-2.5,2.5]) for (const z of [-2,2]) { box(g,.4,3.5,.4,x,1.75,z,wallMat); cone(g,.42,.85,x,3.9,z,roofMat,6); }
+      box(g,1.2,1.4,.08,0,.7,2.29,glassMat,false);
+    }, {buildingId:'MOSQUE', official:'Sultan Haji Ahmad Shah Mosque', function:'礼拜与宗教活动', link:'https://centre.iium.edu.my/centris/wp-content/uploads/sites/4/2025/03/About-CENTRIS-1.pdf', source:'IIUM Centre for Islamisation'});
+    place('IIUM Sejahtera Clinic','Gombak 诊所；当前体块位置未核实。',-7,-4,'诊所 · 示意位置',g => {
+      genericBuilding(g,3.1,2.1,1.65,mat(0xe8e6db));
+      box(g,.2,.85,.05,0,2.16,1.1,mat(0xdf6f6c),false);
+      box(g,.8,.2,.05,0,2.16,1.11,mat(0xdf6f6c),false);
+    }, {buildingId:'CLINIC', official:'IIUM Sejahtera Clinic', function:'校园医疗服务', link:'https://centre.iium.edu.my/clinic/', source:'IIUM Sejahtera Clinic'});
+    for (const [id,name,x,z,w,d,h,fn,link] of [
+      ['ICC','IIUM Cultural Centre · ICC',-19,15,4.6,3.1,2.3,'校园文化与活动','https://office.iium.edu.my/ocap/wp-content/uploads/sites/2/2022/09/ICC-Venue-Booking-Form-External-2021-OCAP.pdf'],
+      ['CELPAD','CELPAD',-2,6,4.2,2.8,2.1,'语言教学','https://centre.iium.edu.my/celpad/'],
+      ['ITD','Information Technology Division · ITD',5,7,3.7,2.8,2.2,'校园信息技术服务','https://division.iium.edu.my/itd/']
+    ]) place(name,'建筑位置与外形为示意。',x,z,'校园设施 · 示意体块',g=>genericBuilding(g,w,d,h),{buildingId:id,official:name,function:fn,offices:id==='ITD'?'ICT Services Helpdesk（IIUM 官方资料；具体楼层请当期核对）':undefined,link,source:'IIUM 官方部门资料'});
+
+    const dormWallMat=mat(0xd9c4bb), dormRoofMat=mat(0x8d86af);
+    function dormBlocks(g) {
+      const walls=[],roofs=[],windows=[];
+      for (let i=0;i<3;i++) {
+        const x = (i-1)*1.35, z = i===1?-.65:.45;
+        walls.push(new THREE.BoxGeometry(1.1,1.45,1.05).translate(x,.72,z));
+        roofs.push(new THREE.BoxGeometry(1.25,.2,1.2).translate(x,1.55,z));
+        windows.push(new THREE.BoxGeometry(.7,.28,.05).translate(x,1.05,z+.55));
+      }
+      for(const [geometries,material,shadow] of [
+        [walls,dormWallMat,true],[roofs,dormRoofMat,true],[windows,windowMat,false]
+      ]) {
+        const mesh=new THREE.Mesh(mergeGeometries(geometries),material);
+        mesh.castShadow=shadow; mesh.receiveShadow=true; g.add(mesh);
+        geometries.forEach(geo=>geo.dispose());
+      }
+    }
+    const mahallahs = [
+      ['Ruqayyah',-29,-32,'混合'],['Maryam',5,-32,'女'],['Asiah',-34,-23,'女'],
+      ['Halimatus Saadiah',-11,-25,'女'],['Salahuddin',25,-24,'混合'],
+      ['Aminah',-35,-13,'女'],['Asma',-20,-17,'女'],['Hafsah',-17,-8,'女'],
+      ['Sumayyah',15,-17,'女'],['Nusaibah',23,-7,'女'],
+      ['Safiyyah',-30,32,'女'],['Zubair',-25,40,'男'],['Ali',-7,34,'男'],
+      ['Bilal',9,39,'男'],['Siddiq',23,37,'男'],['Faruq',33,31,'男'],['Uthman',41,28,'男']
+    ];
+    const fullMahallahName={
+      Faruq:'Al-Faruq', Siddiq:'As-Siddiq', Ali:'Ali Ibn Abi Talib',
+      Bilal:'Bilal Ibn Rabah', Uthman:'Uthman Ibn Affan',
+      Zubair:'Zubair Al-Awwam', Salahuddin:'Salahuddin Al-Ayyubi', Asma:"Asma'"
+    };
+    for (const [short,x,z,gender] of mahallahs) {
+      place('Mahallah '+short,'IIUM Gombak 学生宿舍；相对位置参考所附分区图，楼群轮廓为示意。',x,z,'Mahallah · 示意楼群',dormBlocks,{
+        buildingId:'MAHALLAH_'+short.toUpperCase().replaceAll(' ','_'),
+        official:'Mahallah '+(fullMahallahName[short]||short), gender:gender==='混合'?'混合':'仅'+gender+'生',
+        function:'学生住宿与社区活动', department:'Residential and Services Department',
+        management:'Residential and Services Department', link:'https://mahallah.iium.edu.my/overview/',
+        source:'IIUM Mahallah 官方总览'
+      });
+    }
+
+    place('Sayyidina Hamzah Stadium','体育场与跑道为展示示意；位置参考分区图。',39,19,'体育 · 示意区域',g => {
+      const track = new THREE.Mesh(new THREE.RingGeometry(2.4,3.15,32),mat(0xca8178)); track.rotation.x=-Math.PI/2; track.scale.y=.62; track.position.y=.09; g.add(track);
+      box(g,4.1,.11,2.2,0,.07,0,mat(0x5f9e70),false);
+      box(g,3,.8,.8,0,.55,-2.4,wallMat); box(g,3.2,.2,1,0,1.04,-2.4,roofMat);
+    }, {buildingId:'STADIUM',official:'Sayyidina Hamzah Stadium',function:'体育活动与运动场',link:'https://taaruf.iium.edu.my/sdc/',source:'IIUM 校园体育资料'});
+    place('IIUM River','河道走势依分区图艺术化绘制，不代表实测水道。',-10,15,'水体 · 示意走势',g=>{
+      box(g,1.6,.08,.6,0,.12,0,mat(0x4aa9c6),false);
+    },{buildingId:'IIUM_RIVER',official:'IIUM River',function:'校园水道',source:'所附 IIUM Gombak 分区示意图'});
+    place('Male Sports Complex','体育综合设施；建筑边界与入口未核实。',39,9,'体育 · 示意区域',g=>genericBuilding(g,3.2,2.5,1.6),{buildingId:'MALE_SPORTS',official:'Male Sports Complex',function:'体育活动',link:'https://taaruf.iium.edu.my/sdc/',source:'IIUM 校园体育资料'});
+    place('Female Sports Complex','校区分区图所示设施；具体范围和入口待核。',12,-23,'体育 · 示意区域',g => {
+      box(g,4,.12,2.6,0,.08,0,mat(0x609e78),false);
+      box(g,3,1.6,1.6,0,.8,-2.1,wallMat); box(g,3.2,.25,1.8,0,1.73,-2.1,roofMat);
+    }, {buildingId:'FEMALE_SPORTS',official:'Female Sports Complex',function:'体育活动',link:'https://taaruf.iium.edu.my/sdc/',source:'IIUM 校园体育资料'});
+    for (const [id,name,x,z] of [
+      ['MAIN_ENTRANCE','IIUM Main Entrance',-18,31],
+      ['SECOND_ENTRANCE','IIUM Second Entrance',-44,12],
+      ['THIRD_ENTRANCE','IIUM Third Entrance',45,9]
+    ]) place(name,'入口大致方位参考分区图；不用于精确导航。',x,z,'入口 · 示意位置',g=>{
+      box(g,2.8,.24,.4,0,2.15,0,mat(0xefe0be));
+      for(const side of [-1,1]) box(g,.3,2.1,.4,side*1.26,1.05,0,mat(0xefe0be));
+    },{buildingId:id,official:name,function:'校园出入口',source:'所附 IIUM Gombak 分区示意图'});
+
+    // Instance repeated vegetation to keep draw calls low on the homepage-sized preview.
+    let seed = 72431;
+    const random = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+    const trunks = new THREE.InstancedMesh(new THREE.CylinderGeometry(.11,.15,.8,5),mat(0x7d6855),760);
+    const crowns = new THREE.InstancedMesh(new THREE.ConeGeometry(.6,1.55,6),mat(0x438568),760);
+    const dummy = new THREE.Object3D();
+    let treeCount = 0;
+    while (treeCount < 760) {
+      const x = (random()-.5)*174, z = (random()-.5)*144;
+      if (Math.abs(x)<45 && Math.abs(z)<43 && random()<.89) continue;
+      if (places.some(p=>Math.hypot(p.group.position.x-x,p.group.position.z-z)<4.7)) continue;
+      const scale = .8+random()*1.2, y=height(x,z);
+      dummy.position.set(x,y+.38*scale,z); dummy.scale.set(scale,scale,scale); dummy.rotation.y=random()*6.28; dummy.updateMatrix(); trunks.setMatrixAt(treeCount,dummy.matrix);
+      dummy.position.y=y+1.15*scale; dummy.updateMatrix(); crowns.setMatrixAt(treeCount,dummy.matrix);
+      treeCount++;
+    }
+    trunks.instanceMatrix.needsUpdate=true; crowns.instanceMatrix.needsUpdate=true;
+    scene.add(trunks,crowns);
+
+    for (let i=0;i<20;i++) {
+      const angle=i*Math.PI*2/20, x=Math.cos(angle)*32, z=Math.sin(angle)*23;
+      const g=new THREE.Group(); g.position.set(x,height(x,z),z);
+      box(g,.08,1.5,.08,0,.75,0,mat(0x4d6264),false);
+      const bulb=new THREE.Mesh(new THREE.SphereGeometry(.19,6,4),lampMat); bulb.position.y=1.55; g.add(bulb); scene.add(g);
+    }
+    for (const [x,z] of [[-20,9],[-7,17],[13,10],[25,20],[37,9]]) {
+      const light=new THREE.PointLight(0xffcb84,0,11,2); light.position.set(x,4,z); scene.add(light); light.userData.nightLight=true;
+    }
+    const nightLights=scene.children.filter(obj=>obj.userData.nightLight);
+
+    // Source-backed cards describe historical reports, not a current wildlife census.
+    function bird(x,y,z) {
+      const g=new THREE.Group(); g.position.set(x,y,z);
+      box(g,.45,.08,.12,-.23,0,0,mat(0xe8d9bd),false).rotation.z=-.3;
+      box(g,.45,.08,.12,.23,0,0,mat(0xe8d9bd),false).rotation.z=.3;
+      scene.add(g); birds.push(g);
+    }
+    for(const [x,y,z] of [[-52,12,-35],[-49,14,-33],[58,11,8],[51,13,5],[9,8,-31]]) bird(x,y,z);
+    place('鸟类（未确定物种）','IIUM Today 2016 年校园环境文章提到清晨鸟鸣；未确认具体物种或目前活动点。',-50,-34,
+      '动物 · IIUM 历史资料',g=>{
+        box(g,.2,.16,.18,0,2.6,0,mat(0xd8ccaa),false);
+        box(g,.35,.06,.1,-.25,2.6,0,mat(0xd8ccaa),false).rotation.z=-.3;
+        box(g,.35,.06,.1,.25,2.6,0,mat(0xd8ccaa),false).rotation.z=.3;
+      },{buildingId:'ANIMAL_BIRD',official:'鸟类（物种未知）',function:'低模生态展示',
+        link:'https://news.iium.edu.my/iium-has-beautiful-enviornment/',
+        source:'IIUM Today 2016 校园环境文章；非物种调查'});
+    function creature(g,color,tail=0) {
+      const skin=mat(color);
+      const body=new THREE.Mesh(new THREE.IcosahedronGeometry(.31,0),skin);
+      body.scale.set(1,.65,.62); body.position.y=.26; g.add(body);
+      const head=new THREE.Mesh(new THREE.IcosahedronGeometry(.18,0),skin);
+      head.position.set(.29,.34,0); g.add(head);
+      for(const x of [-.2,.17]) for(const z of [-.15,.15]) box(g,.09,.2,.08,x,.11,z,skin);
+      if(tail) { const t=cone(g,.12,tail,-.38,.22,0,skin,5); t.rotation.z=-Math.PI/2; }
+    }
+    const wildlife = [
+      ['MONKEY','猴子',-53,-11,0x8e765f,'IIUM Today 2018 年文章提到校园河流附近有猴子；此体块只是森林边缘示意。','https://news.iium.edu.my/no-plastics-in-campus-towards-saving-our-environment/'],
+      ['MONITOR','巨蜥',28,17,0x718365,'IIUM Today 2018 年文章提到校园河流附近有巨蜥；未确认具体物种与现在位置。','https://news.iium.edu.my/no-plastics-in-campus-towards-saving-our-environment/'],
+      ['PYTHON','蛇（历史报道中的蟒蛇）',-56,-29,0x9a9568,'IIUM Today 2015 年曾报道 Gombak 教育学院附近出现蟒蛇；模型位于外围森林，仅作意象。','https://news.iium.edu.my/a-visitor-at-the-cafe-turns-out-to-be-a-phyton/'],
+      ['CAT','猫',-36,-16,0xb89b78,'IIUM Today 2015 年 Gombak 蟒蛇报道中提到猫；模型不表示现在此处有猫。','https://news.iium.edu.my/a-visitor-at-the-cafe-turns-out-to-be-a-phyton/']
+    ];
+    for(const [id,name,x,z,color,detail,link] of wildlife)
+      place(name,detail,x,z,'动物 · IIUM 历史资料',g=>{
+        if(id==='PYTHON') {
+          const curve=new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-.7,.14,-.3),new THREE.Vector3(-.2,.16,.15),
+            new THREE.Vector3(.25,.16,-.25),new THREE.Vector3(.65,.17,.05)
+          ]);
+          const body=new THREE.Mesh(new THREE.TubeGeometry(curve,12,.1,5,false),mat(color)); g.add(body);
+        } else {
+          creature(g,color,id==='MONITOR'?1.2:.45);
+          if(id==='CAT') for(const zz of [-.12,.12]) cone(g,.1,.22,.36,.58,zz,mat(color),4);
+          if(id==='MONKEY') {
+            for(const zz of [-.18,.18]) {
+              const ear=new THREE.Mesh(new THREE.IcosahedronGeometry(.09,0),mat(color));
+              ear.position.set(.27,.48,zz); g.add(ear);
+            }
+          }
+        }
+      },
+        {buildingId:'ANIMAL_'+id,official:name,function:'低模生态展示',link,source:'IIUM Today 校园报道；非实时物种记录'});
+    // The remaining animals are decoration only; no campus-presence claim.
+    for(const [id,name,x,z,color,tail] of [
+      ['LIZARD','蜥蜴',59,13,0x6a9b6c,.6],['DOG','狗',48,37,0x977753,.35]
+    ]) place(name,'低模环境装饰；未找到可确认该动物目前出现在 IIUM Gombak 的资料。',x,z,
+      '动物 · 仅环境装饰',g=>creature(g,color,tail),
+      {buildingId:'DECOR_'+id,official:name,source:'纯装饰模型；不作为校园物种记录'});
+    const antMat=mat(0x3f3a32);
+    const ants=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.05,0),antMat,24);
+    for(let i=0;i<24;i++) {
+      const x=50+(i%6)*.13,z=34+Math.floor(i/6)*.16;
+      dummy.position.set(x,height(x,z)+.07,z); dummy.scale.set(1,1,1); dummy.updateMatrix(); ants.setMatrixAt(i,dummy.matrix);
+    }
+    ants.instanceMatrix.needsUpdate=true; scene.add(ants);
+    const placeIds=places.map(p=>p.buildingId);
+    if(mahallahs.length!==17 || new Set(mahallahs.map(m=>m[0])).size!==17 ||
+      placeIds.some(id=>!id) || new Set(placeIds).size!==placeIds.length)
+      throw new Error('校园地点 ID 或 17 个 Mahallah 清单不完整');
+
+    const themes = {
+      sunrise: { sky:0xdec0aa, fog:0xdec0aa, ambient:1.25, sun:3.2, sunColor:0xffa36f, sunPos:[-22,13,10], exposure:1.25, glow:.18, lamps:.15 },
+      day: { sky:0xb8d7d4, fog:0xb8d7d4, ambient:1.7, sun:2.8, sunColor:0xfff3d8, sunPos:[-18,32,22], exposure:1.22, glow:.05, lamps:.15 },
+      night: { sky:0x102037, fog:0x18344b, ambient:.48, sun:.32, sunColor:0x99b8ee, sunPos:[15,18,-20], exposure:1.12, glow:1.75, lamps:3.5 }
+    };
+    function setTime(next) {
+      mode=next; const t=themes[next];
+      scene.background=new THREE.Color(t.sky); scene.fog.color.setHex(t.fog);
+      ambient.intensity=t.ambient; sun.intensity=t.sun; sun.color.setHex(t.sunColor); sun.position.set(...t.sunPos);
+      renderer.toneMappingExposure=t.exposure;
+      windowMat.emissiveIntensity=t.glow; glassMat.emissiveIntensity=t.glow*.35; lampMat.emissiveIntensity=t.lamps;
+      for (const light of nightLights) light.intensity=next==='night'?4:0;
+      document.querySelectorAll('.mode').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.time===next)));
+    }
+    document.querySelectorAll('.mode').forEach(button=>button.addEventListener('click',()=>setTime(button.dataset.time)));
+    setTime('day');
+
+    const raycaster=new THREE.Raycaster(), pointer=new THREE.Vector2();
+    const selectionBox=new THREE.BoxHelper(new THREE.Object3D(),0xffdc73);
+    selectionBox.visible=false; scene.add(selectionBox);
+    let down=null;
+    function hit(event) {
+      const rect=renderer.domElement.getBoundingClientRect();
+      pointer.set((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1);
+      raycaster.setFromCamera(pointer,camera);
+      const target=raycaster.intersectObjects(pickables,false)[0]?.object;
+      let owner=target;
+      while(owner && !owner.userData.place) owner=owner.parent;
+      return owner?.userData.place || null;
+    }
+    renderer.domElement.addEventListener('pointermove',event=>{
+      if (event.pointerType==='touch') return;
+      const found=hit(event);
+      tooltip.style.display=found?'block':'none'; renderer.domElement.style.cursor=found?'pointer':'grab';
+      if (found) {
+        tooltip.textContent=found.name;
+        const rect=stage.getBoundingClientRect();
+        tooltip.style.left=Math.min(event.clientX-rect.left+14,rect.width-210)+'px';
+        tooltip.style.top=Math.max(12,event.clientY-rect.top-34)+'px';
+      }
+    });
+    renderer.domElement.addEventListener('pointerleave',()=>tooltip.style.display='none');
+    renderer.domElement.addEventListener('pointerdown',event=>{ down=[event.clientX,event.clientY]; });
+    renderer.domElement.addEventListener('pointerup',event=>{
+      if (!down || Math.hypot(event.clientX-down[0],event.clientY-down[1])>6) return;
+      const found=hit(event); if(found) select(found); down=null;
+    });
+    function select(found) {
+      nameBox.textContent=found.name; detailBox.textContent=found.detail;
+      document.getElementById('place-tag').textContent=found.type;
+      const facts=document.getElementById('place-facts'); facts.replaceChildren();
+      for(const [label,value] of [
+        ['buildingId',found.buildingId],['官方名称',found.official],['宿舍类型',found.gender],
+        ['主要功能',found.function],['学院 / 部门',found.department],
+        ['相关办公室',found.offices],['管理部门',found.management],['资料来源',found.source]
+      ]) if(value) {
+        const row=document.createElement('div'), dt=document.createElement('dt'), dd=document.createElement('dd');
+        dt.textContent=label; dd.textContent=value; row.append(dt,dd); facts.append(row);
+      }
+      if(found.link) {
+        const row=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd'),a=document.createElement('a');
+        dt.textContent='官方链接 / 报道'; a.href=found.link; a.target='_blank'; a.rel='noopener noreferrer';
+        a.textContent=found.link; dd.append(a); row.append(dt,dd); facts.append(row);
+      }
+      selectionBox.setFromObject(found.group); selectionBox.visible=true;
+      document.documentElement.classList.add('has-selection');
+    }
+    document.getElementById('close-card').addEventListener('click',()=>{document.documentElement.classList.remove('has-selection'); selectionBox.visible=false;});
+    const quick=document.getElementById('quick');
+    for (const p of places.filter(p=>p.buildingId && !p.buildingId.startsWith('DECOR_'))) {
+      const button=document.createElement('button'); button.textContent=p.name.includes(' · ')?p.name.split(' · ')[0]:p.name; button.title=p.name; button.addEventListener('click',()=>{
+        select(p);
+        const target=p.group.position; const delta=new THREE.Vector3(target.x-controls.target.x,0,target.z-controls.target.z);
+        camera.position.add(delta); controls.target.add(delta); controls.update();
+      }); quick.append(button);
+    }
+
+    const resize=new ResizeObserver(()=>{
+      const w=stage.clientWidth,h=stage.clientHeight;
+      renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+    }); resize.observe(stage);
+    window.__campusPreviewReady = true;
+    function animate(time) {
+      requestAnimationFrame(animate);
+      controls.update();
+      birds.forEach((b,i)=>{ b.position.y=5.7+i*.4+Math.sin(time*.0017+i)*.22; b.rotation.y=Math.sin(time*.0006+i)*.2; });
+      renderer.render(scene,camera);
+    }
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
