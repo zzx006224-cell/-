@@ -36,24 +36,49 @@
         .back-link { display: inline-block; margin-bottom: 16px; color: var(--primary-dark); font-weight: 600; }
         .page-header h1 { margin: 0 0 10px; font-size: clamp(2.1rem, 4vw, 3rem); }
         .page-header p { margin: 0; color: var(--muted); }
-        .content-card {
-            padding: 28px 24px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            box-shadow: 0 18px 42px rgba(17, 36, 47, 0.08);
-        }
-        .content-label { display: inline-flex; padding: 8px 12px; background: rgba(44,174,118,0.08); color: var(--primary-dark); border-radius: 999px; font-weight: 700; margin-bottom: 16px; }
-        .content-card p { margin: 0 0 12px; color: var(--text); }
-        .content-card .placeholder { color: var(--muted); }
         .footer { width: min(980px, calc(100% - 32px)); margin: 0 auto 32px; padding-top: 18px; border-top: 1px solid rgba(45,111,73,0.14); color: var(--muted); text-align: center; font-size: 0.9rem; }
         .footer p { margin: 0 0 8px; }
         @media (max-width: 760px) {
             .topbar-inner, .page-shell, .footer { width: min(100% - 22px, 980px); }
             .topbar-inner { flex-direction: column; align-items: flex-start; }
             .nav-links { justify-content: flex-start; }
-            .content-card { padding: 20px 16px; }
         }
+
+        .page-header { padding: 26px 0 12px; }
+        .hero-label { display: inline-block; color: var(--primary-dark); font-size: .85rem; font-weight: 700; letter-spacing: .1em; }
+        .page-header h1 { margin-top: 12px; font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: -.04em; }
+        .page-header .intro { max-width: 640px; font-size: 1.08rem; color: var(--text); }
+        .hero-count { margin-top: 18px !important; font-size: .9rem; }
+        .usage-note { border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: 16px; background: #f0f8f2; padding: 18px 20px; margin: 24px 0 30px; }
+        .usage-note h2 { font-size: 1rem; margin: 0 0 6px; }
+        .usage-note p { margin: 0; color: #42594d; }
+        .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+        .filters[hidden], .product-card[hidden] { display: none; }
+        .filter { min-height: 44px; padding: 9px 16px; font: inherit; font-size: .92rem; border: 1px solid var(--border); border-radius: 999px; background: white; color: var(--text); cursor: pointer; }
+        .filter[aria-pressed="true"] { background: var(--primary-dark); color: white; border-color: var(--primary-dark); }
+        a:focus-visible, button:focus-visible { outline: 3px solid var(--primary-dark); outline-offset: 4px; }
+        .results-count { color: var(--muted); font-size: .9rem; margin: 0 0 20px; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+        .product-card { min-width: 0; padding: 28px; background: white; border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); overflow-wrap: anywhere; transition: transform .18s ease, box-shadow .18s ease; }
+        .card-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .item-number { color: var(--primary-dark); font-size: .95rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: .08em; }
+        .category-label { font-size: .8rem; color: var(--muted); }
+        .product-card h2 { margin: 12px 0; font-size: 1.45rem; line-height: 1.4; }
+        .product-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 20px; }
+        .product-meta:empty { display: none; }
+        .rating { background: #edf7f0; color: var(--primary-dark); padding: 5px 10px; border-radius: 9px; font-size: .86rem; font-weight: 600; }
+        .rating-special { color: white; background: var(--primary-dark); }
+        .price { font-weight: 700; font-size: .95rem; }
+        .original-copy { font-size: 1rem; line-height: 1.9; }
+        .original-copy p { margin: 0 0 12px; }
+        .original-copy p:first-child { margin-bottom: 22px; }
+        .shop-link { display: flex; flex-direction: column; gap: 6px; min-height: 48px; padding: 12px 14px; margin: 0 0 14px; border: 1px solid #b7dac5; border-radius: 12px; background: #f5fbf7; color: var(--primary-dark); font-weight: 700; }
+        .shop-link:hover { background: #e8f5ed; }
+        .original-url { font-size: .8rem; font-weight: 400; overflow-wrap: anywhere; line-height: 1.6; }
+        .platform-label { padding-top: 16px; margin-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: .82rem; }
+        @media (hover: hover) { .product-card:hover { transform: translateY(-3px); box-shadow: 0 22px 46px rgba(17,36,47,.11); } }
+        @media (prefers-reduced-motion: reduce) { .product-card { transition: none; } .product-card:hover { transform: none; } }
+        @media (max-width: 760px) { .product-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; } .product-card { padding: 22px 18px; } .page-shell { padding-top: 24px; } .page-header { padding-top: 10px; } .nav-links { gap: 14px; } .usage-note { padding: 16px; } }
     </style>
 </head>
 <body>
@@ -73,22 +98,176 @@
     </div>
 
     <main class="page-shell">
-        <div class="page-header">
-            <a class="back-link" href="other-affairs.html">← 返回其他事务</a>
+        <a class="back-link" href="other-affairs.html">← 返回其他事务</a>
+        <header class="page-header">
+            <span class="hero-label">站长亲测</span>
             <h1>宿舍好物</h1>
-            <p>此页面暂未补充正式内容，后续可在这里整理宿舍实用好物和购买建议。</p>
+            <p class="intro">本期给大家带来好物推荐，都是本人亲自测评不好用请拨打10086进行投诉。</p>
+            <p class="hero-count">20件宿舍好物</p>
+        </header>
+        <aside class="usage-note" aria-labelledby="usage-title"><h2 id="usage-title">宿舍使用提醒</h2><p>涉及电煮锅、电饭煲等电器时，请先确认当前宿舍规定及允许使用的电器类型，避免因违规电器产生罚款或其他问题。</p></aside>
+        <div class="filters" role="group" aria-label="按商品用途筛选" hidden><button type="button" class="filter" data-filter="全部" aria-pressed="true" aria-controls="product-grid">全部</button><button type="button" class="filter" data-filter="宿舍布置" aria-pressed="false" aria-controls="product-grid">宿舍布置</button><button type="button" class="filter" data-filter="收纳清洁" aria-pressed="false" aria-controls="product-grid">收纳清洁</button><button type="button" class="filter" data-filter="学习/桌面" aria-pressed="false" aria-controls="product-grid">学习/桌面</button><button type="button" class="filter" data-filter="生活电器" aria-pressed="false" aria-controls="product-grid">生活电器</button><button type="button" class="filter" data-filter="其他" aria-pressed="false" aria-controls="product-grid">其他</button></div>
+        <p class="results-count" role="status" aria-live="polite">显示全部 20 件</p>
+        <div class="product-grid" id="product-grid">
+            <article class="product-card" id="item-1" data-category="学习/桌面" aria-labelledby="title-1">
+                <div class="card-top"><span class="item-number">01</span><span class="category-label">学习/桌面</span></div>
+                <h2 id="title-1">人体工学椅</h2>
+                <div class="product-meta"><span class="rating">推荐指数：4颗星</span><span class="price">255马币</span></div>
+                <div class="original-copy"><p>这个椅子推荐指数4颗星，坐起来非常舒服可动也不错靠背扶手等都可以旋转还有脚托，价格255马币。</p><p>链接：</p><a class="shop-link" href="https://my.shp.ee/os9xjGE8" target="_blank" rel="noopener noreferrer"><span>前往 Shopee ↗</span><span class="original-url">https://my.shp.ee/os9xjGE8</span></a><p>（复制发到自己微信点击可以打开）这个是Shopee</p></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-2" data-category="学习/桌面" aria-labelledby="title-2">
+                <div class="card-top"><span class="item-number">02</span><span class="category-label">学习/桌面</span></div>
+                <h2 id="title-2">电脑支架</h2>
+                <div class="product-meta"><span class="price">20--30马币</span></div>
+                <div class="original-copy"><p>支架其实都差不多买一个20--30马币的可以用到死。</p><p>链接：</p><a class="shop-link" href="https://my.shp.ee/hFyqafnT" target="_blank" rel="noopener noreferrer"><span>前往 Shopee ↗</span><span class="original-url">https://my.shp.ee/hFyqafnT</span></a><p>（复制发到自己微信点击可以打开）这个是Shopee</p></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-3" data-category="宿舍布置" aria-labelledby="title-3">
+                <div class="card-top"><span class="item-number">03</span><span class="category-label">宿舍布置</span></div>
+                <h2 id="title-3">帘子</h2>
+                <div class="product-meta"><span class="rating">推荐指数：5颗星</span><span class="price">60人民币</span></div>
+                <div class="original-copy"><p>推荐指数5颗星，有一些比较注重隐私的我挺推荐这个的，我自己用了一个学期了非常好用但是你得先量好自己宿舍柜子和墙的距离再买。价格60人民币</p><p>链接：【淘宝】7天无理由退货</p><a class="shop-link" href="https://e.tb.cn/h.8w7i39AarMyu0yx?tk=L9jNTnw48MS" target="_blank" rel="noopener noreferrer"><span>前往淘宝 ↗</span><span class="original-url">https://e.tb.cn/h.8w7i39AarMyu0yx?tk=L9jNTnw48MS</span></a><p>CZ225 「复古美式门帘布艺露营装饰遮挡帘卧室隔断帘半帘短帘ins挂帘子」</p><p>点击链接直接打开 或者 淘宝搜索直接打开</p></div>
+                <div class="platform-label">购买平台 · 淘宝</div>
+            </article>
+            <article class="product-card" id="item-4" data-category="学习/桌面" aria-labelledby="title-4">
+                <div class="card-top"><span class="item-number">04</span><span class="category-label">学习/桌面</span></div>
+                <h2 id="title-4">床头手机支架</h2>
+                <div class="product-meta"><span class="rating">推荐指数：3颗星</span><span class="price">原价80人民币 · 本人到手价30人民币</span></div>
+                <div class="original-copy"><p>推荐指数3颗星，这个好坏参半吧买这个的时候店家说所有平板都能支买回来发现我的13寸平板支不住，和店家大吵一架给我退了50人民币，原价80人民币本人到手价30人民币（想要吵架教程的私信主播）</p><p>链接：【淘宝】30天价保</p><a class="shop-link" href="https://e.tb.cn/h.8yf5bAqJMDBa2rP?tk=ioc4Tnw9vRQ" target="_blank" rel="noopener noreferrer"><span>前往淘宝 ↗</span><span class="original-url">https://e.tb.cn/h.8yf5bAqJMDBa2rP?tk=ioc4Tnw9vRQ</span></a><p>CZ225 「全铝合金】七鹰手机支架2026新款床头桌面平板ipad电脑懒人支撑架躺床看手机神器床上桌上铝合金折叠直播专用」</p><p>点击链接直接打开 或者 淘宝搜索直接打开</p></div>
+                <div class="platform-label">购买平台 · 淘宝</div>
+            </article>
+            <article class="product-card" id="item-5" data-category="其他" aria-labelledby="title-5">
+                <div class="card-top"><span class="item-number">05</span><span class="category-label">其他</span></div>
+                <h2 id="title-5">瑜伽垫</h2>
+                <div class="product-meta"><span class="rating">推荐指数：2颗星</span><span class="price">35马币</span></div>
+                <div class="original-copy"><p>推荐指数2颗星，请不要相信自己买完这个之后就可以健身锻炼了本人瑜伽垫已经贱卖了，但是不得不说我买的这个瑜伽垫质量确实挺好的。价格35马币</p><p>链接：【淘宝】假一赔四</p><a class="shop-link" href="https://e.tb.cn/h.8w7Ml1jO4XuOrUD?tk=n508TnwQQF8" target="_blank" rel="noopener noreferrer"><span>前往淘宝 ↗</span><span class="original-url">https://e.tb.cn/h.8w7Ml1jO4XuOrUD?tk=n508TnwQQF8</span></a><p>CA381 「亚运男士健身垫加厚瑜伽垫子地垫家用跳绳减震垫运动防滑隔音防震」</p><p>点击链接直接打开 或者 淘宝搜索直接打开</p></div>
+                <div class="platform-label">购买平台 · 淘宝</div>
+            </article>
+            <article class="product-card" id="item-6" data-category="收纳清洁" aria-labelledby="title-6">
+                <div class="card-top"><span class="item-number">06</span><span class="category-label">收纳清洁</span></div>
+                <h2 id="title-6">插排固定篮</h2>
+                <div class="product-meta"><span class="rating">推荐指数：3.5颗星</span><span class="price">40人民币</span></div>
+                <div class="original-copy"><p>推荐指数3.5颗星，这个用了一学期还可以这个就是一个长方形篮子固定在桌子旁边可以放插排等你也可以放别的，有一个缺点就是不太牢固其实不使劲碰它它也不会掉。价格：40人民币</p><p>链接：【淘宝】假一赔四</p><a class="shop-link" href="https://e.tb.cn/h.8w7FJHD80xrYcrE?tk=ujbyTnwKrK0" target="_blank" rel="noopener noreferrer"><span>前往淘宝 ↗</span><span class="original-url">https://e.tb.cn/h.8w7FJHD80xrYcrE?tk=ujbyTnwKrK0</span></a><p>HU108 「插排固定器免打孔桌下插座支架路由器放置架桌下理线器排插收纳盒」</p><p>点击链接直接打开 或者 淘宝搜索直接打开</p></div>
+                <div class="platform-label">购买平台 · 淘宝</div>
+            </article>
+            <article class="product-card" id="item-7" data-category="宿舍布置" aria-labelledby="title-7">
+                <div class="card-top"><span class="item-number">07</span><span class="category-label">宿舍布置</span></div>
+                <h2 id="title-7">板凳降噪防滑垫</h2>
+                <div class="product-meta"><span class="rating">推荐指数：4颗星</span><span class="price">15人民币</span></div>
+                <div class="original-copy"><p>推荐指数4颗星，这个就是绑在凳子腿上的减少噪音防滑等。价格：15人民币</p><p>链接：【淘宝】假一赔四</p><a class="shop-link" href="https://e.tb.cn/h.8yfqniZzO42qkfX?tk=CICNTnwwnpc" target="_blank" rel="noopener noreferrer"><span>前往淘宝 ↗</span><span class="original-url">https://e.tb.cn/h.8yfqniZzO42qkfX?tk=CICNTnwwnpc</span></a><p>CA381 「3M椅子脚垫桌椅脚套降噪耐磨防滑加厚垫片沙发凳床脚防响桌椅脚垫」</p><p>点击链接直接打开 或者 淘宝搜索直接打开</p></div>
+                <div class="platform-label">购买平台 · 淘宝</div>
+            </article>
+            <article class="product-card" id="item-8" data-category="生活电器" aria-labelledby="title-8">
+                <div class="card-top"><span class="item-number">08</span><span class="category-label">生活电器</span></div>
+                <h2 id="title-8">小夜灯</h2>
+                <div class="product-meta"><span class="rating">推荐指数：3.5颗星</span><span class="price">50人民币</span></div>
+                <div class="original-copy"><p>推荐指数3.5颗星，这个小夜灯有两种颜色淡黄色和白色，平时本人晚上挑灯夜读的时候开宿舍灯太亮了就会用它照明冲一次电续航大概3-4天，价格50人民币。</p><p>链接：【淘宝】</p><a class="shop-link" href="https://e.tb.cn/h.8yfub7ZQWGU6Uy5?tk=E7FOTnwAh9s" target="_blank" rel="noopener noreferrer"><span>前往淘宝 ↗</span><span class="original-url">https://e.tb.cn/h.8yfub7ZQWGU6Uy5?tk=E7FOTnwAh9s</span></a><p>CZ193 「遥控小夜灯充电式台灯卧室床头灯触摸婴儿喂奶护眼夜间睡眠灯夜晚」</p><p>点击链接直接打开 或者 淘宝搜索直接打开</p></div>
+                <div class="platform-label">购买平台 · 淘宝</div>
+            </article>
+            <article class="product-card" id="item-9" data-category="生活电器" aria-labelledby="title-9">
+                <div class="card-top"><span class="item-number">09</span><span class="category-label">生活电器</span></div>
+                <h2 id="title-9">小熊电煮锅</h2>
+                <div class="product-meta"><span class="rating">推荐指数：4颗星</span><span class="price">240人民币</span></div>
+                <div class="original-copy"><p>推荐指数4颗星，这个我用了一个学期我感觉非常好用平时周末出去买点菜买个火锅料花一个小时时间做好边看剧边吃，这个锅非常小巧放在桌子上也不占位置去商场再自己买个小碗，出装推荐：小熊电锅搭配宁阳火锅料再配合日式塑料小碗and火锅蘸料还有13寸大平板可对胃部打出完美暴击，价格240人民币。</p><p>链接：【淘宝】假一赔四</p><a class="shop-link" href="https://e.tb.cn/h.8D8Cmpk80dxGrWV?tk=NeT2TnD9ubp" target="_blank" rel="noopener noreferrer"><span>前往淘宝 ↗</span><span class="original-url">https://e.tb.cn/h.8D8Cmpk80dxGrWV?tk=NeT2TnD9ubp</span></a><p>MF168 「小熊电煮锅分体式小电锅小型钛电火锅一体多功能家用蒸锅官方正品」</p><p>点击链接直接打开 或者 淘宝搜索直接打开</p></div>
+                <div class="platform-label">购买平台 · 淘宝</div>
+            </article>
+            <article class="product-card" id="item-10" data-category="生活电器" aria-labelledby="title-10">
+                <div class="card-top"><span class="item-number">10</span><span class="category-label">生活电器</span></div>
+                <h2 id="title-10">电饭煲</h2>
+                <div class="product-meta"><span class="rating">推荐指数：3颗星</span><span class="price">310人民币</span></div>
+                <div class="original-copy"><p>推荐指数3颗星，这个电饭煲这个学期才买这个主打一个便捷，买一袋大米放宿舍再买点西红柿生菜等（可以直接在抖音搜索电饭煲5分钟做饭教程）平时晚上下课不知道吃啥或者想省钱直接把菜切好和大米一起放进去蒸10几分钟直接开吃。价格310人民币</p><p>链接：【淘宝】假一赔四</p><a class="shop-link" href="https://e.tb.cn/h.8wisqt6HQ2BINfZ?tk=TsVtTnDMHrv" target="_blank" rel="noopener noreferrer"><span>前往淘宝 ↗</span><span class="original-url">https://e.tb.cn/h.8wisqt6HQ2BINfZ?tk=TsVtTnDMHrv</span></a><p>CZ028 「苏泊尔电压力锅家用3L小型迷你容量多功能智能预约多功能电高压锅」</p><p>点击链接直接打开 或者 淘宝搜索直接打开</p></div>
+                <div class="platform-label">购买平台 · 淘宝</div>
+            </article>
+            <article class="product-card" id="item-11" data-category="其他" aria-labelledby="title-11">
+                <div class="card-top"><span class="item-number">11</span><span class="category-label">其他</span></div>
+                <h2 id="title-11">三国杀</h2>
+                <div class="product-meta"></div>
+                <div class="original-copy"><p>舍友之间增进感情直接shopee搜索就行了（这里宿舍增进感情好物就不推荐太多了，如果你们看完觉得比较好可以和我说我再推荐，本宿舍总记购买10几件增加感情的小玩意）</p></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-12" data-category="其他" aria-labelledby="title-12">
+                <div class="card-top"><span class="item-number">12</span><span class="category-label">其他</span></div>
+                <h2 id="title-12">摩托车车衣</h2>
+                <div class="product-meta"><span class="rating">推荐指数：3.5颗星</span><span class="price">26马币</span></div>
+                <div class="original-copy"><p>推荐指数3.5颗星，这个是我给我朋友送的生日礼物挺好用的，价格26马币</p><p>链接：</p><a class="shop-link" href="https://my.shp.ee/QyDpxDcw" target="_blank" rel="noopener noreferrer"><span>前往 Shopee ↗</span><span class="original-url">https://my.shp.ee/QyDpxDcw</span></a><p>（复制发到自己微信点击可以打开）这个是Shopee</p></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-13" data-category="收纳清洁" aria-labelledby="title-13">
+                <div class="card-top"><span class="item-number">13</span><span class="category-label">收纳清洁</span></div>
+                <h2 id="title-13">WD40</h2>
+                <div class="product-meta"><span class="rating">推荐指数：4颗星</span><span class="price">14马币</span></div>
+                <div class="original-copy"><p>推荐指数4颗星，防止生锈喷雾，这个就比较专业了有一些喜欢模型的同学买的一些工具在这边非常容易生锈，喷完这个会防止生锈。价格14马币</p><p>链接：我买的这个商品下架了你们直接在shopee搜WD40就行了。</p></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-14" data-category="宿舍布置" aria-labelledby="title-14">
+                <div class="card-top"><span class="item-number">14</span><span class="category-label">宿舍布置</span></div>
+                <h2 id="title-14">钟表</h2>
+                <div class="product-meta"><span class="rating">推荐指数：3.5颗星</span><span class="price">27马币</span></div>
+                <div class="original-copy"><p>推荐指数3.5颗星，平时看时间要打开手机觉得麻烦的可以买一个挂的钟表一抬头就能看到比较方便。价格：27马币</p><p>链接：</p><a class="shop-link" href="https://my.shp.ee/Nj459rdv" target="_blank" rel="noopener noreferrer"><span>前往 Shopee ↗</span><span class="original-url">https://my.shp.ee/Nj459rdv</span></a><p>（复制发到自己微信点击可以打开）这个是Shopee</p></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-15" data-category="收纳清洁" aria-labelledby="title-15">
+                <div class="card-top"><span class="item-number">15</span><span class="category-label">收纳清洁</span></div>
+                <h2 id="title-15">挂钥匙的挂钩</h2>
+                <div class="product-meta"><span class="rating">推荐指数：4颗星</span><span class="price">14马币</span></div>
+                <div class="original-copy"><p>推荐指数4颗星，一个赛车形状的钥匙挂钩可以贴墙上每天下课钥匙直接挂上面比较方便，特别好看而且可以亮灯实用和设计感都拉满了。价格：14马币</p><p>链接：</p><a class="shop-link" href="https://my.shp.ee/5fDheWbs" target="_blank" rel="noopener noreferrer"><span>前往 Shopee ↗</span><span class="original-url">https://my.shp.ee/5fDheWbs</span></a><p>（复制发到自己微信点击可以打开）这个是Shopee</p></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-16" data-category="收纳清洁" aria-labelledby="title-16">
+                <div class="card-top"><span class="item-number">16</span><span class="category-label">收纳清洁</span></div>
+                <h2 id="title-16">垃圾桶</h2>
+                <div class="product-meta"><span class="rating">推荐指数：4颗星</span><span class="price">16马币</span></div>
+                <div class="original-copy"><p>推荐指数4颗星，这个垃圾桶本人用了一个学期非常实用，后面又买了一个（其实是我朋友一个雷霆大屁给我盖子坐坏了名字我就不说了myn）但其实不坐坏我也打算再买一个的。价格16马币</p><p>链接：</p><a class="shop-link" href="https://my.shp.ee/P2ZVSeoj" target="_blank" rel="noopener noreferrer"><span>前往 Shopee ↗</span><span class="original-url">https://my.shp.ee/P2ZVSeoj</span></a><p>（复制发到自己微信点击可以打开）这个是Shopee</p></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-17" data-category="收纳清洁" aria-labelledby="title-17">
+                <div class="card-top"><span class="item-number">17</span><span class="category-label">收纳清洁</span></div>
+                <h2 id="title-17">小喷壶</h2>
+                <div class="product-meta"><span class="rating">推荐指数：4.5颗星</span><span class="price">5马币</span></div>
+                <div class="original-copy"><p>推荐指数4.5颗星，这个属于是清洁类的我有一点点的小洁癖，这个就非常好用每次灌满放柜子里下午下课下课回来把桌子上的东西放床上拿喷壶喷两下拿纸擦一下非常干净，这个清洁非常好用擦风扇擦玻璃擦柜子抽屉写字板鞋子电脑平板手机灯泡手啥都能喷。价格：5马币</p><p>链接：</p><a class="shop-link" href="https://my.shp.ee/yFAwsaHr" target="_blank" rel="noopener noreferrer"><span>前往 Shopee ↗</span><span class="original-url">https://my.shp.ee/yFAwsaHr</span></a><p>（复制发到自己微信点击可以打开）这个是Shopee</p></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-18" data-category="收纳清洁" aria-labelledby="title-18">
+                <div class="card-top"><span class="item-number">18</span><span class="category-label">收纳清洁</span></div>
+                <h2 id="title-18">小东西收纳盒</h2>
+                <div class="product-meta"><span class="rating">推荐指数：3颗星</span><span class="price">15马币</span></div>
+                <div class="original-copy"><p>推荐指数3颗星，这个盒子收纳小玩意非常方便一个大盒子里面有36个小盒子什么戒指，耳环，小螺丝，取卡针反正小物件怕丢的都能装进去。价格：15马币</p><p>链接：</p><a class="shop-link" href="https://my.shp.ee/6xo9itmU" target="_blank" rel="noopener noreferrer"><span>前往 Shopee ↗</span><span class="original-url">https://my.shp.ee/6xo9itmU</span></a><p>（复制发到自己微信点击可以打开）这个是Shopee</p></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-19" data-category="收纳清洁" aria-labelledby="title-19">
+                <div class="card-top"><span class="item-number">19</span><span class="category-label">收纳清洁</span></div>
+                <h2 id="title-19">洞洞板</h2>
+                <div class="product-meta"><span class="rating">推荐指数：3颗星</span><span class="price">一块板子8马币</span></div>
+                <div class="original-copy"><p>推荐指数3颗星，这个我用的怎么说呢也就还行吧主要是洞洞板的配件太贵了还有就是这个是在shopee上买的不太行是粘胶的内种，但平时不挂重的东西其实也挺好的挂个钟表挂个照片啥的可以。价格一块板子8马币</p><p>链接：</p><a class="shop-link" href="https://my.shp.ee/HvSQxn8n" target="_blank" rel="noopener noreferrer"><span>前往 Shopee ↗</span><span class="original-url">https://my.shp.ee/HvSQxn8n</span></a></div>
+                <div class="platform-label">购买平台 · Shopee</div>
+            </article>
+            <article class="product-card" id="item-20" data-category="宿舍布置" aria-labelledby="title-20">
+                <div class="card-top"><span class="item-number">20</span><span class="category-label">宿舍布置</span></div>
+                <h2 id="title-20">墙纸</h2>
+                <div class="product-meta"><span class="rating rating-special">推荐指数：1000颗星</span></div>
+                <div class="original-copy"><p>推荐指数1000颗星，这个必须得买直接去DIY买3大卷，宿舍的床都是靠墙的如果你运气好上一个人比较干净那你可以考虑买不买，但是据我所知99%宿舍墙都比较难崩上个学期我住的宿舍靠床的墙上还有上一个森口给我留的鼻屎（当天我是在床边边睡觉的）</p><p>链接：直接去DIY买就行了。</p></div>
+                <div class="platform-label">购买平台 · DIY</div>
+            </article>
         </div>
-
-        <section class="content-card">
-            <div class="content-label">更新说明</div>
-            <p>本页面用于后续添加“宿舍好物”的真实信息，当前仅用于页面结构和链接占位。</p>
-            <p class="placeholder">后续可在此处补充内容：宿舍必备品、推荐清单、购买建议和使用体验等。</p>
-        </section>
     </main>
 
     <footer class="footer">
         <p>信息持续更新中，发现错误欢迎 <a href="zhao.html">反馈</a>。</p>
         <p>免责声明：信息仅供参考，请以学校实际通知为准。</p>
     </footer>
+    <script>
+        const filters = document.querySelector('.filters');
+        const cards = [...document.querySelectorAll('.product-card')];
+        filters.hidden = false;
+        filters.addEventListener('click', (event) => {
+            const button = event.target.closest('button[data-filter]');
+            if (!button) return;
+            const category = button.dataset.filter;
+            filters.querySelectorAll('button').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+            cards.forEach((card) => { card.hidden = category !== '全部' && card.dataset.category !== category; });
+            document.querySelector('.results-count').textContent = category === '全部' ? '显示全部 20 件' : `${category} · ${cards.filter((card) => !card.hidden).length} 件`;
+        });
+    </script>
 </body>
 </html>
