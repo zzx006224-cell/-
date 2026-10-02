@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>出售小电动车 | 校园服务 | 指路猫</title>
     <link rel="stylesheet" href="campus-services.css" />
+    <link rel="stylesheet" href="campus-services-e-scooter.css" />
+    <script src="campus-services-e-scooter-data.js" defer></script>
+    <script src="campus-services-e-scooter.js" defer></script>
 </head>
-<body>
+<body class="scooter-body">
     <div class="topbar">
         <div class="topbar-inner">
             <a class="brand" href="index.html">
@@ -22,23 +25,74 @@
         </div>
     </div>
 
-    <main class="page-shell">
-        <nav class="breadcrumb" aria-label="面包屑"><a href="index.html">首页</a><span aria-hidden="true">›</span><a href="campus-services.html">校园服务</a><span aria-hidden="true">›</span><span aria-current="page">出售小电动车</span></nav>
-        <div class="page-header"><a class="back-link" href="campus-services.html">← 返回校园服务</a><br><span class="eyebrow" lang="en">Campus E-Scooter</span><h1>校园小电动车</h1><p>为校园短途出行提供更方便的选择。</p></div>
-        <p class="section-intro"><span class="status">资料整理中</span> <span lang="en">Coming Soon</span> · 当前为页面框架，真实资料等待更新。</p>
-        <div class="detail-grid"><section class="content-card wide" aria-labelledby="section-0"><h2 id="section-0">产品展示</h2><p class="placeholder">新车 / 二手车展示 · 资料整理中，暂无商品。</p><dl class="fields"><div><dt>名称</dt><dd>等待更新</dd></div><div><dt>价格</dt><dd>等待更新</dd></div><div><dt>新车 / 二手</dt><dd>等待更新</dd></div><div><dt>购买时间</dt><dd>等待更新</dd></div></dl></section>
-            <section class="content-card" aria-labelledby="section-1"><h2 id="section-1">产品图片</h2><div class="image-placeholder">产品图片 · 等待更新</div></section>
-            <section class="content-card" aria-labelledby="section-2"><h2 id="section-2">基本参数</h2><dl class="fields"><div><dt>续航</dt><dd>等待更新</dd></div><div><dt>充电时间</dt><dd>等待更新</dd></div><div><dt>重量</dt><dd>等待更新</dd></div><div><dt>车况</dt><dd>等待更新</dd></div><div><dt>配件</dt><dd>等待更新</dd></div></dl></section>
-            <section class="content-card" aria-labelledby="section-3"><h2 id="section-3">续航</h2><p class="placeholder">资料整理中 · 等待更新</p></section>
-            <section class="content-card" aria-labelledby="section-4"><h2 id="section-4">充电时间</h2><p class="placeholder">资料整理中 · 等待更新</p></section>
-            <section class="content-card" aria-labelledby="section-5"><h2 id="section-5">重量</h2><p class="placeholder">资料整理中 · 等待更新</p></section>
-            <section class="content-card" aria-labelledby="section-6"><h2 id="section-6">车辆状态</h2><p class="placeholder">资料整理中 · 等待更新</p></section>
-            <section class="content-card" aria-labelledby="section-7"><h2 id="section-7">配件</h2><p class="placeholder">资料整理中 · 等待更新</p></section>
-            <section class="content-card" aria-labelledby="section-8"><h2 id="section-8">价格</h2><p class="placeholder">资料整理中 · 等待更新</p></section>
-            <section class="content-card" aria-labelledby="section-9"><h2 id="section-9">联系方式</h2><p class="placeholder">资料整理中 · 等待更新</p></section>
-            <section class="content-card" aria-labelledby="section-10"><h2 id="section-10">我要出售</h2><button type="button" disabled aria-describedby="sell-note">我要出售 · Coming Soon</button><p class="placeholder" id="sell-note">发布入口尚未开放。目前无法提交商品或进行交易，后续再接入真实发布渠道。</p></section>
-            <section class="content-card" aria-labelledby="section-11"><h2 id="section-11">使用注意事项</h2><p class="placeholder">资料整理中 · 等待更新</p></section></div>
-    </main>
+    <main class="page-shell scooter-page">
+ <nav class="breadcrumb" aria-label="面包屑"><a href="index.html">首页</a><span aria-hidden="true">›</span><a href="campus-services.html">校园服务</a><span aria-hidden="true">›</span><span aria-current="page">出售小电动车</span></nav>
+ <a class="back-link" href="campus-services.html">← 返回校园服务</a>
+ <section class="product-hero" aria-labelledby="product-name">
+  <div class="hero-image"><button type="button" class="hero-photo" data-open-photo="0" aria-label="查看车辆完整侧面大图"><img src="校园/scooter/side.jpg" alt="黑色小电动车完整侧面，包含前后轮、座椅和车身" width="1320" height="994" fetchpriority="high" decoding="async"><span class="image-note">实拍 · 点击查看大图 <span aria-hidden="true">↗</span></span></button></div>
+  <div class="hero-info"><span class="eyebrow" lang="en">Campus E-Scooter</span><h1 id="product-name" data-product="name">可拆卸电池代步电动车</h1>
+   <div class="price"><span lang="en">RM</span> <strong data-product="priceMyr">1290</strong></div><p class="price-copy"><span data-product="price">1290马币</span> · <span data-product="rmb">人民币最多2150人民币</span></p>
+   <div class="hero-specs"><div class="hero-spec"><span>充电时常</span><strong data-spec="0">4小时左右</strong></div><div class="hero-spec"><span>速度</span><strong data-spec="1">40-45码</strong></div><div class="hero-spec"><span>公里数</span><strong data-spec="2">100公里左右</strong></div><div class="hero-spec"><span>载重</span><strong data-spec="3">100kg</strong></div></div><div class="actions"><button type="button" class="primary-button" data-buy>联系购买 <span aria-hidden="true">↗</span></button><a class="secondary-button" href="#gallery">查看实物图 <span aria-hidden="true">↓</span></a></div><p class="hero-caption">可拆卸电池 · 一年免费上门维修</p>
+  </div>
+ </section>
+ <section class="story-section" aria-labelledby="commute-title"><div class="section-heading"><span class="section-number">01 / CAMPUS LIFE</span><h2 id="commute-title">每天的路，可以轻松一点</h2></div>
+  <div class="commute-grid"><div><span>男宿舍区 → 中心大寺</span><strong>1.5公里</strong><small>步行 20分钟</small></div><div><span>比拉里 → 男生操场</span><strong>950m</strong><small>步行 14分钟左右</small></div><div><span>比拉里宿舍 → KICT</span><strong>2.5公里</strong><small>步行 35分钟</small></div></div>
+  <div class="reading-copy"><p class="original" data-copy="intro">引言：在iium上学通勤是一个非常常见的话题，因为这个学校真的非常非常大从远一点的男宿舍区到中心的大寺大概1.5公里步行到达可能需要20分钟，平时可能会有同学喜欢健身游泳等，从比拉里到达男生操场距离950m步行大约需要14分钟左右，更不用说苦命的计算机学生了KICT在山头上（命苦）KICT距离比拉里宿舍2.5公里步行需要35分钟。
+ 所有很多学生都会考虑购买交通工具最主流的就是摩托车，小电动车，车，滑板车。</p></div>
+ </section>
+ <section class="story-section" aria-labelledby="compare-title"><div class="section-heading"><span class="section-number">02 / GETTING AROUND</span><h2 class="section-title" data-copy="compareTitle">对比：</h2></div><div class="compare-grid"><article class="compare-card">
+ <span class="compare-icon" aria-hidden="true">🏍️</span><h3>摩托车</h3><p class="compare-price">最低价3000--3500马币</p>
+ <p class="compare-preview" data-preview="motorcycle"> 摩托车：最低价3000--3500马币，一般人们会首先考虑摩托车，因为摩托车优势比较大油费便宜可以上公路等等，</p>
+ <button class="accordion-toggle" type="button" aria-expanded="false" aria-controls="full-motorcycle"><span>展开全文</span><span class="chevron" aria-hidden="true">↓</span></button>
+ <div id="full-motorcycle" class="accordion-body" hidden><p class="original" data-copy="motorcycle"> 摩托车：最低价3000--3500马币，一般人们会首先考虑摩托车，因为摩托车优势比较大油费便宜可以上公路等等，
+ but摩托车低价确实有一点点高5000-6000人民币也不是小数目很多同学可能有点吃不消，
+ 还有摩托车的安全性，摩托车可以上公路也比较方便但马来西亚摩托车和小汽车一块跑如果不小心摔一下那就不是小打小闹了，
+ and摩托车需要驾照，有时候学校校警会突击检查如果查到你没有驾照罚款300马币。</p></div>
+</article>
+<article class="compare-card featured">
+ <span class="compare-icon" aria-hidden="true">🛵</span><h3>小电动车</h3><p class="compare-price">最低价1290马币</p>
+ <p class="compare-preview" data-preview="scooter">小电动车：最低价1290马币，小电动车可能是人们退而求其次的考虑，</p>
+ <button class="accordion-toggle" type="button" aria-expanded="false" aria-controls="full-scooter"><span>展开全文</span><span class="chevron" aria-hidden="true">↓</span></button>
+ <div id="full-scooter" class="accordion-body" hidden><p class="original" data-copy="scooter">小电动车：最低价1290马币，小电动车可能是人们退而求其次的考虑，
+ 首先价格虽然不是特别低也需要2000人民币但是对比摩托车还是比较有性价比，等你毕业出二手也能最低卖900-1000人民币的，因为我的小电动车就是二手1000多买的。
+ 安全性方面任何交通工具都有安全隐患，只是受伤程度不一样摩托车摔一下可能就要伤筋动骨，小电瓶车也会摔但是谁骑电动车没摔过跤呢摔完自己还能趴起来生还的可能性比较大，而且这款电动车时速40多码不是特别快摔一下可能就刺破皮。
+ 电动车是不需要驾照的，小巧灵活哪里都能钻交警看见了根本不会管你。</p></div>
+</article>
+<article class="compare-card">
+ <span class="compare-icon" aria-hidden="true">🚙</span><h3>车</h3><p class="compare-price">价格几千马币到几万马币不等</p>
+ <p class="compare-preview" data-preview="car">车：价格几千马币到几万马币不等，额...我感觉汽车没什么好说的有钱人的座驾。</p>
+ <button class="accordion-toggle" type="button" aria-expanded="false" aria-controls="full-car"><span>展开全文</span><span class="chevron" aria-hidden="true">↓</span></button>
+ <div id="full-car" class="accordion-body" hidden><p class="original" data-copy="car">车：价格几千马币到几万马币不等，额...我感觉汽车没什么好说的有钱人的座驾。</p></div>
+</article>
+<article class="compare-card">
+ <span class="compare-icon" aria-hidden="true">🛴</span><h3>滑板车</h3><p class="compare-price">最低价500马币</p>
+ <p class="compare-preview" data-preview="skateboard">滑板车：最低价500马币，价格方面我觉得优势比较小，小1000人民币的价格你说贵也不贵但是也不便宜，还有我都有1000人民币了我再存一点直接买小电动车不行吗买二手性价比也比这个高，而且现在电动滑板车市场鱼龙混杂什么价位都有买回来骑两天坏了修也没办法修白白损失时间还有精力。</p>
+ <button class="accordion-toggle" type="button" aria-expanded="false" aria-controls="full-skateboard"><span>展开全文</span><span class="chevron" aria-hidden="true">↓</span></button>
+ <div id="full-skateboard" class="accordion-body" hidden><p class="original" data-copy="skateboard">滑板车：最低价500马币，价格方面我觉得优势比较小，小1000人民币的价格你说贵也不贵但是也不便宜，还有我都有1000人民币了我再存一点直接买小电动车不行吗买二手性价比也比这个高，而且现在电动滑板车市场鱼龙混杂什么价位都有买回来骑两天坏了修也没办法修白白损失时间还有精力。
+ 安全性方面，虽然骑小滑板车摔的不严重因为它非常慢，但是它非常容易摔跤虽然摔的轻但是没人想天天摔跤吧我又不是M，因为这种小滑板车轮距非常小看也能看出来他的轮子只有一点点，而且重心高，你过个小坑（下雨天看不清坑）过个减速带或者来个急转弯等等都是生死局因为它对路况非常敏感，还有小滑板车就不要想拉东西了它能拖动你都英山安拉了。
+ 还有就是充电，这种电动车电池是一体的你只能把车折叠拿上去冲电住1楼还好说3楼4楼那真是享福了天天有氧运动，而且小滑板车它体积就那么大冲一次电续航又能有多少？</p></div>
+</article></div></section>
+ <section class="product-divider" aria-labelledby="recommendation"><h2 class="recommendation-title" data-copy="recommendation">推荐的小电动车介绍：</h2><span lang="en">Campus E-Scooter</span></section>
+ <section id="gallery" class="story-section gallery-section" aria-labelledby="gallery-title"><div class="section-heading"><span class="section-number">03 / REAL PHOTOS</span><h2 id="gallery-title">看清每一个细节</h2><p>完整侧面、仪表盘与钥匙、后方与座椅。</p></div>
+  <div class="gallery-track" id="gallery-track" tabindex="0" aria-label="车辆实物图，手机可横向滑动"><button class="gallery-photo" type="button" data-photo="0" aria-label="查看完整侧面大图"><img src="校园/scooter/side.jpg" alt="黑色小电动车完整侧面，包含前后轮、座椅和车身" width="1320" height="994" loading="lazy" decoding="async"><span class="photo-label">完整侧面 <span aria-hidden="true">↗</span></span></button>
+<button class="gallery-photo" type="button" data-photo="1" aria-label="查看仪表盘与钥匙大图"><img src="校园/scooter/dashboard.jpg" alt="小电动车仪表盘、车把和钥匙实拍细节" width="990" height="1316" loading="lazy" decoding="async"><span class="photo-label">仪表盘与钥匙 <span aria-hidden="true">↗</span></span></button>
+<button class="gallery-photo" type="button" data-photo="2" aria-label="查看后方与座椅大图"><img src="校园/scooter/rear.jpg" alt="从后方拍摄的小电动车后座、轮胎与车架" width="990" height="1324" loading="lazy" decoding="async"><span class="photo-label">后方与座椅 <span aria-hidden="true">↗</span></span></button></div>
+  <div class="gallery-navigation"><span id="gallery-counter" aria-live="polite">1 / 3</span><span class="gallery-tip">点击放大 · 手机左右滑动</span></div><div class="thumbnails" aria-label="实物图缩略图"><button type="button" class="thumbnail" data-thumb="0" aria-label="显示完整侧面" aria-pressed="true"><img src="校园/scooter/side.jpg" alt="黑色小电动车完整侧面，包含前后轮、座椅和车身" width="1320" height="994" loading="lazy" decoding="async"><span>完整侧面</span></button><button type="button" class="thumbnail" data-thumb="1" aria-label="显示仪表盘与钥匙" aria-pressed="false"><img src="校园/scooter/dashboard.jpg" alt="小电动车仪表盘、车把和钥匙实拍细节" width="990" height="1316" loading="lazy" decoding="async"><span>仪表盘与钥匙</span></button><button type="button" class="thumbnail" data-thumb="2" aria-label="显示后方与座椅" aria-pressed="false"><img src="校园/scooter/rear.jpg" alt="从后方拍摄的小电动车后座、轮胎与车架" width="990" height="1324" loading="lazy" decoding="async"><span>后方与座椅</span></button></div><p class="gallery-caption" data-copy="photos">“以上为实物图”</p>
+ </section>
+ <section class="story-section" aria-labelledby="spec-title"><div class="section-heading"><span class="section-number">04 / THE DETAILS</span><h2 id="spec-title">价格与核心参数</h2></div>
+  <div class="spec-grid"><div class="spec-cell"><p class="original" data-copy="name"> 名称：可拆卸电池代步电动车</p></div><div class="spec-cell"><p class="original" data-copy="price">价格：1290马币，人民币最多2150人民币</p></div><div class="spec-cell"><p class="original" data-copy="charge">充电时常：4小时左右</p></div><div class="spec-cell"><p class="original" data-copy="battery">电池：电池是完全可拆卸的，下课回来把电动车停车棚电池一卸就走了</p></div><div class="spec-cell"><p class="original" data-copy="speed">速度：40-45码（如果改一下电机可以到55码左右）</p></div><div class="spec-cell"><p class="original" data-copy="range">公里数：100公里左右（具体要看你的载重等），（100公里你冲一次电可以妥妥骑2-3天了，最远的KICT也就3公里你冲一次电能跑30多趟了谁闲的没事干一直跑）</p></div><div class="spec-cell"><p class="original" data-copy="load">载重：100kg，女生的话两个人也能拖动（但是尽量一个人骑“注意安全”）100kg平时搬宿舍或者去洗一大堆衣服等等都能拖后面有车座子前面还有小篮子</p></div></div>
+ </section>
+ <section class="feature-section battery-feature" aria-labelledby="battery-title"><div><span class="section-number">05 / REMOVABLE BATTERY</span><h2 id="battery-title">电池带走，车留在车棚。</h2><p class="original" data-copy="battery">电池：电池是完全可拆卸的，下课回来把电动车停车棚电池一卸就走了</p></div><ol class="steps"><li><span aria-hidden="true">🅿️</span>停车</li><li><span aria-hidden="true">🔋</span>拆电池</li><li><span aria-hidden="true">🎒</span>带走</li><li><span aria-hidden="true">🏠</span>回宿舍充电</li></ol></section>
+ <div class="range-load-grid"><section class="feature-section range-feature" aria-labelledby="range-title"><span class="section-number">06 / RANGE</span><h2 id="range-title">100公里左右</h2><div class="tags"><span>2-3天</span><span>KICT</span><span>3公里</span><span>30多趟</span></div><p class="original" data-copy="range">公里数：100公里左右（具体要看你的载重等），（100公里你冲一次电可以妥妥骑2-3天了，最远的KICT也就3公里你冲一次电能跑30多趟了谁闲的没事干一直跑）</p></section>
+ <section class="feature-section load-feature" aria-labelledby="load-title"><span class="section-number">07 / EVERYDAY USE</span><h2 id="load-title">100kg</h2><div class="tags"><span>校园通勤</span><span>搬宿舍</span><span>洗衣服</span><span>后座 / 前篮子</span></div><p class="original" data-copy="load">载重：100kg，女生的话两个人也能拖动（但是尽量一个人骑“注意安全”）100kg平时搬宿舍或者去洗一大堆衣服等等都能拖后面有车座子前面还有小篮子</p></section></div>
+ <section class="feature-section warranty-feature" aria-labelledby="warranty-title"><span class="section-number">08 / ONE YEAR</span><h2 id="warranty-title">一年免费上门维修</h2><p class="original" data-copy="warranty">保修：不管你是在网上买还是买二手维修都是一个大麻烦，但是这款电动车有一年的保修坏了直接给我打电话，我在KICT上课我都蹬自行车过去给你修（保证一年免费上门维修）</p><ol class="steps"><li>出现问题</li><li>联系</li><li>确认问题</li><li>上门维修</li></ol></section>
+ <section class="story-section" aria-labelledby="gifts-title"><div class="section-heading"><span class="section-number">09 / INCLUDED</span><h2 id="gifts-title">免费送报警器和车锁</h2></div><div class="gift-grid"><div><span aria-hidden="true">🔔</span><h3>报警器</h3><p>免费赠送</p></div><div><span aria-hidden="true">🔒</span><h3>车锁</h3><p>免费赠送</p></div></div><div class="reading-copy"><p class="original" data-copy="gifts">配件：这款电动车只要下单免费送报警器和车锁，其他有些商家为了省钱啥也不给在网上买个锁子少说都要2-30块钱了白花钱</p></div></section>
+ <section class="final-cta" aria-labelledby="final-title"><span class="eyebrow" lang="en">Campus Mobility</span><h2 id="final-title" data-product="name">可拆卸电池代步电动车</h2><p class="final-price" data-product="price">1290马币</p><p data-product="rmb">人民币最多2150人民币</p><p>一年免费上门维修 · 免费送报警器和车锁</p><div class="actions"><button type="button" class="primary-button" data-buy>联系购买 <span aria-hidden="true">↗</span></button><a class="secondary-button" href="campus-services.html">返回校园服务</a></div></section>
+ <noscript><p class="content-card">请启用 JavaScript 使用折叠全文、图片查看与联系提示。商品正文和三张实物图已保留在页面中。</p></noscript>
+</main>
+<div class="mobile-buy-bar"><span><small>可拆卸电池代步电动车</small><strong>RM<span data-product="priceMyr">1290</span></strong></span><button type="button" class="primary-button" data-buy>联系购买 <span aria-hidden="true">↗</span></button></div>
+<dialog id="photo-lightbox" class="photo-lightbox" aria-labelledby="lightbox-title"><div class="lightbox-inner"><div class="lightbox-toolbar"><span id="lightbox-title">车辆实物图</span><span id="lightbox-counter">1 / 3</span><button type="button" data-close-dialog aria-label="关闭大图">✕</button></div><div class="lightbox-stage"><img id="lightbox-image" alt=""></div><div class="lightbox-controls"><button type="button" id="photo-prev" aria-label="上一张实物图">←</button><span>左右键切图 · Esc 关闭</span><button type="button" id="photo-next" aria-label="下一张实物图">→</button></div></div></dialog>
+<dialog id="purchase-dialog" class="purchase-dialog" aria-labelledby="purchase-title"><button type="button" class="dialog-close" data-close-dialog aria-label="关闭联系提示">✕</button><span class="eyebrow">联系购买</span><h2 id="purchase-title">联系方式待补充</h2><p id="purchase-message">联系方式待补充</p><a id="purchase-link" class="primary-button" hidden></a><button type="button" class="secondary-button" data-close-dialog>知道了</button></dialog>
 
     <footer class="footer">
         <p>信息持续更新中，发现错误欢迎 <a href="zhao.html">反馈</a>。</p>
