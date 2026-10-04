@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>各大院系的主任和院长 | 指路猫</title>
+    <link rel="stylesheet" href="campus-services.css" />
+    <link rel="stylesheet" href="faculty-leadership.css" />
+    <script src="faculty-leadership-data.js" defer></script>
+    <script src="faculty-leadership.js" defer></script>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">🐱</span>
+                <span>指路猫</span>
+            </a>
+            <nav class="nav-links" aria-label="主导航">
+                <a href="index.html">首页</a>
+                <a href="campus-map.html">学校地图</a>
+                <a href="other-affairs.html">其他事务</a>
+                <a href="zhao.html">反馈建议</a>
+            </nav>
+        </div>
+    </div>
+
+
+    <main class="page-shell">
+        <nav class="breadcrumb" aria-label="面包屑导航"><a href="index.html">首页</a><span aria-hidden="true">›</span><span aria-current="page">各大院系的主任和院长</span></nav>
+        <header class="page-header">
+            <span class="eyebrow" aria-hidden="true">🏫</span>
+            <h1>各大院系的主任和院长</h1>
+            <span class="directory-english" lang="en">Deans &amp; Heads of Departments</span>
+            <p>快速查找学院院长、系主任和相关负责人。</p>
+        </header>
+        <section class="content-card directory-search" aria-label="人物与学院搜索">
+            <label for="faculty-search">人物 / 学院搜索</label>
+            <input id="faculty-search" type="search" placeholder="搜索学院、院长、系主任……" autocomplete="off" aria-controls="faculty-list" />
+            <p>目前展示部分学院，名单及负责人资料整理中。已录入资料可按学院简称、全称、姓名、系或职位查找。</p>
+            <p id="faculty-count" role="status" aria-live="polite">正在加载资料……</p>
+        </section>
+        <div id="faculty-list" class="faculty-list"></div>
+        <div id="faculty-empty" class="content-card directory-empty" hidden><h2>未找到匹配资料</h2><p>试试学院简称或其他搜索词。负责人信息仍在整理中，未匹配不代表该学院没有相关负责人。</p></div>
+        <noscript><p class="content-card">请启用 JavaScript 以查看学院卡片和使用搜索。负责人资料整理中。</p></noscript>
+    </main>
+    <footer class="footer">
+        <p>信息持续更新中，发现错误欢迎 <a href="zhao.html">反馈</a>。</p>
+        <p>免责声明：信息仅供参考，请以学校实际通知为准。</p>
+    </footer>
+    <div id="directory-toast" class="directory-toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

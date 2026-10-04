@@ -1,0 +1,39 @@
+.directory-english { display: block; margin: 10px 0; color: var(--primary-dark); font-size: 1.05rem; }
+.directory-search { margin-bottom: 24px; min-height: 0; }
+.directory-search label { display: block; margin-bottom: 8px; font-weight: 700; }
+.directory-search input { color: var(--text); }
+.directory-search p { margin: 12px 0 0; color: var(--muted); }
+.faculty-list { display: grid; gap: 18px; }
+.faculty-card { min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 24px; box-shadow: 0 12px 28px rgba(16,34,47,.04); overflow-wrap: anywhere; }
+.faculty-card summary { display: flex; align-items: center; gap: 16px; padding: 24px; cursor: pointer; min-height: 72px; list-style: none; }
+.faculty-card summary::-webkit-details-marker { display: none; }
+.faculty-heading { flex: 1; min-width: 0; }
+.faculty-heading h2 { margin: 0; font-size: 1.35rem; }
+.faculty-heading p { margin: 4px 0 0; color: var(--muted); font-size: .9rem; }
+.faculty-arrow { color: var(--primary-dark); transition: transform .2s ease; }
+.faculty-card[open] .faculty-arrow { transform: rotate(180deg); }
+.faculty-content { padding: 0 24px 24px; }
+.faculty-content > p { color: var(--muted); }
+.faculty-group { margin-top: 18px; }
+.faculty-group h3 { font-size: 1rem; margin: 0 0 12px; }
+.people-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.person-card { min-width: 0; padding: 18px; border: 1px solid var(--border); border-radius: 16px; background: #f7fcf9; }
+.person-card h4 { margin: 0 0 10px; font-size: 1.1rem; }
+.person-photo { width: 72px; height: 72px; object-fit: cover; border-radius: 14px; margin-bottom: 12px; }
+.person-card dl { margin: 0; }
+.person-card dl div { margin-bottom: 10px; }
+.person-card dt { font-size: .85rem; color: var(--muted); }
+.person-card dd { margin: 0; overflow-wrap: anywhere; }
+.person-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.person-actions a { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 12px; color: var(--primary-dark); background: white; font-weight: 600; }
+.person-actions button { cursor: pointer; }
+.directory-empty { text-align: center; color: var(--muted); }
+.directory-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); max-width: calc(100% - 32px); padding: 12px 18px; border-radius: 12px; background: var(--text); color: white; z-index: 20; }
+summary:focus-visible { outline: 3px solid var(--primary-dark); outline-offset: -4px; border-radius: 24px; }
+@media (max-width:760px) {
+  .faculty-card summary { padding: 20px 16px; flex-wrap: wrap; gap: 12px; }
+  .faculty-heading { flex-basis: calc(100% - 32px); }
+  .faculty-content { padding: 0 16px 20px; }
+  .people-grid { grid-template-columns: minmax(0,1fr); }
+}
+@media (prefers-reduced-motion:reduce) { .faculty-arrow { transition: none; } }
