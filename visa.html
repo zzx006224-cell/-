@@ -483,6 +483,28 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .visa-contacts, .attendance-routes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+        .visa-contacts .detail-card { margin: 0; min-width: 0; }
+        .contact-value { overflow-wrap: anywhere; }
+        .contact-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+        .contact-actions button, .contact-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--primary-dark); font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; }
+        .faq-toggle:focus-visible, .contact-actions button:focus-visible, .contact-actions a:focus-visible { outline: 3px solid var(--primary-dark); outline-offset: -3px; }
+        #visa-contact, #visa-notes { scroll-margin-top: 170px; }
+        #visa-notes { --danger: #b42318; --danger-border: #e9b6b2; border-color: var(--danger-border); background: #fff4f2; }
+        #visa-notes .faq-toggle, #visa-notes strong { color: var(--danger); }
+        #visa-notes .faq-index, #visa-notes .faq-arrow { background: #fce3e0; color: var(--danger); }
+        .visa-warning-heading { flex-wrap: wrap; min-width: 0; }
+        .visa-warning-subtitle { font-size: .85rem; font-weight: 500; }
+        #visa-notes .warning-card { border-color: var(--danger-border); background: #fffaf9; }
+        #visa-notes .faq-content p { color: var(--text); }
+        .attendance-routes { margin-bottom: 14px; }
+        .attendance-routes div { padding: 14px; border: 1px solid var(--danger-border); border-radius: 12px; }
+        .visa-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 30; max-width: calc(100% - 32px); padding: 10px 18px; border-radius: 12px; background: var(--text); color: white; box-shadow: var(--shadow); }
+        .faq-item.is-open .faq-content { animation: visa-expand .2s ease; }
+        @keyframes visa-expand { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+        @media (prefers-reduced-motion: reduce) { .faq-item.is-open .faq-content { animation: none; } }
+        @media (max-width: 760px) { .visa-contacts, .attendance-routes { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -670,6 +692,7 @@
                             <button class="qr-image-button" type="button" aria-label="查看出勤证明二维码">
                                 <img src="校园/af779782824023bc969f13690997c3b5.jpg" alt="" loading="lazy" />
                             </button>
+                            <p>该二维码对应语言班学生获取出勤表的方式。入系学生请查看下方<a href="#visa-notes">“注意事项”</a>。</p>
                         </div>
 
                         <div class="detail-card">
@@ -712,10 +735,10 @@
                     </div>
                 </article>
 
-                <!-- 6. 穆伊家中介发的公告 -->
+                <!-- 6. 学校签证办公室公告 -->
                 <article class="faq-item">
                     <button class="faq-toggle" type="button" aria-expanded="false">
-                        <span><span class="faq-index">6</span>穆伊家中介发的公告</span>
+                        <span><span class="faq-index">6</span>学校签证办公室公告</span>
                         <span class="faq-arrow">⌄</span>
                     </button>
                     <div class="faq-content">
@@ -725,10 +748,39 @@
                     </div>
                 </article>
 
-                <!-- 7. 注意事项 -->
-                <article class="faq-item">
+                <!-- 7. 签证问题咨询 -->
+                <article class="faq-item" id="visa-contact">
                     <button class="faq-toggle" type="button" aria-expanded="false">
-                        <span><span class="faq-index">7</span>注意事项</span>
+                        <span><span class="faq-index">7</span>签证问题咨询</span>
+                        <span class="faq-arrow">⌄</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="visa-contacts">
+                            <div class="detail-card">
+                                <h3>学校签证办公室</h3>
+                                <p>Email<br><span class="contact-value">visaunit@live.iium.edu.my</span></p>
+                                <div class="contact-actions">
+                                    <button type="button" data-copy="visaunit@live.iium.edu.my">复制邮箱</button>
+                                    <a href="mailto:visaunit@live.iium.edu.my">发送邮件</a>
+                                </div>
+                            </div>
+                            <div class="detail-card">
+                                <h3>签证办公室学哥联系方式</h3>
+                                <p>微信<br><span class="contact-value">ibrahim20049</span></p>
+                                <p>WA Business<br><span class="contact-value">01114062998</span></p>
+                                <div class="contact-actions">
+                                    <button type="button" data-copy="ibrahim20049">复制微信</button>
+                                    <button type="button" data-copy="01114062998">复制WA号码</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 8. 注意事项 -->
+                <article class="faq-item" id="visa-notes">
+                    <button class="faq-toggle" type="button" aria-expanded="false">
+                        <span class="visa-warning-heading"><span class="faq-index">8</span><span><span aria-hidden="true">⚠</span> 注意事项</span><span class="visa-warning-subtitle">重要提醒，请务必阅读</span></span>
                         <span class="faq-arrow">⌄</span>
                     </button>
                     <div class="faq-content">
@@ -743,6 +795,17 @@
                         </div>
                         <div class="warning-card">
                             <p>4：逾期停留在马来西亚每天必须付30马币。</p>
+                        </div>
+                        <div class="warning-card">
+                            <p>1：像<strong>平均分低于1.0</strong>和<strong>出勤率低于80%</strong>的学生续签这里会被拒绝，这个情况签证办公室需要跟JPT那边开会讨论然后告诉他们，如果续签被拒的学生知道自己的<strong>续签被拒绝</strong>了，你们<strong>需要去办公室</strong>跟办公室的人说一下然后他们要开会讨论这个，<strong>一个月只有一次</strong>。</p>
+                        </div>
+                        <div class="warning-card">
+                            <div class="attendance-routes">
+                                <div><strong>语言班学生</strong><br>↓<br>使用上面的二维码获取出勤表</div>
+                                <div><strong>入系学生</strong><br>↓<br>跟自己的系里获取出勤表<br>↓<br><strong>不要跟语言中心要</strong></div>
+                            </div>
+                            <p>2：出勤表的获取方式语言班和入系学生是不一样的，上面的二维码是语言班获取出勤表的方式</p>
+                            <p>入系的学生需要跟你们系里要你的出勤表不要跟语言中心要。</p>
                         </div>
                     </div>
                 </article>
@@ -759,6 +822,8 @@
         <button class="image-modal-close" type="button" aria-label="关闭大图">&times;</button>
         <img src="校园/af779782824023bc969f13690997c3b5.jpg" alt="" />
     </div>
+
+    <div class="visa-toast" role="status" aria-live="polite" hidden></div>
 
     <script>
         // 每个栏目都可以单独展开/收起，允许多个栏目同时展开。
@@ -801,6 +866,41 @@
                 }
             });
         }
+
+        const visaToast = document.querySelector('.visa-toast');
+        let visaToastTimer;
+        document.querySelectorAll('[data-copy]').forEach(function (button) {
+            button.addEventListener('click', async function () {
+                let copied = false;
+                try {
+                    await navigator.clipboard.writeText(button.dataset.copy);
+                    copied = true;
+                } catch (error) {
+                    const field = document.createElement('textarea');
+                    field.value = button.dataset.copy;
+                    field.style.position = 'fixed';
+                    field.style.opacity = '0';
+                    document.body.appendChild(field);
+                    field.select();
+                    try { copied = document.execCommand('copy'); } catch (fallbackError) { copied = false; }
+                    field.remove();
+                    button.focus();
+                }
+                visaToast.textContent = copied ? '已复制' : '复制失败，请手动选择联系方式复制';
+                visaToast.hidden = false;
+                clearTimeout(visaToastTimer);
+                visaToastTimer = setTimeout(function () { visaToast.hidden = true; }, 3000);
+            });
+        });
+        function openVisaAnchor() {
+            if (location.hash !== '#visa-contact' && location.hash !== '#visa-notes') return;
+            const item = document.querySelector(location.hash);
+            item.classList.add('is-open');
+            item.querySelector('.faq-toggle').setAttribute('aria-expanded', 'true');
+            item.scrollIntoView({ block: 'start' });
+        }
+        window.addEventListener('hashchange', openVisaAnchor);
+        openVisaAnchor();
     </script>
 </body>
 </html>
