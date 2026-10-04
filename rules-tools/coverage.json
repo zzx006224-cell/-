@@ -1,0 +1,36 @@
+[
+  {
+    "id": "discipline",
+    "pages": 40,
+    "rules": 62,
+    "subclauses": 124,
+    "sha256": "d9929d704b594c2c0f08fd22222b930739b63f29f64976f35accbe6154b5a342",
+    "sparsePages": [
+      1,
+      2,
+      40
+    ],
+    "replacementCharPages": []
+  },
+  {
+    "id": "hostel",
+    "pages": 35,
+    "rules": 49,
+    "subclauses": 38,
+    "sha256": "65bdd9f4a3a090f4ca424145a24f9d4a858e0386a40385da21fec615cdc34070",
+    "sparsePages": [],
+    "replacementCharPages": []
+  },
+  {
+    "id": "dress",
+    "pages": 27,
+    "rules": 23,
+    "subclauses": 26,
+    "sha256": "f6b58435c89b396e263f21619a460c1a530ca20728850a4d03b5cb91077aa94f",
+    "sparsePages": [
+      1,
+      2
+    ],
+    "replacementCharPages": []
+  }
+]
