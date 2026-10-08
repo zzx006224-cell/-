@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>学校部分邮箱 | IIUM 指路猫</title>
+    <meta name="description" content="快速查找 IIUM 学校部门、学院邮箱、签证与付款网站。" />
+    <link rel="stylesheet" href="campus-services.css" />
+    <link rel="stylesheet" href="iium-contacts.css" />
+    <script src="iium-contacts-data.js" defer></script>
+    <script src="iium-contacts.js" defer></script>
+</head>
+<body class="contacts-page">
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">🐱</span>
+                <span>指路猫</span>
+            </a>
+            <nav class="nav-links" aria-label="主导航">
+                <a href="index.html">首页</a>
+                <a href="campus-map.html">学校地图</a>
+                <a href="other-affairs.html">其他事务</a>
+                <a href="zhao.html">反馈建议</a>
+            </nav>
+        </div>
+    </div>
+
+
+    <main class="page-shell">
+        <nav class="breadcrumb" aria-label="面包屑导航"><a href="index.html">首页</a><span aria-hidden="true">›</span><span aria-current="page">学校部分邮箱</span></nav>
+        <header class="page-header">
+            <span class="eyebrow">✉️ 学生办事通讯录</span>
+            <h1>学校部分邮箱</h1>
+            <p class="contacts-english" lang="en">IIUM Contacts &amp; Useful Links</p>
+            <p>快速查找学校部门、学院邮箱和常用办理入口。</p>
+            <p id="contacts-stats" class="contacts-stats"></p>
+        </header>
+        <section class="content-card contacts-search" aria-label="邮箱与服务搜索">
+            <label for="contacts-search">查找邮箱或服务</label>
+            <input id="contacts-search" type="search" placeholder="搜索部门、学院、邮箱或服务……" autocomplete="off" aria-controls="contacts-list" />
+            <nav class="category-chips" aria-label="分类筛选">
+                <button type="button" data-category="all" aria-pressed="true">全部</button>
+                <button type="button" data-category="departments" aria-pressed="false">学校部门</button>
+                <button type="button" data-category="faculties" aria-pressed="false">学院</button>
+                <button type="button" data-category="links" aria-pressed="false">常用网站</button>
+                <button type="button" data-category="payment" aria-pressed="false">付款信息</button>
+            </nav>
+            <p id="contacts-count" role="status" aria-live="polite"></p>
+        </section>
+        <div id="contacts-list"></div>
+        <div id="contacts-empty" class="content-card contacts-empty" hidden><h2>未找到相关邮箱或服务</h2><p>可以尝试搜索部门名称、学院简称或业务名称。</p></div>
+        <noscript><p class="content-card">请启用 JavaScript 查看通讯录、搜索和使用复制功能。</p></noscript>
+        <aside class="contacts-notice">本页仅提供信息和外部入口。实际登录、签证办理及付款请在学校或真实外部系统完成。</aside>
+        <p class="contacts-updated">信息更新时间：<time id="contacts-updated"></time> · 发现信息错误？<a href="zhao.html">反馈建议 →</a></p>
+    </main>
+    <footer class="footer">
+        <p>信息持续更新中，发现错误欢迎 <a href="zhao.html">反馈</a>。</p>
+        <p>免责声明：信息仅供参考，请以学校实际通知为准。</p>
+    </footer>
+    <div id="contacts-toast" class="contacts-toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
