@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2256%22%3E%F0%9F%90%B1%3C%2Ftext%3E%3C%2Fsvg%3E" />
+    <title>学校群消息 | 其他事务</title>
+    <style>
+        :root {
+            --border: rgba(45, 111, 73, 0.14);
+            --text: #11242f;
+            --muted: #5f7b86;
+            --primary-dark: #248257;
+            --shadow: 0 18px 42px rgba(17, 36, 47, 0.08);
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; background: linear-gradient(180deg, #f6fbf7 0%, #edf8f2 100%); color: var(--text); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; line-height: 1.7; }
+        a { color: inherit; text-decoration: none; }
+        .topbar { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,0.9); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+        .topbar-inner { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
+        .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 14px; background: linear-gradient(135deg, #2cae76, #36c08b); color: #fff; font-size: 20px; }
+        .nav-links { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 18px; color: var(--muted); font-size: 0.92rem; }
+        .nav-links a:hover, .back-link:hover { color: var(--primary-dark); }
+        .page-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 72px; }
+        .back-link { display: inline-block; margin-bottom: 16px; color: var(--primary-dark); font-weight: 600; }
+        h1 { margin: 0 0 10px; font-size: clamp(2.1rem, 4vw, 3rem); line-height: 1.15; }
+        .intro { margin: 0 0 30px; color: var(--muted); }
+        section { margin-bottom: 36px; }
+        h2 { margin: 0 0 18px; font-size: 1.55rem; }
+        .group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+        .group-card { min-width: 0; padding: 24px; background: #fff; border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); }
+        .group-card h3 { margin: 0 0 16px; font-size: 1.22rem; }
+        .group-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; padding: 11px 16px; border-radius: 12px; background: #2cae76; color: #fff; font-weight: 700; }
+        .group-link:hover, .group-link:focus-visible { background: var(--primary-dark); }
+        .qr-link { display: block; width: min(420px, 100%); margin: 0 auto; }
+        .qr-link img { display: block; width: 100%; height: auto; border-radius: 16px; }
+        .qr-hint, .expiry { margin: 12px 0 0; color: var(--muted); }
+        .qr-hint { text-align: center; }
+        .expiry { color: #795323; }
+        .footer { width: min(1180px, calc(100% - 32px)); margin: 0 auto 32px; padding-top: 18px; border-top: 1px solid var(--border); color: var(--muted); text-align: center; font-size: 0.9rem; }
+        .footer p { margin: 0 0 8px; }
+        @media (max-width: 760px) {
+            .topbar-inner, .page-shell, .footer { width: min(100% - 22px, 1180px); }
+            .topbar-inner { flex-direction: column; align-items: flex-start; }
+            .nav-links { justify-content: flex-start; gap: 10px 14px; }
+            .group-grid { grid-template-columns: 1fr; }
+            .group-card { padding: 20px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html"><span class="brand-mark">🐱</span><span>指路猫</span></a>
+            <nav class="nav-links" aria-label="主导航">
+                <a href="index.html">首页</a>
+                <a href="campus-map.html">学校地图</a>
+                <a href="other-affairs.html">其他事务</a>
+                <a href="zhao.html">反馈建议</a>
+            </nav>
+        </div>
+    </div>
+    <main class="page-shell">
+        <a class="back-link" href="other-affairs.html">← 返回其他事务</a>
+        <h1>学校群消息</h1>
+        <p class="intro">Telegram 群链接和微信群二维码。以下为群聊入口，并非学校官方公告。</p>
+
+        <section aria-labelledby="telegram-title">
+            <h2 id="telegram-title">Telegram 群</h2>
+            <div class="group-grid">
+                <article class="group-card">
+                    <h3>校园打车群</h3>
+                    <a class="group-link" href="https://t.me/uiastudentsonly" target="_blank" rel="noopener noreferrer"><span>群 1 · 加入群聊</span><span aria-hidden="true">↗</span></a>
+                    <a class="group-link" href="https://t.me/+EKpkzi0mxpoyZWRl" target="_blank" rel="noopener noreferrer"><span>群 2 · 加入群聊</span><span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="group-card">
+                    <h3>校园外卖群</h3>
+                    <a class="group-link" href="https://t.me/foodrunneruia" target="_blank" rel="noopener noreferrer"><span>群 1 · 加入群聊</span><span aria-hidden="true">↗</span></a>
+                    <a class="group-link" href="https://t.me/iiumrunner2" target="_blank" rel="noopener noreferrer"><span>群 2 · 加入群聊</span><span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="group-card">
+                    <h3>学校租车群</h3>
+                    <a class="group-link" href="https://t.me/+aAh-v6OxjYo3ZTU9" target="_blank" rel="noopener noreferrer"><span>加入群聊</span><span aria-hidden="true">↗</span></a>
+                </article>
+            </div>
+        </section>
+
+        <section aria-labelledby="wechat-title">
+            <h2 id="wechat-title">微信群</h2>
+            <div class="group-grid">
+                <article class="group-card">
+                    <h3>计算机系群 · UIA计算机学霸养成营</h3>
+                    <a class="qr-link" href="校园/722d120dc37293ae48b0045ad4ddd757.jpg" target="_blank" rel="noopener noreferrer" aria-label="打开计算机系群二维码原图">
+                        <img src="校园/722d120dc37293ae48b0045ad4ddd757.jpg" width="966" height="1482" alt="UIA计算机学霸养成营微信群二维码" />
+                    </a>
+                    <p class="qr-hint">点击图片打开原图扫码</p>
+                    <p class="expiry">二维码截至 2026 年 10 月 19 日有效；过期后可能无法扫码入群，需要更新二维码。</p>
+                </article>
+                <article class="group-card">
+                    <h3>经济系群 · 伊大经济系群</h3>
+                    <a class="qr-link" href="校园/7682f96bfc4129e52cdfdd9c0455c456.jpg" target="_blank" rel="noopener noreferrer" aria-label="打开经济系群二维码原图">
+                        <img src="校园/7682f96bfc4129e52cdfdd9c0455c456.jpg" width="966" height="1482" alt="伊大经济系群微信群二维码" />
+                    </a>
+                    <p class="qr-hint">点击图片打开原图扫码</p>
+                    <p class="expiry">二维码截至 2026 年 10 月 19 日有效；过期后可能无法扫码入群，需要更新二维码。</p>
+                </article>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <p>信息持续更新中，发现错误欢迎 <a href="zhao.html">反馈</a>。</p>
+        <p>免责声明：信息仅供参考，请以学校实际通知为准。</p>
+    </footer>
+</body>
+</html>
